@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Convert to a weekday</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for as_weekday {clock}"><tr><td>as_weekday {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Convert to a weekday</h2>
+
+<h3>Description</h3>
+
+<p><code>as_weekday()</code> converts to a weekday type. This is normally useful for
+converting to a weekday from a sys-time or naive-time. You can use this
+function along with the <em>circular arithmetic</em> that weekday implements to
+easily get to the &quot;next Monday&quot; or &quot;previous Sunday&quot;.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+as_weekday(x)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code style="white-space: pre;">[object]</code>
+</p>
+<p>An object to convert to a weekday. Usually a sys-time or naive-time.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A weekday.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+x &lt;- as_naive_time(year_month_day(2019, 01, 05))
+
+# This is a Saturday!
+as_weekday(x)
+
+# See the examples in `?weekday` for more usage.
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

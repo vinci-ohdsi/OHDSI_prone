@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Widen a calendar to a more precise precision</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for calendar_widen {clock}"><tr><td>calendar_widen {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Widen a calendar to a more precise precision</h2>
+
+<h3>Description</h3>
+
+<p><code>calendar_widen()</code> widens <code>x</code> to the specified <code>precision</code>. It does so
+by setting new components to their smallest value.
+</p>
+<p>Each calendar has its own help page describing the precisions that you
+can widen to:
+</p>
+
+<ul>
+<li> <p><a href="year-month-day-widen.html">year-month-day</a>
+</p>
+</li>
+<li> <p><a href="year-month-weekday-widen.html">year-month-weekday</a>
+</p>
+</li>
+<li> <p><a href="iso-year-week-day-widen.html">iso-year-week-day</a>
+</p>
+</li>
+<li> <p><a href="year-quarter-day-widen.html">year-quarter-day</a>
+</p>
+</li>
+<li> <p><a href="year-day-widen.html">year-day</a>
+</p>
+</li></ul>
+
+
+
+<h3>Usage</h3>
+
+<pre>
+calendar_widen(x, precision)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code style="white-space: pre;">[calendar]</code>
+</p>
+<p>A calendar vector.</p>
+</td></tr>
+<tr valign="top"><td><code>precision</code></td>
+<td>
+<p><code style="white-space: pre;">[character(1)]</code>
+</p>
+<p>A precision. Allowed precisions are dependent on the calendar used.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>A subsecond precision <code>x</code> cannot be widened. You cannot widen from, say,
+<code>"millisecond"</code> to <code>"nanosecond"</code> precision. clock operates under the
+philosophy that once you have set the subsecond precision of a calendar,
+it is &quot;locked in&quot; at that precision. If you expected this to multiply
+the milliseconds by 1e6 to get to nanosecond precision, you probably
+want to convert to a time point first, and use <code><a href="time_point_cast.html">time_point_cast()</a></code>.
+</p>
+<p>Generally, clock treats calendars at a specific precision as a <em>range</em> of
+values. For example, a month precision year-month-day is treated as a range
+over <code style="white-space: pre;">[yyyy-mm-01, yyyy-mm-last]</code>, with no assumption about the day of the
+month. However, occasionally it is useful to quickly widen a calendar,
+assuming that you want the beginning of this range to be used for each
+component. This is where <code>calendar_widen()</code> can come in handy.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>x</code> widened to the supplied <code>precision</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Month precision
+x &lt;- year_month_day(2019, 1)
+x
+
+# Widen to day precision
+calendar_widen(x, "day")
+
+# Or second precision
+calendar_widen(x, "second")
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

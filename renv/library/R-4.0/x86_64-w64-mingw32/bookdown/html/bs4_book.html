@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: HTML book built with bootstrap4</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for bs4_book {bookdown}"><tr><td>bs4_book {bookdown}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>HTML book built with bootstrap4</h2>
+
+<h3>Description</h3>
+
+<p>This output format is built with <a href="https://getbootstrap.com">bootstrap</a>,
+using carefully craft features to provide a clean reading experience whether
+your on a phone, tablet, or desktop.
+</p>
+<p>Some of the main features:
+</p>
+
+<ul>
+<li><p> Easy customisation of colours and fonts with
+<a href="https://rstudio.github.io/bslib/">bslib</a>
+</p>
+</li>
+<li><p> Built in search (broken down by section) that helps you quickly find what
+you're looking for.
+</p>
+</li>
+<li><p> A sidebar containing a within-chapter table of contents that makes
+navigation easy and helps provide context about your current position
+within the chapter.
+</p>
+</li>
+<li><p> Thoughtful typography to make the contents as easy as possible to read,
+regardless of the size of your device. A sticky header gets out of your
+way when reading, but is easily accessible if you need it.
+</p>
+</li>
+<li><p> In-line footnotes mean you can read asides next to the next they refer
+to. This theme is best paired with a reference style that generates
+footnotes.
+</p>
+</li>
+<li><p> R syntax highlighting and autolinking by
+<a href="https://downlit.r-lib.org/">downlit</a> is paired with a accessible
+colour scheme designed by Alison Hill.
+</p>
+</li></ul>
+
+<p>This theme is designed for books that use one chapter per page.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+bs4_book(
+  theme = bs4_book_theme(),
+  repo = NULL,
+  ...,
+  lib_dir = "libs",
+  pandoc_args = NULL,
+  extra_dependencies = NULL
+)
+
+bs4_book_theme(primary = "#0068D9", ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>theme</code></td>
+<td>
+<p>A named list or <code><a href="../../bslib/html/bs_theme.html">bslib::bs_theme()</a></code> object.
+The default, <code>bs4_book_theme()</code>, resets the base font size to 1rem to
+make reading easier and uses a primary colour with greater constrast
+against the background.</p>
+</td></tr>
+<tr valign="top"><td><code>repo</code></td>
+<td>
+<p>Link to repository where book is hosted, used to generate
+view source and edit buttons. Currently assumes GitHub and that the book
+is in the root directory of the repo.</p>
+</td></tr>
+<tr valign="top"><td><code>lib_dir, pandoc_args, extra_dependencies, ...</code></td>
+<td>
+<p>Passed on to
+<code><a href="../../rmarkdown/html/html_document.html">rmarkdown::html_document()</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>primary</code></td>
+<td>
+<p>Primary colour: used for links and background of footer.</p>
+</td></tr>
+</table>
+
+<hr /><div style="text-align: center;">[Package <em>bookdown</em> version 0.22 <a href="00Index.html">Index</a>]</div>
+</body></html>

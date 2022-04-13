@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Convert to a duration</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for as_duration {clock}"><tr><td>as_duration {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Convert to a duration</h2>
+
+<h3>Description</h3>
+
+<p>You generally convert to a duration from either a sys-time or a naive-time.
+The precision of the input is retained in the returned duration.
+</p>
+<p>To round an existing duration to another precision, see <code><a href="duration-rounding.html">duration_floor()</a></code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+as_duration(x)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code style="white-space: pre;">[object]</code>
+</p>
+<p>An object to convert to a duration.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A duration with the same precision as <code>x</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+x &lt;- as_sys_time(year_month_day(2019, 01, 01))
+
+# The number of days since 1970-01-01 UTC
+as_duration(x)
+
+x &lt;- x + duration_seconds(1)
+x
+
+# The number of seconds since 1970-01-01 00:00:00 UTC
+as_duration(x)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Current date and date-time</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for date-today {clock}"><tr><td>date-today {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Current date and date-time</h2>
+
+<h3>Description</h3>
+
+
+<ul>
+<li> <p><code>date_today()</code> returns the current date in the specified <code>zone</code> as a Date.
+</p>
+</li>
+<li> <p><code>date_now()</code> returns the current date-time in the specified <code>zone</code> as a
+POSIXct.
+</p>
+</li></ul>
+
+
+
+<h3>Usage</h3>
+
+<pre>
+date_today(zone)
+
+date_now(zone)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>zone</code></td>
+<td>
+<p><code style="white-space: pre;">[character(1)]</code>
+</p>
+<p>A time zone to get the current time for.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>clock assumes that Date is a <em>naive</em> type, like naive-time. This means that
+<code>date_today()</code> first looks up the current date-time in the specified <code>zone</code>,
+then converts that to a Date, retaining the printed time while dropping any
+information about that time zone.
+</p>
+
+
+<h3>Value</h3>
+
+
+<ul>
+<li> <p><code>date_today()</code> a single Date.
+</p>
+</li>
+<li> <p><code>date_now()</code> a single POSIXct.
+</p>
+</li></ul>
+
+
+
+<h3>Examples</h3>
+
+<pre>
+# Current date in the local time zone
+date_today("")
+
+# Current date in a specified time zone
+date_today("Europe/London")
+
+# Current date-time in that same time zone
+date_now("Europe/London")
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

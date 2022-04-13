@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Rounding: date</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for date-rounding {clock}"><tr><td>date-rounding {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Rounding: date</h2>
+
+<h3>Description</h3>
+
+<p>These are Date methods for the
+<a href="date-and-date-time-rounding.html">rounding generics</a>.
+</p>
+
+<ul>
+<li> <p><code>date_floor()</code> rounds a date down to a multiple of
+the specified <code>precision</code>.
+</p>
+</li>
+<li> <p><code>date_ceiling()</code> rounds a date up to a multiple of
+the specified <code>precision</code>.
+</p>
+</li>
+<li> <p><code>date_round()</code> rounds up or down depending on what is closer,
+rounding up on ties.
+</p>
+</li></ul>
+
+<p>The only supported rounding <code>precision</code>s for Dates are <code>"day"</code> and <code>"week"</code>.
+You can group by irregular periods such as <code>"month"</code> or <code>"year"</code> by using
+<code><a href="date_group.html">date_group()</a></code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'Date'
+date_floor(x, precision, ..., n = 1L, origin = NULL)
+
+## S3 method for class 'Date'
+date_ceiling(x, precision, ..., n = 1L, origin = NULL)
+
+## S3 method for class 'Date'
+date_round(x, precision, ..., n = 1L, origin = NULL)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code style="white-space: pre;">[Date]</code>
+</p>
+<p>A date vector.</p>
+</td></tr>
+<tr valign="top"><td><code>precision</code></td>
+<td>
+<p><code style="white-space: pre;">[character(1)]</code>
+</p>
+<p>One of:
+</p>
+
+<ul>
+<li> <p><code>"week"</code>
+</p>
+</li>
+<li> <p><code>"day"</code>
+</p>
+</li></ul>
+
+<p><code>"week"</code> is an alias for <code>"day"</code> with <code>n * 7</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>These dots are for future extensions and must be empty.</p>
+</td></tr>
+<tr valign="top"><td><code>n</code></td>
+<td>
+<p><code style="white-space: pre;">[positive integer(1)]</code>
+</p>
+<p>A single positive integer specifying a multiple of <code>precision</code> to use.</p>
+</td></tr>
+<tr valign="top"><td><code>origin</code></td>
+<td>
+<p><code style="white-space: pre;">[Date(1) / NULL]</code>
+</p>
+<p>An origin to start counting from. The default <code>origin</code> is
+1970-01-01.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>When rounding by <code>"week"</code>, remember that the <code>origin</code> determines the &quot;week
+start&quot;. By default, 1970-01-01 is the implicit origin, which is a
+Thursday. If you would like to round by weeks with a different week start,
+just supply an origin on the weekday you are interested in.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>x</code> rounded to the specified <code>precision</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+x &lt;- as.Date("2019-03-31") + 0:5
+x
+
+# Flooring by 2 days, note that this is not tied to the current month,
+# and instead counts from the specified `origin`, so groups can cross
+# the month boundary
+date_floor(x, "day", n = 2)
+
+# Compare to `date_group()`, which groups by the day of the month
+date_group(x, "day", n = 2)
+
+y &lt;- as.Date("2019-01-01") + 0:20
+y
+
+# Flooring by week uses an implicit `origin` of 1970-01-01, which
+# is a Thursday
+date_floor(y, "week")
+as_weekday(date_floor(y, "week"))
+
+# If you want to round by weeks with a different week start, supply an
+# `origin` that falls on the weekday you care about. This uses a Monday.
+origin &lt;- as.Date("1970-01-05")
+as_weekday(origin)
+
+date_floor(y, "week", origin = origin)
+as_weekday(date_floor(y, "week", origin = origin))
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

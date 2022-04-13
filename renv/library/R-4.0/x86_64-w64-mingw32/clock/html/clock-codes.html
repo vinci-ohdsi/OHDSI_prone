@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Integer codes</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for clock-codes {clock}"><tr><td>clock-codes {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Integer codes</h2>
+
+<h3>Description</h3>
+
+<p>Objects with useful mappings from month names and weekday names
+to integer codes.
+</p>
+
+
+<h4>Month codes (<code>clock_months</code>)</h4>
+
+
+<ul>
+<li> <p><code>january == 1</code>
+</p>
+</li>
+<li> <p><code>february == 2</code>
+</p>
+</li>
+<li> <p><code>march == 3</code>
+</p>
+</li>
+<li> <p><code>april == 4</code>
+</p>
+</li>
+<li> <p><code>may == 5</code>
+</p>
+</li>
+<li> <p><code>june == 6</code>
+</p>
+</li>
+<li> <p><code>july == 7</code>
+</p>
+</li>
+<li> <p><code>august == 8</code>
+</p>
+</li>
+<li> <p><code>september == 9</code>
+</p>
+</li>
+<li> <p><code>october == 10</code>
+</p>
+</li>
+<li> <p><code>november == 11</code>
+</p>
+</li>
+<li> <p><code>december == 12</code>
+</p>
+</li></ul>
+
+
+
+
+<h4>Weekday codes (<code>clock_weekdays</code>)</h4>
+
+
+<ul>
+<li> <p><code>sunday == 1</code>
+</p>
+</li>
+<li> <p><code>monday == 2</code>
+</p>
+</li>
+<li> <p><code>tuesday == 3</code>
+</p>
+</li>
+<li> <p><code>wednesday == 4</code>
+</p>
+</li>
+<li> <p><code>thursday == 5</code>
+</p>
+</li>
+<li> <p><code>friday == 6</code>
+</p>
+</li>
+<li> <p><code>saturday == 7</code>
+</p>
+</li></ul>
+
+
+
+
+<h4>ISO weekday codes (<code>clock_iso_weekdays</code>)</h4>
+
+
+<ul>
+<li> <p><code>monday == 1</code>
+</p>
+</li>
+<li> <p><code>tuesday == 2</code>
+</p>
+</li>
+<li> <p><code>wednesday == 3</code>
+</p>
+</li>
+<li> <p><code>thursday == 4</code>
+</p>
+</li>
+<li> <p><code>friday == 5</code>
+</p>
+</li>
+<li> <p><code>saturday == 6</code>
+</p>
+</li>
+<li> <p><code>sunday == 7</code>
+</p>
+</li></ul>
+
+
+
+
+<h3>Usage</h3>
+
+<pre>
+clock_months
+
+clock_weekdays
+
+clock_iso_weekdays
+</pre>
+
+
+<h3>Format</h3>
+
+
+<ul>
+<li> <p><code>clock_months</code>: An environment containing month codes.
+</p>
+</li></ul>
+
+
+<ul>
+<li> <p><code>clock_weekdays</code>: An environment containing weekday codes.
+</p>
+</li></ul>
+
+
+<ul>
+<li> <p><code>clock_iso_weekdays</code>: An environment containing ISO weekday codes.
+</p>
+</li></ul>
+
+
+
+<h3>Examples</h3>
+
+<pre>
+weekday(clock_weekdays$wednesday)
+
+year_month_weekday(2019, clock_months$april, clock_weekdays$monday, 1:4)
+
+iso_year_week_day(2020, 52, clock_iso_weekdays$thursday)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

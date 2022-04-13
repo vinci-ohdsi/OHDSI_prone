@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Widen: year-quarter-day</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for year-quarter-day-widen {clock}"><tr><td>year-quarter-day-widen {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Widen: year-quarter-day</h2>
+
+<h3>Description</h3>
+
+<p>This is a year-quarter-day method for the <code><a href="calendar_widen.html">calendar_widen()</a></code> generic. It
+widens a year-quarter-day vector to the specified <code>precision</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'clock_year_quarter_day'
+calendar_widen(x, precision)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code style="white-space: pre;">[clock_year_quarter_day]</code>
+</p>
+<p>A year-quarter-day vector.</p>
+</td></tr>
+<tr valign="top"><td><code>precision</code></td>
+<td>
+<p><code style="white-space: pre;">[character(1)]</code>
+</p>
+<p>One of:
+</p>
+
+<ul>
+<li> <p><code>"year"</code>
+</p>
+</li>
+<li> <p><code>"quarter"</code>
+</p>
+</li>
+<li> <p><code>"day"</code>
+</p>
+</li>
+<li> <p><code>"hour"</code>
+</p>
+</li>
+<li> <p><code>"minute"</code>
+</p>
+</li>
+<li> <p><code>"second"</code>
+</p>
+</li>
+<li> <p><code>"millisecond"</code>
+</p>
+</li>
+<li> <p><code>"microsecond"</code>
+</p>
+</li>
+<li> <p><code>"nanosecond"</code>
+</p>
+</li></ul>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p><code>x</code> widened to the supplied <code>precision</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Quarter precision
+x &lt;- year_quarter_day(2019, 1)
+x
+
+# Widen to day precision
+calendar_widen(x, "day")
+
+# Or second precision
+sec &lt;- calendar_widen(x, "second")
+sec
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

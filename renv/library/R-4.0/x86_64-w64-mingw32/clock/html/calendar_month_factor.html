@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Convert a calendar to an ordered factor of month names</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for calendar_month_factor {clock}"><tr><td>calendar_month_factor {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Convert a calendar to an ordered factor of month names</h2>
+
+<h3>Description</h3>
+
+<p><code>calendar_month_factor()</code> extracts the month values from a calendar and
+converts them to an ordered factor of month names. This can be useful in
+combination with ggplot2, or for modeling.
+</p>
+<p>This function is only relevant for calendar types that use a month field,
+i.e. <code><a href="year_month_day.html">year_month_day()</a></code> and <code><a href="year_month_weekday.html">year_month_weekday()</a></code>. The calendar type must
+have at least month precision.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+calendar_month_factor(x, ..., labels = "en", abbreviate = FALSE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code style="white-space: pre;">[calendar]</code>
+</p>
+<p>A calendar vector.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>These dots are for future extensions and must be empty.</p>
+</td></tr>
+<tr valign="top"><td><code>labels</code></td>
+<td>
+<p><code style="white-space: pre;">[clock_labels / character(1)]</code>
+</p>
+<p>Character representations of localized weekday names, month names, and
+AM/PM names. Either the language code as string (passed on to
+<code><a href="clock_labels.html">clock_labels_lookup()</a></code>), or an object created by <code><a href="clock_labels.html">clock_labels()</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>abbreviate</code></td>
+<td>
+<p><code style="white-space: pre;">[logical(1)]</code>
+</p>
+<p>If <code>TRUE</code>, the abbreviated month names from <code>labels</code> will be used.
+</p>
+<p>If <code>FALSE</code>, the full month names from <code>labels</code> will be used.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>An ordered factor representing the months.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+x &lt;- year_month_day(2019, 1:12)
+
+calendar_month_factor(x)
+calendar_month_factor(x, abbreviate = TRUE)
+calendar_month_factor(x, labels = "fr")
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

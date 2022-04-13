@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Date and date-time rounding</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for date-and-date-time-rounding {clock}"><tr><td>date-and-date-time-rounding {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Date and date-time rounding</h2>
+
+<h3>Description</h3>
+
+
+<ul>
+<li> <p><code>date_floor()</code> rounds a date or date-time down to a multiple of
+the specified <code>precision</code>.
+</p>
+</li>
+<li> <p><code>date_ceiling()</code> rounds a date or date-time up to a multiple of
+the specified <code>precision</code>.
+</p>
+</li>
+<li> <p><code>date_round()</code> rounds up or down depending on what is closer,
+rounding up on ties.
+</p>
+</li></ul>
+
+<p>There are separate help pages for rounding dates and date-times:
+</p>
+
+<ul>
+<li> <p><a href="date-rounding.html">dates (Date)</a>
+</p>
+</li>
+<li> <p><a href="posixt-rounding.html">date-times (POSIXct/POSIXlt)</a>
+</p>
+</li></ul>
+
+<p>These functions round the underlying duration itself, relative to an
+<code>origin</code>. For example, rounding to 15 hours will construct groups of
+15 hours, starting from <code>origin</code>, which defaults to a naive time of
+1970-01-01 00:00:00.
+</p>
+<p>If you want to group by components, such as &quot;day of the month&quot;, see
+<code><a href="date_group.html">date_group()</a></code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+date_floor(x, precision, ..., n = 1L, origin = NULL)
+
+date_ceiling(x, precision, ..., n = 1L, origin = NULL)
+
+date_round(x, precision, ..., n = 1L, origin = NULL)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code style="white-space: pre;">[Date / POSIXct / POSIXlt]</code>
+</p>
+<p>A date or date-time vector.</p>
+</td></tr>
+<tr valign="top"><td><code>precision</code></td>
+<td>
+<p><code style="white-space: pre;">[character(1)]</code>
+</p>
+<p>A precision. Allowed precisions are dependent on the input used.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>These dots are for future extensions and must be empty.</p>
+</td></tr>
+<tr valign="top"><td><code>n</code></td>
+<td>
+<p><code style="white-space: pre;">[positive integer(1)]</code>
+</p>
+<p>A single positive integer specifying a multiple of <code>precision</code> to use.</p>
+</td></tr>
+<tr valign="top"><td><code>origin</code></td>
+<td>
+<p><code style="white-space: pre;">[Date(1) / POSIXct(1) / POSIXlt(1) / NULL]</code>
+</p>
+<p>An origin to start counting from. The default <code>origin</code> is
+midnight on 1970-01-01 in the time zone of <code>x</code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p><code>x</code> rounded to the specified <code>precision</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# See the type specific documentation for more examples
+
+x &lt;- as.Date("2019-03-31") + 0:5
+x
+
+# Flooring by 2 days, note that this is not tied to the current month,
+# and instead counts from the specified `origin`.
+date_floor(x, "day", n = 2)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

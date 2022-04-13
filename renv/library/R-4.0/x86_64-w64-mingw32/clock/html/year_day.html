@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Calendar: year-day</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for year_day {clock}"><tr><td>year_day {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Calendar: year-day</h2>
+
+<h3>Description</h3>
+
+<p><code>year_day()</code> constructs a calendar vector from the Gregorian
+year and day of the year.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+year_day(
+  year,
+  day = NULL,
+  hour = NULL,
+  minute = NULL,
+  second = NULL,
+  subsecond = NULL,
+  ...,
+  subsecond_precision = NULL
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>year</code></td>
+<td>
+<p><code style="white-space: pre;">[integer]</code>
+</p>
+<p>The year. Values <code style="white-space: pre;">[-32767, 32767]</code> are generally allowed.</p>
+</td></tr>
+<tr valign="top"><td><code>day</code></td>
+<td>
+<p><code style="white-space: pre;">[integer / NULL]</code>
+</p>
+<p>The day of the year. Values <code style="white-space: pre;">[1, 366]</code> are allowed.</p>
+</td></tr>
+<tr valign="top"><td><code>hour</code></td>
+<td>
+<p><code style="white-space: pre;">[integer / NULL]</code>
+</p>
+<p>The hour. Values <code style="white-space: pre;">[0, 23]</code> are allowed.</p>
+</td></tr>
+<tr valign="top"><td><code>minute</code></td>
+<td>
+<p><code style="white-space: pre;">[integer / NULL]</code>
+</p>
+<p>The minute. Values <code style="white-space: pre;">[0, 59]</code> are allowed.</p>
+</td></tr>
+<tr valign="top"><td><code>second</code></td>
+<td>
+<p><code style="white-space: pre;">[integer / NULL]</code>
+</p>
+<p>The second. Values <code style="white-space: pre;">[0, 59]</code> are allowed.</p>
+</td></tr>
+<tr valign="top"><td><code>subsecond</code></td>
+<td>
+<p><code style="white-space: pre;">[integer / NULL]</code>
+</p>
+<p>The subsecond. If specified, <code>subsecond_precision</code> must also be specified
+to determine how to interpret the <code>subsecond</code>.
+</p>
+<p>If using milliseconds, values <code style="white-space: pre;">[0, 999]</code> are allowed.
+</p>
+<p>If using microseconds, values <code style="white-space: pre;">[0, 999999]</code> are allowed.
+</p>
+<p>If using nanoseconds, values <code style="white-space: pre;">[0, 999999999]</code> are allowed.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>These dots are for future extensions and must be empty.</p>
+</td></tr>
+<tr valign="top"><td><code>subsecond_precision</code></td>
+<td>
+<p><code style="white-space: pre;">[character(1) / NULL]</code>
+</p>
+<p>The precision to interpret <code>subsecond</code> as. One of: <code>"millisecond"</code>,
+<code>"microsecond"</code>, or <code>"nanosecond"</code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Fields are recycled against each other.
+</p>
+<p>Fields are collected in order until the first <code>NULL</code> field is located. No
+fields after the first <code>NULL</code> field are used.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A year-day calendar vector.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Just the year
+x &lt;- year_day(2019:2025)
+x
+
+year_day(2020, 1:10)
+
+# Last day of the year, accounting for leap years
+year_day(2019:2021, "last")
+
+# Precision can go all the way out to nanosecond
+year_day(2019, 100, 2, 40, 45, 200, subsecond_precision = "nanosecond")
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

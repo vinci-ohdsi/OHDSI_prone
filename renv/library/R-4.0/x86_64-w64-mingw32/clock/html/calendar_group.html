@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Group calendar components</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for calendar_group {clock}"><tr><td>calendar_group {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Group calendar components</h2>
+
+<h3>Description</h3>
+
+<p><code>calendar_group()</code> groups at a multiple of the specified precision. Grouping
+alters the value of a single component (i.e. the month component
+if grouping by month). Components that are more precise than the precision
+being grouped at are dropped altogether (i.e. the day component is dropped
+if grouping by month).
+</p>
+<p>Each calendar has its own help page describing the grouping process in more
+detail:
+</p>
+
+<ul>
+<li> <p><a href="year-month-day-group.html">year-month-day</a>
+</p>
+</li>
+<li> <p><a href="year-month-weekday-group.html">year-month-weekday</a>
+</p>
+</li>
+<li> <p><a href="iso-year-week-day-group.html">iso-year-week-day</a>
+</p>
+</li>
+<li> <p><a href="year-quarter-day-group.html">year-quarter-day</a>
+</p>
+</li>
+<li> <p><a href="year-day-group.html">year-day</a>
+</p>
+</li></ul>
+
+
+
+<h3>Usage</h3>
+
+<pre>
+calendar_group(x, precision, ..., n = 1L)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code style="white-space: pre;">[calendar]</code>
+</p>
+<p>A calendar vector.</p>
+</td></tr>
+<tr valign="top"><td><code>precision</code></td>
+<td>
+<p><code style="white-space: pre;">[character(1)]</code>
+</p>
+<p>A precision. Allowed precisions are dependent on the calendar used.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>These dots are for future extensions and must be empty.</p>
+</td></tr>
+<tr valign="top"><td><code>n</code></td>
+<td>
+<p><code style="white-space: pre;">[positive integer(1)]</code>
+</p>
+<p>A single positive integer specifying a multiple of <code>precision</code> to use.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p><code>x</code> grouped at the specified <code>precision</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# See the calendar specific help pages for more examples
+x &lt;- year_month_day(2019, c(1, 1, 2, 2, 3, 3, 4, 4), 1:8)
+x
+
+# Group by two months
+calendar_group(x, "month", n = 2)
+
+# Group by two days of the month
+calendar_group(x, "day", n = 2)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

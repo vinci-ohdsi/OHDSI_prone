@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Grouping: year-month-weekday</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for year-month-weekday-group {clock}"><tr><td>year-month-weekday-group {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Grouping: year-month-weekday</h2>
+
+<h3>Description</h3>
+
+<p>This is a year-month-weekday method for the <code><a href="calendar_group.html">calendar_group()</a></code> generic.
+</p>
+<p>Grouping for a year-month-weekday object can be done at any precision except
+for <code>"day"</code>, as long as <code>x</code> is at least as precise as <code>precision</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'clock_year_month_weekday'
+calendar_group(x, precision, ..., n = 1L)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code style="white-space: pre;">[clock_year_month_weekday]</code>
+</p>
+<p>A year-month-weekday vector.</p>
+</td></tr>
+<tr valign="top"><td><code>precision</code></td>
+<td>
+<p><code style="white-space: pre;">[character(1)]</code>
+</p>
+<p>One of:
+</p>
+
+<ul>
+<li> <p><code>"year"</code>
+</p>
+</li>
+<li> <p><code>"month"</code>
+</p>
+</li>
+<li> <p><code>"hour"</code>
+</p>
+</li>
+<li> <p><code>"minute"</code>
+</p>
+</li>
+<li> <p><code>"second"</code>
+</p>
+</li>
+<li> <p><code>"millisecond"</code>
+</p>
+</li>
+<li> <p><code>"microsecond"</code>
+</p>
+</li>
+<li> <p><code>"nanosecond"</code>
+</p>
+</li></ul>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>These dots are for future extensions and must be empty.</p>
+</td></tr>
+<tr valign="top"><td><code>n</code></td>
+<td>
+<p><code style="white-space: pre;">[positive integer(1)]</code>
+</p>
+<p>A single positive integer specifying a multiple of <code>precision</code> to use.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Grouping by <code>"day"</code> is undefined for a year-month-weekday because there are
+two day fields, the weekday and the index, and there is no clear way to
+define how to group by that.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>x</code> grouped at the specified <code>precision</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+x &lt;- year_month_weekday(2019, 1:12, clock_weekdays$sunday, 1, 00, 05, 05)
+x
+
+# Group by 3 months - drops more precise components!
+calendar_group(x, "month", n = 3)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

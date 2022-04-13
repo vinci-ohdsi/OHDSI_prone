@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Getters: date</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for Date-getters {clock}"><tr><td>Date-getters {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Getters: date</h2>
+
+<h3>Description</h3>
+
+<p>These are Date methods for the <a href="clock-getters.html">getter generics</a>.
+</p>
+
+<ul>
+<li> <p><code>get_year()</code> returns the Gregorian year.
+</p>
+</li>
+<li> <p><code>get_month()</code> returns the month of the year.
+</p>
+</li>
+<li> <p><code>get_day()</code> returns the day of the month.
+</p>
+</li></ul>
+
+<p>For more advanced component extraction, convert to the calendar type
+that you are interested in.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'Date'
+get_year(x)
+
+## S3 method for class 'Date'
+get_month(x)
+
+## S3 method for class 'Date'
+get_day(x)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code style="white-space: pre;">[Date]</code>
+</p>
+<p>A Date to get the component from.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>The component.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+x &lt;- as.Date("2019-01-01") + 0:5
+get_day(x)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

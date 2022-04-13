@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create or retrieve date related labels</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for clock_labels {clock}"><tr><td>clock_labels {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Create or retrieve date related labels</h2>
+
+<h3>Description</h3>
+
+<p>When parsing and formatting dates, you often need to know how weekdays of
+the week and months are represented as text. These functions allow you
+to either create your own labels, or look them up from a standard set of
+language specific labels. The standard list is derived from ICU
+(<a href="https://unicode-org.github.io/icu/">https://unicode-org.github.io/icu/</a>) via the stringi package.
+</p>
+
+<ul>
+<li> <p><code>clock_labels_lookup()</code> looks up a set of labels from a
+given language code.
+</p>
+</li>
+<li> <p><code>clock_labels_languages()</code> lists the language codes that are accepted.
+</p>
+</li>
+<li> <p><code>clock_labels()</code> lets you create your own set of labels. Use this if the
+currently supported languages don't meet your needs.
+</p>
+</li></ul>
+
+
+
+<h3>Usage</h3>
+
+<pre>
+clock_labels(
+  month,
+  month_abbrev = month,
+  weekday,
+  weekday_abbrev = weekday,
+  am_pm
+)
+
+clock_labels_lookup(language)
+
+clock_labels_languages()
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>month, month_abbrev</code></td>
+<td>
+<p><code style="white-space: pre;">[character(12)]</code>
+</p>
+<p>Full and abbreviated month names. Starts with January.</p>
+</td></tr>
+<tr valign="top"><td><code>weekday, weekday_abbrev</code></td>
+<td>
+<p><code style="white-space: pre;">[character(7)]</code>
+</p>
+<p>Full and abbreviated weekday names. Starts with Sunday.</p>
+</td></tr>
+<tr valign="top"><td><code>am_pm</code></td>
+<td>
+<p><code style="white-space: pre;">[character(2)]</code>
+</p>
+<p>Names used for AM and PM.</p>
+</td></tr>
+<tr valign="top"><td><code>language</code></td>
+<td>
+<p><code style="white-space: pre;">[character(1)]</code>
+</p>
+<p>A BCP 47 locale, generally constructed from a two or three
+digit language code. See <code>clock_labels_languages()</code> for a complete list of
+available locales.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A <code>"clock_labels"</code> object.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+clock_labels_lookup("en")
+clock_labels_lookup("ko")
+clock_labels_lookup("fr")
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

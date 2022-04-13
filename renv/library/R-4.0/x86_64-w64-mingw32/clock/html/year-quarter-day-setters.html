@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Setters: year-quarter-day</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for year-quarter-day-setters {clock}"><tr><td>year-quarter-day-setters {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Setters: year-quarter-day</h2>
+
+<h3>Description</h3>
+
+<p>These are year-quarter-day methods for the
+<a href="clock-setters.html">setter generics</a>.
+</p>
+
+<ul>
+<li> <p><code>set_year()</code> sets the fiscal year.
+</p>
+</li>
+<li> <p><code>set_quarter()</code> sets the fiscal quarter of the year.
+Valid values are in the range of <code style="white-space: pre;">[1, 4]</code>.
+</p>
+</li>
+<li> <p><code>set_day()</code> sets the day of the fiscal quarter.
+Valid values are in the range of <code style="white-space: pre;">[1, 92]</code>.
+</p>
+</li>
+<li><p> There are sub-daily setters for setting more precise components.
+</p>
+</li></ul>
+
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'clock_year_quarter_day'
+set_year(x, value, ...)
+
+## S3 method for class 'clock_year_quarter_day'
+set_quarter(x, value, ...)
+
+## S3 method for class 'clock_year_quarter_day'
+set_day(x, value, ...)
+
+## S3 method for class 'clock_year_quarter_day'
+set_hour(x, value, ...)
+
+## S3 method for class 'clock_year_quarter_day'
+set_minute(x, value, ...)
+
+## S3 method for class 'clock_year_quarter_day'
+set_second(x, value, ...)
+
+## S3 method for class 'clock_year_quarter_day'
+set_millisecond(x, value, ...)
+
+## S3 method for class 'clock_year_quarter_day'
+set_microsecond(x, value, ...)
+
+## S3 method for class 'clock_year_quarter_day'
+set_nanosecond(x, value, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code style="white-space: pre;">[clock_year_quarter_day]</code>
+</p>
+<p>A year-quarter-day vector.</p>
+</td></tr>
+<tr valign="top"><td><code>value</code></td>
+<td>
+<p><code style="white-space: pre;">[integer / "last"]</code>
+</p>
+<p>The value to set the component to.
+</p>
+<p>For <code>set_day()</code>, this can also be <code>"last"</code> to adjust to the last
+day of the current fiscal quarter.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>These dots are for future extensions and must be empty.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p><code>x</code> with the component set.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+library(magrittr)
+
+# Quarter precision vector
+x &lt;- year_quarter_day(2019, 1:4)
+x
+
+# Promote to day precision by setting the day
+x &lt;- set_day(x, 1)
+x
+
+# Or set to the last day of the quarter
+x &lt;- set_day(x, "last")
+x
+
+# What year-month-day is this?
+as_year_month_day(x)
+
+# Set to an invalid day of the quarter
+# (not all quarters have 92 days)
+invalid &lt;- set_day(x, 92)
+invalid
+
+# Here are the invalid ones
+invalid[invalid_detect(invalid)]
+
+# Resolve the invalid dates by choosing the previous/next valid moment
+invalid_resolve(invalid, invalid = "previous")
+invalid_resolve(invalid, invalid = "next")
+
+# Or resolve by "overflowing" by the number of days that you have
+# gone past the last valid day
+invalid_resolve(invalid, invalid = "overflow")
+
+# This is similar to
+days &lt;- get_day(invalid) - 1L
+invalid %&gt;%
+  set_day(1) %&gt;%
+  as_naive_time() %&gt;%
+  add_days(days) %&gt;%
+  as_year_quarter_day()
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

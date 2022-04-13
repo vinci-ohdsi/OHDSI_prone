@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Calendar setters</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for clock-setters {clock}"><tr><td>clock-setters {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Calendar setters</h2>
+
+<h3>Description</h3>
+
+<p>This family of functions sets fields in a calendar vector. Each
+calendar has its own set of supported setters, which are documented on
+their own help page:
+</p>
+
+<ul>
+<li> <p><a href="year-month-day-setters.html">year-month-day</a>
+</p>
+</li>
+<li> <p><a href="year-month-weekday-setters.html">year-month-weekday</a>
+</p>
+</li>
+<li> <p><a href="iso-year-week-day-setters.html">iso-year-week-day</a>
+</p>
+</li>
+<li> <p><a href="year-quarter-day-setters.html">year-quarter-day</a>
+</p>
+</li>
+<li> <p><a href="year-day-setters.html">year-day</a>
+</p>
+</li></ul>
+
+<p>There are also convenience methods for setting certain components
+directly on R's native date and date-time types.
+</p>
+
+<ul>
+<li> <p><a href="Date-setters.html">dates (Date)</a>
+</p>
+</li>
+<li> <p><a href="posixt-setters.html">date-times (POSIXct / POSIXlt)</a>
+</p>
+</li></ul>
+
+<p>Some general rules about setting components on calendar types:
+</p>
+
+<ul>
+<li><p> You can only set components that are relevant to the calendar type that
+you are working with. For example, you can't set the quarter of a
+year-month-day type. You'd have to convert to year-quarter-day first.
+</p>
+</li>
+<li><p> You can set a component that is at the current precision, or one level
+of precision more precise than the current precision. For example,
+you can set the day field of a month precision year-month-day type,
+but not the hour field.
+</p>
+</li>
+<li><p> Setting a component can result in an <em>invalid date</em>, such as
+<code>set_day(year_month_day(2019, 02), 31)</code>, as long as it is eventually
+resolved either manually or with a strategy from <code><a href="clock-invalid.html">invalid_resolve()</a></code>.
+</p>
+</li>
+<li><p> With sub-second precisions, you can only set the component corresponding
+to the precision that you are at. For example, you can set the nanoseconds
+of the second while at nanosecond precision, but not milliseconds.
+</p>
+</li></ul>
+
+
+
+<h3>Usage</h3>
+
+<pre>
+set_year(x, value, ...)
+
+set_quarter(x, value, ...)
+
+set_month(x, value, ...)
+
+set_week(x, value, ...)
+
+set_day(x, value, ...)
+
+set_hour(x, value, ...)
+
+set_minute(x, value, ...)
+
+set_second(x, value, ...)
+
+set_millisecond(x, value, ...)
+
+set_microsecond(x, value, ...)
+
+set_nanosecond(x, value, ...)
+
+set_index(x, value, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code style="white-space: pre;">[object]</code>
+</p>
+<p>An object to set the component for.</p>
+</td></tr>
+<tr valign="top"><td><code>value</code></td>
+<td>
+<p><code style="white-space: pre;">[integer]</code>
+</p>
+<p>The value to set the component to.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>These dots are for future extensions and must be empty.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>You cannot set components directly on a time point type, such as
+sys-time or naive-time. Convert it to a calendar type first. Similarly,
+a zoned-time must be converted to either a sys-time or naive-time, and
+then to a calendar type, to be able to set components on it.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>x</code> with the component set.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+x &lt;- year_month_day(2019, 1:3)
+
+# Set the day
+set_day(x, 12:14)
+
+# Set to the "last" day of the month
+set_day(x, "last")
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

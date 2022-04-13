@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Extract underlying weekday codes</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for weekday_code {clock}"><tr><td>weekday_code {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Extract underlying weekday codes</h2>
+
+<h3>Description</h3>
+
+<p><code>weekday_code()</code> extracts out the integer code for the weekday.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+weekday_code(x, ..., encoding = "western")
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code style="white-space: pre;">[weekday]</code>
+</p>
+<p>A weekday vector.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>These dots are for future extensions and must be empty.</p>
+</td></tr>
+<tr valign="top"><td><code>encoding</code></td>
+<td>
+<p><code style="white-space: pre;">[character(1)]</code>
+</p>
+<p>One of:
+</p>
+
+<ul>
+<li> <p><code>"western"</code>: Encode weekdays assuming <code>1 == Sunday</code> and <code>7 == Saturday</code>.
+</p>
+</li>
+<li> <p><code>"iso"</code>: Encode weekdays assuming <code>1 == Monday</code> and <code>7 == Sunday</code>. This
+is in line with the ISO standard.
+</p>
+</li></ul>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>An integer vector of codes.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Here we supply a western encoding to `weekday()`
+x &lt;- weekday(1:7)
+x
+
+# We can extract out the codes using different encodings
+weekday_code(x, encoding = "western")
+weekday_code(x, encoding = "iso")
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

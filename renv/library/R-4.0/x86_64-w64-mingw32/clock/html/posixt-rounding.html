@@ -1,0 +1,263 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Rounding: date-time</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for posixt-rounding {clock}"><tr><td>posixt-rounding {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Rounding: date-time</h2>
+
+<h3>Description</h3>
+
+<p>These are POSIXct/POSIXlt methods for the
+<a href="date-and-date-time-rounding.html">rounding generics</a>.
+</p>
+
+<ul>
+<li> <p><code>date_floor()</code> rounds a date-time down to a multiple of
+the specified <code>precision</code>.
+</p>
+</li>
+<li> <p><code>date_ceiling()</code> rounds a date-time up to a multiple of
+the specified <code>precision</code>.
+</p>
+</li>
+<li> <p><code>date_round()</code> rounds up or down depending on what is closer,
+rounding up on ties.
+</p>
+</li></ul>
+
+<p>You can group by irregular periods such as <code>"month"</code> or <code>"year"</code> by using
+<code><a href="date_group.html">date_group()</a></code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'POSIXt'
+date_floor(
+  x,
+  precision,
+  ...,
+  n = 1L,
+  origin = NULL,
+  nonexistent = NULL,
+  ambiguous = x
+)
+
+## S3 method for class 'POSIXt'
+date_ceiling(
+  x,
+  precision,
+  ...,
+  n = 1L,
+  origin = NULL,
+  nonexistent = NULL,
+  ambiguous = x
+)
+
+## S3 method for class 'POSIXt'
+date_round(
+  x,
+  precision,
+  ...,
+  n = 1L,
+  origin = NULL,
+  nonexistent = NULL,
+  ambiguous = x
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code style="white-space: pre;">[POSIXct / POSIXlt]</code>
+</p>
+<p>A date-time vector.</p>
+</td></tr>
+<tr valign="top"><td><code>precision</code></td>
+<td>
+<p><code style="white-space: pre;">[character(1)]</code>
+</p>
+<p>One of:
+</p>
+
+<ul>
+<li> <p><code>"week"</code>
+</p>
+</li>
+<li> <p><code>"day"</code>
+</p>
+</li>
+<li> <p><code>"hour"</code>
+</p>
+</li>
+<li> <p><code>"minute"</code>
+</p>
+</li>
+<li> <p><code>"second"</code>
+</p>
+</li></ul>
+
+<p><code>"week"</code> is an alias for <code>"day"</code> with <code>n * 7</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>These dots are for future extensions and must be empty.</p>
+</td></tr>
+<tr valign="top"><td><code>n</code></td>
+<td>
+<p><code style="white-space: pre;">[positive integer(1)]</code>
+</p>
+<p>A single positive integer specifying a multiple of <code>precision</code> to use.</p>
+</td></tr>
+<tr valign="top"><td><code>origin</code></td>
+<td>
+<p><code style="white-space: pre;">[POSIXct(1) / POSIXlt(1) / NULL]</code>
+</p>
+<p>An origin to start counting from.
+</p>
+<p><code>origin</code> must have exactly the same time zone as <code>x</code>.
+</p>
+<p><code>origin</code> will be floored to <code>precision</code>. If information is lost when
+flooring, a warning will be thrown.
+</p>
+<p>If <code>NULL</code>, defaults to midnight on 1970-01-01 in the time zone of <code>x</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>nonexistent</code></td>
+<td>
+<p><code style="white-space: pre;">[character / NULL]</code>
+</p>
+<p>One of the following nonexistent time resolution strategies, allowed to be
+either length 1, or the same length as the input:
+</p>
+
+<ul>
+<li> <p><code>"roll-forward"</code>: The next valid instant in time.
+</p>
+</li>
+<li> <p><code>"roll-backward"</code>: The previous valid instant in time.
+</p>
+</li>
+<li> <p><code>"shift-forward"</code>: Shift the nonexistent time forward by the size of
+the daylight saving time gap.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">"shift-backward</code>: Shift the nonexistent time backward by the size of
+the daylight saving time gap.
+</p>
+</li>
+<li> <p><code>"NA"</code>: Replace nonexistent times with <code>NA</code>.
+</p>
+</li>
+<li> <p><code>"error"</code>: Error on nonexistent times.
+</p>
+</li></ul>
+
+<p>Using either <code>"roll-forward"</code> or <code>"roll-backward"</code> is generally
+recommended over shifting, as these two strategies maintain the
+<em>relative ordering</em> between elements of the input.
+</p>
+<p>If <code>NULL</code>, defaults to <code>"error"</code>.
+</p>
+<p>If <code>getOption("clock.strict")</code> is <code>TRUE</code>, <code>nonexistent</code> must be supplied
+and cannot be <code>NULL</code>. This is a convenient way to make production code
+robust to nonexistent times.</p>
+</td></tr>
+<tr valign="top"><td><code>ambiguous</code></td>
+<td>
+<p><code style="white-space: pre;">[character / zoned_time / POSIXct / list(2) / NULL]</code>
+</p>
+<p>One of the following ambiguous time resolution strategies, allowed to be
+either length 1, or the same length as the input:
+</p>
+
+<ul>
+<li> <p><code>"earliest"</code>: Of the two possible times, choose the earliest one.
+</p>
+</li>
+<li> <p><code>"latest"</code>: Of the two possible times, choose the latest one.
+</p>
+</li>
+<li> <p><code>"NA"</code>: Replace ambiguous times with <code>NA</code>.
+</p>
+</li>
+<li> <p><code>"error"</code>: Error on ambiguous times.
+</p>
+</li></ul>
+
+<p>Alternatively, <code>ambiguous</code> is allowed to be a zoned_time (or POSIXct) that
+is either length 1, or the same length as the input. If an ambiguous time
+is encountered, the zoned_time is consulted. If the zoned_time corresponds
+to a naive_time that is also ambiguous <em>and</em> uses the same daylight saving
+time transition point as the original ambiguous time, then the offset of
+the zoned_time is used to resolve the ambiguity. If the ambiguity cannot be
+resolved by consulting the zoned_time, then this method falls back to
+<code>NULL</code>.
+</p>
+<p>Finally, <code>ambiguous</code> is allowed to be a list of size 2, where the first
+element of the list is a zoned_time (as described above), and the second
+element of the list is an ambiguous time resolution strategy to use when
+the ambiguous time cannot be resolved by consulting the zoned_time.
+Specifying a zoned_time on its own is identical to <code style="white-space: pre;">list(&lt;zoned_time&gt;, NULL)</code>.
+</p>
+<p>If <code>NULL</code>, defaults to <code>"error"</code>.
+</p>
+<p>If <code>getOption("clock.strict")</code> is <code>TRUE</code>, <code>ambiguous</code> must be supplied and
+cannot be <code>NULL</code>. Additionally, <code>ambiguous</code> cannot be specified as a
+zoned_time on its own, as this implies <code>NULL</code> for ambiguous times that the
+zoned_time cannot resolve. Instead, it must be specified as a list
+alongside an ambiguous time resolution strategy as described above. This is
+a convenient way to make production code robust to ambiguous times.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>When rounding by <code>"week"</code>, remember that the <code>origin</code> determines the &quot;week
+start&quot;. By default, 1970-01-01 is the implicit origin, which is a
+Thursday. If you would like to round by weeks with a different week start,
+just supply an origin on the weekday you are interested in.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>x</code> rounded to the specified <code>precision</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+x &lt;- as.POSIXct("2019-03-31", "America/New_York")
+x &lt;- add_days(x, 0:5)
+
+# Flooring by 2 days, note that this is not tied to the current month,
+# and instead counts from the specified `origin`, so groups can cross
+# the month boundary
+date_floor(x, "day", n = 2)
+
+# Compare to `date_group()`, which groups by the day of the month
+date_group(x, "day", n = 2)
+
+# Note that daylight saving time gaps can throw off rounding
+x &lt;- as.POSIXct("1970-04-26 01:59:59", "America/New_York") + c(0, 1)
+x
+
+# Rounding is done in naive-time, which means that rounding by 2 hours
+# will attempt to generate a time of 1970-04-26 02:00:00, which doesn't
+# exist in this time zone
+try(date_floor(x, "hour", n = 2))
+
+# You can handle this by specifying a nonexistent time resolution strategy
+date_floor(x, "hour", n = 2, nonexistent = "roll-forward")
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Getters: year-day</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for year-day-getters {clock}"><tr><td>year-day-getters {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Getters: year-day</h2>
+
+<h3>Description</h3>
+
+<p>These are year-day methods for the <a href="clock-getters.html">getter generics</a>.
+</p>
+
+<ul>
+<li> <p><code>get_year()</code> returns the Gregorian year.
+</p>
+</li>
+<li> <p><code>get_day()</code> returns the day of the year.
+</p>
+</li>
+<li><p> There are sub-daily getters for extracting more precise components.
+</p>
+</li></ul>
+
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'clock_year_day'
+get_year(x)
+
+## S3 method for class 'clock_year_day'
+get_day(x)
+
+## S3 method for class 'clock_year_day'
+get_hour(x)
+
+## S3 method for class 'clock_year_day'
+get_minute(x)
+
+## S3 method for class 'clock_year_day'
+get_second(x)
+
+## S3 method for class 'clock_year_day'
+get_millisecond(x)
+
+## S3 method for class 'clock_year_day'
+get_microsecond(x)
+
+## S3 method for class 'clock_year_day'
+get_nanosecond(x)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code style="white-space: pre;">[clock_year_day]</code>
+</p>
+<p>A year-day to get the component from.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>The component.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+x &lt;- year_day(2019, 101:105, 1, 20, 30)
+
+get_day(x)
+get_second(x)
+
+# Cannot extract more precise components
+y &lt;- year_day(2019, 1)
+try(get_hour(y))
+
+# Cannot extract components that don't exist for this calendar
+try(get_quarter(x))
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Get or set the time zone</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for date-zone {clock}"><tr><td>date-zone {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Get or set the time zone</h2>
+
+<h3>Description</h3>
+
+
+<ul>
+<li> <p><code>date_zone()</code> gets the time zone.
+</p>
+</li>
+<li> <p><code>date_set_zone()</code> sets the time zone. This retains the <em>underlying
+duration</em>, but changes the <em>printed time</em> depending on the zone that is
+chosen.
+</p>
+</li></ul>
+
+
+
+<h3>Usage</h3>
+
+<pre>
+date_zone(x)
+
+date_set_zone(x, zone)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code style="white-space: pre;">[POSIXct / POSIXlt]</code>
+</p>
+<p>A date-time vector.</p>
+</td></tr>
+<tr valign="top"><td><code>zone</code></td>
+<td>
+<p><code style="white-space: pre;">[character(1)]</code>
+</p>
+<p>A valid time zone to switch to.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>This function is only valid for date-times, as clock treats R's Date class as
+a <em>naive</em> type, which always has a yet-to-be-specified time zone.
+</p>
+
+
+<h3>Value</h3>
+
+
+<ul>
+<li> <p><code>date_zone()</code> returns a string containing the time zone.
+</p>
+</li>
+<li> <p><code>date_set_zone()</code> returns <code>x</code> with an altered printed time. The
+underlying duration is not changed.
+</p>
+</li></ul>
+
+
+
+<h3>Examples</h3>
+
+<pre>
+library(magrittr)
+
+# Cannot set or get the zone of Date.
+# clock assumes that Dates are naive types, like naive-time.
+x &lt;- as.Date("2019-01-01")
+try(date_zone(x))
+try(date_set_zone(x, "America/New_York"))
+
+x &lt;- as.POSIXct("2019-01-02 01:30:00", tz = "America/New_York")
+x
+
+date_zone(x)
+
+# If it is 1:30am in New York, what time is it in Los Angeles?
+# Same underlying duration, new printed time
+date_set_zone(x, "America/Los_Angeles")
+
+# If you want to retain the printed time, but change the underlying duration,
+# convert to a naive-time to drop the time zone, then convert back to a
+# date-time. Be aware that this requires that you handle daylight saving time
+# irregularities with the `nonexistent` and `ambiguous` arguments to
+# `as.POSIXct()`!
+x %&gt;%
+  as_naive_time() %&gt;%
+  as.POSIXct("America/Los_Angeles")
+
+y &lt;- as.POSIXct("2021-03-28 03:30:00", "America/New_York")
+y
+
+y_nt &lt;- as_naive_time(y)
+y_nt
+
+# Helsinki had a daylight saving time gap where they jumped from
+# 02:59:59 -&gt; 04:00:00
+try(as.POSIXct(y_nt, "Europe/Helsinki"))
+
+as.POSIXct(y_nt, "Europe/Helsinki", nonexistent = "roll-forward")
+as.POSIXct(y_nt, "Europe/Helsinki", nonexistent = "roll-backward")
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

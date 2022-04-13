@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Arithmetic: year-month-weekday</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for year-month-weekday-arithmetic {clock}"><tr><td>year-month-weekday-arithmetic {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Arithmetic: year-month-weekday</h2>
+
+<h3>Description</h3>
+
+<p>These are year-month-weekday methods for the
+<a href="clock-arithmetic.html">arithmetic generics</a>.
+</p>
+
+<ul>
+<li> <p><code>add_years()</code>
+</p>
+</li>
+<li> <p><code>add_quarters()</code>
+</p>
+</li>
+<li> <p><code>add_months()</code>
+</p>
+</li></ul>
+
+<p>Notably, <em>you cannot add days to a year-month-weekday</em>. For day-based
+arithmetic, first convert to a time point with <code><a href="as_naive_time.html">as_naive_time()</a></code> or
+<code><a href="as_sys_time.html">as_sys_time()</a></code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'clock_year_month_weekday'
+add_years(x, n, ...)
+
+## S3 method for class 'clock_year_month_weekday'
+add_quarters(x, n, ...)
+
+## S3 method for class 'clock_year_month_weekday'
+add_months(x, n, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code style="white-space: pre;">[clock_year_month_weekday]</code>
+</p>
+<p>A year-month-weekday vector.</p>
+</td></tr>
+<tr valign="top"><td><code>n</code></td>
+<td>
+<p><code style="white-space: pre;">[integer / clock_duration]</code>
+</p>
+<p>An integer vector to be converted to a duration, or a duration
+corresponding to the arithmetic function being used. This corresponds
+to the number of duration units to add. <code>n</code> may be negative to subtract
+units of duration.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>These dots are for future extensions and must be empty.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Adding a single quarter with <code>add_quarters()</code> is equivalent to adding
+3 months.
+</p>
+<p><code>x</code> and <code>n</code> are recycled against each other.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>x</code> after performing the arithmetic.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# 2nd Friday in January, 2019
+x &lt;- year_month_weekday(2019, 1, clock_weekdays$friday, 2)
+x
+
+add_months(x, 1:5)
+
+# These don't necessarily correspond to the same day of the month
+as_year_month_day(add_months(x, 1:5))
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

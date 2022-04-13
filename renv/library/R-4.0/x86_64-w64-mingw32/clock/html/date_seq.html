@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Sequences: date and date-time</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for date_seq {clock}"><tr><td>date_seq {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Sequences: date and date-time</h2>
+
+<h3>Description</h3>
+
+<p><code>date_seq()</code> generates a date (Date) or date-time (POSIXct/POSIXlt) sequence.
+</p>
+<p>There are separate help pages for generating sequences for dates and
+date-times:
+</p>
+
+<ul>
+<li> <p><a href="date-sequence.html">dates (Date)</a>
+</p>
+</li>
+<li> <p><a href="posixt-sequence.html">date-times (POSIXct/POSIXlt)</a>
+</p>
+</li></ul>
+
+
+
+<h3>Usage</h3>
+
+<pre>
+date_seq(from, ..., to = NULL, by = NULL, total_size = NULL)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>from</code></td>
+<td>
+<p><code style="white-space: pre;">[Date(1) / POSIXct(1) / POSIXlt(1)]</code>
+</p>
+<p>A date or date-time to start the sequence from.
+</p>
+<p><code>from</code> is always included in the result.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>These dots are for future extensions and must be empty.</p>
+</td></tr>
+<tr valign="top"><td><code>to</code></td>
+<td>
+<p><code style="white-space: pre;">[Date(1) / POSIXct(1) / POSIXlt(1) / NULL]</code>
+</p>
+<p>A date or date-time to stop the sequence at.
+</p>
+<p><code>to</code> is only included in the result if the resulting sequence divides
+the distance between <code>from</code> and <code>to</code> exactly.</p>
+</td></tr>
+<tr valign="top"><td><code>by</code></td>
+<td>
+<p><code style="white-space: pre;">[integer(1) / clock_duration(1) / NULL]</code>
+</p>
+<p>The unit to increment the sequence by.
+</p>
+<p>If <code>to &lt; from</code>, then <code>by</code> must be positive.
+</p>
+<p>If <code>to &gt; from</code>, then <code>by</code> must be negative.</p>
+</td></tr>
+<tr valign="top"><td><code>total_size</code></td>
+<td>
+<p><code style="white-space: pre;">[positive integer(1) / NULL]</code>
+</p>
+<p>The size of the resulting sequence.
+</p>
+<p>If specified alongside <code>to</code>, this must generate a non-fractional sequence
+between <code>from</code> and <code>to</code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A date or date-time vector.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# See method specific documentation for more examples
+
+x &lt;- as.Date("2019-01-01")
+date_seq(x, by = duration_months(2), total_size = 20)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

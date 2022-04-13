@@ -3,3 +3,10 @@ data/tmp
 
 # BQ JDBC drivers
 bq_jdbc
+.Rproj.user/
+
+
+
+
+renv
+

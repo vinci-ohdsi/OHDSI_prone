@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Construct a weekday vector</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for weekday {clock}"><tr><td>weekday {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Construct a weekday vector</h2>
+
+<h3>Description</h3>
+
+<p>A <code>weekday</code> is a simple type that represents a day of the week.
+</p>
+<p>The most interesting thing about the weekday type is that it implements
+<em>circular arithmetic</em>, which makes determining the &quot;next Monday&quot; or
+&quot;previous Tuesday&quot; from a sys-time or naive-time easy to compute.
+See the examples.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+weekday(code = integer(), ..., encoding = "western")
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>code</code></td>
+<td>
+<p><code style="white-space: pre;">[integer]</code>
+</p>
+<p>Integer codes between <code style="white-space: pre;">[1, 7]</code> representing days of the week. The
+interpretation of these values depends on <code>encoding</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>These dots are for future extensions and must be empty.</p>
+</td></tr>
+<tr valign="top"><td><code>encoding</code></td>
+<td>
+<p><code style="white-space: pre;">[character(1)]</code>
+</p>
+<p>One of:
+</p>
+
+<ul>
+<li> <p><code>"western"</code>: Encode weekdays assuming <code>1 == Sunday</code> and <code>7 == Saturday</code>.
+</p>
+</li>
+<li> <p><code>"iso"</code>: Encode weekdays assuming <code>1 == Monday</code> and <code>7 == Sunday</code>. This
+is in line with the ISO standard.
+</p>
+</li></ul>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A weekday vector.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+x &lt;- as_naive_time(year_month_day(2019, 01, 05))
+
+# This is a Saturday!
+as_weekday(x)
+
+# Adjust to the next Wednesday
+wednesday &lt;- weekday(clock_weekdays$wednesday)
+
+# This returns the number of days until the next Wednesday using
+# circular arithmetic
+# "Wednesday - Saturday = 4 days until next Wednesday"
+wednesday - as_weekday(x)
+
+# Advance to the next Wednesday
+x_next_wednesday &lt;- x + (wednesday - as_weekday(x))
+
+as_weekday(x_next_wednesday)
+
+# What about the previous Tuesday?
+tuesday &lt;- weekday(clock_weekdays$tuesday)
+x - (as_weekday(x) - tuesday)
+
+# What about the next Saturday?
+# With an additional condition that if today is a Saturday,
+# then advance to the next one.
+saturday &lt;- weekday(clock_weekdays$saturday)
+x + 1L + (saturday - as_weekday(x + 1L))
+
+# You can supply an ISO coding for `code` as well, where 1 == Monday.
+weekday(1:7, encoding = "western")
+weekday(1:7, encoding = "iso")
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

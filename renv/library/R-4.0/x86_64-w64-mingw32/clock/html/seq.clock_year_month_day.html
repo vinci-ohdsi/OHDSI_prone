@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Sequences: year-month-day</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for seq.clock_year_month_day {clock}"><tr><td>seq.clock_year_month_day {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Sequences: year-month-day</h2>
+
+<h3>Description</h3>
+
+<p>This is a year-month-day method for the <code><a href="../../base/html/seq.html">seq()</a></code> generic.
+</p>
+<p>Sequences can only be generated for <code>"year"</code> and <code>"month"</code> precision
+year-month-day vectors.
+</p>
+<p>When calling <code>seq()</code>, exactly two of the following must be specified:
+</p>
+
+<ul>
+<li> <p><code>to</code>
+</p>
+</li>
+<li> <p><code>by</code>
+</p>
+</li>
+<li><p> Either <code>length.out</code> or <code>along.with</code>
+</p>
+</li></ul>
+
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'clock_year_month_day'
+seq(from, to = NULL, by = NULL, length.out = NULL, along.with = NULL, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>from</code></td>
+<td>
+<p><code style="white-space: pre;">[clock_year_month_day(1)]</code>
+</p>
+<p>A <code>"year"</code> or <code>"month"</code> precision year-month-day to start the sequence
+from.
+</p>
+<p><code>from</code> is always included in the result.</p>
+</td></tr>
+<tr valign="top"><td><code>to</code></td>
+<td>
+<p><code style="white-space: pre;">[clock_year_month_day(1) / NULL]</code>
+</p>
+<p>A <code>"year"</code> or <code>"month"</code> precision year-month-day to stop the sequence
+at.
+</p>
+<p><code>to</code> is cast to the type of <code>from</code>.
+</p>
+<p><code>to</code> is only included in the result if the resulting sequence divides
+the distance between <code>from</code> and <code>to</code> exactly.</p>
+</td></tr>
+<tr valign="top"><td><code>by</code></td>
+<td>
+<p><code style="white-space: pre;">[integer(1) / clock_duration(1) / NULL]</code>
+</p>
+<p>The unit to increment the sequence by.
+</p>
+<p>If <code>to &lt; from</code>, then <code>by</code> must be positive.
+</p>
+<p>If <code>to &gt; from</code>, then <code>by</code> must be negative.
+</p>
+<p>If <code>by</code> is an integer, it is transformed into a duration with the
+precision of <code>from</code>.
+</p>
+<p>If <code>by</code> is a duration, it is cast to the type of <code>from</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>length.out</code></td>
+<td>
+<p><code style="white-space: pre;">[positive integer(1) / NULL]</code>
+</p>
+<p>The length of the resulting sequence.
+</p>
+<p>If specified, <code>along.with</code> must be <code>NULL</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>along.with</code></td>
+<td>
+<p><code style="white-space: pre;">[vector / NULL]</code>
+</p>
+<p>A vector who's length determines the length of the resulting sequence.
+</p>
+<p>Equivalent to <code>length.out = vec_size(along.with)</code>.
+</p>
+<p>If specified, <code>length.out</code> must be <code>NULL</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>These dots are for future extensions and must be empty.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A sequence with the type of <code>from</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Monthly sequence
+x &lt;- seq(year_month_day(2019, 1), year_month_day(2020, 12), by = 1)
+x
+
+# Which we can then set the day of to get a sequence of end-of-month values
+set_day(x, "last")
+
+# Daily sequences are not allowed. Use a naive-time for this instead.
+try(seq(year_month_day(2019, 1, 1), by = 2, length.out = 2))
+seq(as_naive_time(year_month_day(2019, 1, 1)), by = 2, length.out = 2)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

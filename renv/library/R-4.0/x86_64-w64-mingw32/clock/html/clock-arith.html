@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Support for vctrs arithmetic</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for vec_arith.clock_year_day {clock}"><tr><td>vec_arith.clock_year_day {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Support for vctrs arithmetic</h2>
+
+<h3>Description</h3>
+
+<p>Support for vctrs arithmetic
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'clock_year_day'
+vec_arith(op, x, y, ...)
+
+## S3 method for class 'clock_year_month_day'
+vec_arith(op, x, y, ...)
+
+## S3 method for class 'clock_year_month_weekday'
+vec_arith(op, x, y, ...)
+
+## S3 method for class 'clock_iso_year_week_day'
+vec_arith(op, x, y, ...)
+
+## S3 method for class 'clock_naive_time'
+vec_arith(op, x, y, ...)
+
+## S3 method for class 'clock_year_quarter_day'
+vec_arith(op, x, y, ...)
+
+## S3 method for class 'clock_sys_time'
+vec_arith(op, x, y, ...)
+
+## S3 method for class 'clock_weekday'
+vec_arith(op, x, y, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>op</code></td>
+<td>
+<p>An arithmetic operator as a string</p>
+</td></tr>
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p>A pair of vectors. For <code>!</code>, unary <code>+</code> and unary <code>-</code>, <code>y</code> will be
+a sentinel object of class <code>MISSING</code>, as created by <code>MISSING()</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>y</code></td>
+<td>
+<p>A pair of vectors. For <code>!</code>, unary <code>+</code> and unary <code>-</code>, <code>y</code> will be
+a sentinel object of class <code>MISSING</code>, as created by <code>MISSING()</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>These dots are for future extensions and must be empty.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>The result of the arithmetic operation.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+vctrs::vec_arith("+", year_month_day(2019), 1)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

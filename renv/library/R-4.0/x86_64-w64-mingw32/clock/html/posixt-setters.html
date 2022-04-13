@@ -1,0 +1,250 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Setters: date-time</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for posixt-setters {clock}"><tr><td>posixt-setters {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Setters: date-time</h2>
+
+<h3>Description</h3>
+
+<p>These are POSIXct/POSIXlt methods for the <a href="clock-setters.html">setter generics</a>.
+</p>
+
+<ul>
+<li> <p><code>set_year()</code> sets the year.
+</p>
+</li>
+<li> <p><code>set_month()</code> sets the month of the year. Valid values are in the range
+of <code style="white-space: pre;">[1, 12]</code>.
+</p>
+</li>
+<li> <p><code>set_day()</code> sets the day of the month. Valid values are in the range
+of <code style="white-space: pre;">[1, 31]</code>.
+</p>
+</li>
+<li><p> There are sub-daily setters for setting more precise components, up to
+a precision of seconds.
+</p>
+</li></ul>
+
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'POSIXt'
+set_year(x, value, ..., invalid = NULL, nonexistent = NULL, ambiguous = x)
+
+## S3 method for class 'POSIXt'
+set_month(x, value, ..., invalid = NULL, nonexistent = NULL, ambiguous = x)
+
+## S3 method for class 'POSIXt'
+set_day(x, value, ..., invalid = NULL, nonexistent = NULL, ambiguous = x)
+
+## S3 method for class 'POSIXt'
+set_hour(x, value, ..., invalid = NULL, nonexistent = NULL, ambiguous = x)
+
+## S3 method for class 'POSIXt'
+set_minute(x, value, ..., invalid = NULL, nonexistent = NULL, ambiguous = x)
+
+## S3 method for class 'POSIXt'
+set_second(x, value, ..., invalid = NULL, nonexistent = NULL, ambiguous = x)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code style="white-space: pre;">[POSIXct / POSIXlt]</code>
+</p>
+<p>A date-time vector.</p>
+</td></tr>
+<tr valign="top"><td><code>value</code></td>
+<td>
+<p><code style="white-space: pre;">[integer / "last"]</code>
+</p>
+<p>The value to set the component to.
+</p>
+<p>For <code>set_day()</code>, this can also be <code>"last"</code> to set the day to the
+last day of the month.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>These dots are for future extensions and must be empty.</p>
+</td></tr>
+<tr valign="top"><td><code>invalid</code></td>
+<td>
+<p><code style="white-space: pre;">[character(1) / NULL]</code>
+</p>
+<p>One of the following invalid date resolution strategies:
+</p>
+
+<ul>
+<li> <p><code>"previous"</code>: The previous valid instant in time.
+</p>
+</li>
+<li> <p><code>"previous-day"</code>: The previous valid day in time, keeping the time of
+day.
+</p>
+</li>
+<li> <p><code>"next"</code>: The next valid instant in time.
+</p>
+</li>
+<li> <p><code>"next-day"</code>: The next valid day in time, keeping the time of day.
+</p>
+</li>
+<li> <p><code>"overflow"</code>: Overflow by the number of days that the input is invalid
+by. Time of day is dropped.
+</p>
+</li>
+<li> <p><code>"overflow-day"</code>: Overflow by the number of days that the input is
+invalid by. Time of day is kept.
+</p>
+</li>
+<li> <p><code>"NA"</code>: Replace invalid dates with <code>NA</code>.
+</p>
+</li>
+<li> <p><code>"error"</code>: Error on invalid dates.
+</p>
+</li></ul>
+
+<p>Using either <code>"previous"</code> or <code>"next"</code> is generally recommended, as these
+two strategies maintain the <em>relative ordering</em> between elements of the
+input.
+</p>
+<p>If <code>NULL</code>, defaults to <code>"error"</code>.
+</p>
+<p>If <code>getOption("clock.strict")</code> is <code>TRUE</code>, <code>invalid</code> must be supplied and
+cannot be <code>NULL</code>. This is a convenient way to make production code robust
+to invalid dates.</p>
+</td></tr>
+<tr valign="top"><td><code>nonexistent</code></td>
+<td>
+<p><code style="white-space: pre;">[character / NULL]</code>
+</p>
+<p>One of the following nonexistent time resolution strategies, allowed to be
+either length 1, or the same length as the input:
+</p>
+
+<ul>
+<li> <p><code>"roll-forward"</code>: The next valid instant in time.
+</p>
+</li>
+<li> <p><code>"roll-backward"</code>: The previous valid instant in time.
+</p>
+</li>
+<li> <p><code>"shift-forward"</code>: Shift the nonexistent time forward by the size of
+the daylight saving time gap.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">"shift-backward</code>: Shift the nonexistent time backward by the size of
+the daylight saving time gap.
+</p>
+</li>
+<li> <p><code>"NA"</code>: Replace nonexistent times with <code>NA</code>.
+</p>
+</li>
+<li> <p><code>"error"</code>: Error on nonexistent times.
+</p>
+</li></ul>
+
+<p>Using either <code>"roll-forward"</code> or <code>"roll-backward"</code> is generally
+recommended over shifting, as these two strategies maintain the
+<em>relative ordering</em> between elements of the input.
+</p>
+<p>If <code>NULL</code>, defaults to <code>"error"</code>.
+</p>
+<p>If <code>getOption("clock.strict")</code> is <code>TRUE</code>, <code>nonexistent</code> must be supplied
+and cannot be <code>NULL</code>. This is a convenient way to make production code
+robust to nonexistent times.</p>
+</td></tr>
+<tr valign="top"><td><code>ambiguous</code></td>
+<td>
+<p><code style="white-space: pre;">[character / zoned_time / POSIXct / list(2) / NULL]</code>
+</p>
+<p>One of the following ambiguous time resolution strategies, allowed to be
+either length 1, or the same length as the input:
+</p>
+
+<ul>
+<li> <p><code>"earliest"</code>: Of the two possible times, choose the earliest one.
+</p>
+</li>
+<li> <p><code>"latest"</code>: Of the two possible times, choose the latest one.
+</p>
+</li>
+<li> <p><code>"NA"</code>: Replace ambiguous times with <code>NA</code>.
+</p>
+</li>
+<li> <p><code>"error"</code>: Error on ambiguous times.
+</p>
+</li></ul>
+
+<p>Alternatively, <code>ambiguous</code> is allowed to be a zoned_time (or POSIXct) that
+is either length 1, or the same length as the input. If an ambiguous time
+is encountered, the zoned_time is consulted. If the zoned_time corresponds
+to a naive_time that is also ambiguous <em>and</em> uses the same daylight saving
+time transition point as the original ambiguous time, then the offset of
+the zoned_time is used to resolve the ambiguity. If the ambiguity cannot be
+resolved by consulting the zoned_time, then this method falls back to
+<code>NULL</code>.
+</p>
+<p>Finally, <code>ambiguous</code> is allowed to be a list of size 2, where the first
+element of the list is a zoned_time (as described above), and the second
+element of the list is an ambiguous time resolution strategy to use when
+the ambiguous time cannot be resolved by consulting the zoned_time.
+Specifying a zoned_time on its own is identical to <code style="white-space: pre;">list(&lt;zoned_time&gt;, NULL)</code>.
+</p>
+<p>If <code>NULL</code>, defaults to <code>"error"</code>.
+</p>
+<p>If <code>getOption("clock.strict")</code> is <code>TRUE</code>, <code>ambiguous</code> must be supplied and
+cannot be <code>NULL</code>. Additionally, <code>ambiguous</code> cannot be specified as a
+zoned_time on its own, as this implies <code>NULL</code> for ambiguous times that the
+zoned_time cannot resolve. Instead, it must be specified as a list
+alongside an ambiguous time resolution strategy as described above. This is
+a convenient way to make production code robust to ambiguous times.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p><code>x</code> with the component set.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+x &lt;- as.POSIXct("2019-02-01", tz = "America/New_York")
+
+# Set the day
+set_day(x, 12:14)
+
+# Set to the "last" day of the month
+set_day(x, "last")
+
+# You cannot set a date-time to an invalid date like you can with
+# a year-month-day. Instead, the default strategy is to error.
+try(set_day(x, 31))
+set_day(as_year_month_day(x), 31)
+
+# You can resolve these issues while setting the day by specifying
+# an invalid date resolution strategy with `invalid`
+set_day(x, 31, invalid = "previous")
+
+y &lt;- as.POSIXct("2020-03-08 01:30:00", tz = "America/New_York")
+
+# Nonexistent and ambiguous times must be resolved immediately when
+# working with R's native date-time types. An error is thrown by default.
+try(set_hour(y, 2))
+set_hour(y, 2, nonexistent = "roll-forward")
+set_hour(y, 2, nonexistent = "roll-backward")
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

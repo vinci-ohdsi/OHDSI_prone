@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Convert to a zoned-time from a date</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for as-zoned-time-Date {clock}"><tr><td>as-zoned-time-Date {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Convert to a zoned-time from a date</h2>
+
+<h3>Description</h3>
+
+<p>This is a Date method for the <code><a href="as_zoned_time.html">as_zoned_time()</a></code> generic.
+</p>
+<p>clock assumes that Dates are <em>naive</em> date-time types. Like naive-times, they
+have a yet-to-be-specified time zone. This method allows you to specify that
+time zone, keeping the printed time. If possible, the time will be set to
+midnight (see Details for the rare case in which this is not possible).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'Date'
+as_zoned_time(x, zone, ..., nonexistent = NULL, ambiguous = NULL)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code style="white-space: pre;">[Date]</code>
+</p>
+<p>A Date.</p>
+</td></tr>
+<tr valign="top"><td><code>zone</code></td>
+<td>
+<p><code style="white-space: pre;">[character(1)]</code>
+</p>
+<p>The zone to convert to.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>These dots are for future extensions and must be empty.</p>
+</td></tr>
+<tr valign="top"><td><code>nonexistent</code></td>
+<td>
+<p><code style="white-space: pre;">[character / NULL]</code>
+</p>
+<p>One of the following nonexistent time resolution strategies, allowed to be
+either length 1, or the same length as the input:
+</p>
+
+<ul>
+<li> <p><code>"roll-forward"</code>: The next valid instant in time.
+</p>
+</li>
+<li> <p><code>"roll-backward"</code>: The previous valid instant in time.
+</p>
+</li>
+<li> <p><code>"shift-forward"</code>: Shift the nonexistent time forward by the size of
+the daylight saving time gap.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">"shift-backward</code>: Shift the nonexistent time backward by the size of
+the daylight saving time gap.
+</p>
+</li>
+<li> <p><code>"NA"</code>: Replace nonexistent times with <code>NA</code>.
+</p>
+</li>
+<li> <p><code>"error"</code>: Error on nonexistent times.
+</p>
+</li></ul>
+
+<p>Using either <code>"roll-forward"</code> or <code>"roll-backward"</code> is generally
+recommended over shifting, as these two strategies maintain the
+<em>relative ordering</em> between elements of the input.
+</p>
+<p>If <code>NULL</code>, defaults to <code>"error"</code>.
+</p>
+<p>If <code>getOption("clock.strict")</code> is <code>TRUE</code>, <code>nonexistent</code> must be supplied
+and cannot be <code>NULL</code>. This is a convenient way to make production code
+robust to nonexistent times.</p>
+</td></tr>
+<tr valign="top"><td><code>ambiguous</code></td>
+<td>
+<p><code style="white-space: pre;">[character / zoned_time / POSIXct / list(2) / NULL]</code>
+</p>
+<p>One of the following ambiguous time resolution strategies, allowed to be
+either length 1, or the same length as the input:
+</p>
+
+<ul>
+<li> <p><code>"earliest"</code>: Of the two possible times, choose the earliest one.
+</p>
+</li>
+<li> <p><code>"latest"</code>: Of the two possible times, choose the latest one.
+</p>
+</li>
+<li> <p><code>"NA"</code>: Replace ambiguous times with <code>NA</code>.
+</p>
+</li>
+<li> <p><code>"error"</code>: Error on ambiguous times.
+</p>
+</li></ul>
+
+<p>Alternatively, <code>ambiguous</code> is allowed to be a zoned_time (or POSIXct) that
+is either length 1, or the same length as the input. If an ambiguous time
+is encountered, the zoned_time is consulted. If the zoned_time corresponds
+to a naive_time that is also ambiguous <em>and</em> uses the same daylight saving
+time transition point as the original ambiguous time, then the offset of
+the zoned_time is used to resolve the ambiguity. If the ambiguity cannot be
+resolved by consulting the zoned_time, then this method falls back to
+<code>NULL</code>.
+</p>
+<p>Finally, <code>ambiguous</code> is allowed to be a list of size 2, where the first
+element of the list is a zoned_time (as described above), and the second
+element of the list is an ambiguous time resolution strategy to use when
+the ambiguous time cannot be resolved by consulting the zoned_time.
+Specifying a zoned_time on its own is identical to <code style="white-space: pre;">list(&lt;zoned_time&gt;, NULL)</code>.
+</p>
+<p>If <code>NULL</code>, defaults to <code>"error"</code>.
+</p>
+<p>If <code>getOption("clock.strict")</code> is <code>TRUE</code>, <code>ambiguous</code> must be supplied and
+cannot be <code>NULL</code>. Additionally, <code>ambiguous</code> cannot be specified as a
+zoned_time on its own, as this implies <code>NULL</code> for ambiguous times that the
+zoned_time cannot resolve. Instead, it must be specified as a list
+alongside an ambiguous time resolution strategy as described above. This is
+a convenient way to make production code robust to ambiguous times.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>In the rare instance that the specified time zone does not contain a
+date-time at midnight due to daylight saving time, <code>nonexistent</code> can be used
+to resolve the issue. Similarly, if there are two possible midnight times due
+to a daylight saving time fallback, <code>ambiguous</code> can be used.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A zoned-time.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+x &lt;- as.Date("2019-01-01")
+
+# The resulting zoned-times have the same printed time, but are in
+# different time zones
+as_zoned_time(x, "UTC")
+as_zoned_time(x, "America/New_York")
+
+# Converting Date -&gt; zoned-time is the same as naive-time -&gt; zoned-time
+x &lt;- as_naive_time(year_month_day(2019, 1, 1))
+as_zoned_time(x, "America/New_York")
+
+# In Asia/Beirut, there was a DST gap from
+# 2021-03-27 23:59:59 -&gt; 2021-03-28 01:00:00,
+# skipping the 0th hour entirely. This means there is no midnight value.
+x &lt;- as.Date("2021-03-28")
+try(as_zoned_time(x, "Asia/Beirut"))
+
+# To resolve this, set a `nonexistent` time resolution strategy
+as_zoned_time(x, "Asia/Beirut", nonexistent = "roll-forward")
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

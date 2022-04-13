@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Narrow: year-month-weekday</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for year-month-weekday-narrow {clock}"><tr><td>year-month-weekday-narrow {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Narrow: year-month-weekday</h2>
+
+<h3>Description</h3>
+
+<p>This is a year-month-weekday method for the <code><a href="calendar_narrow.html">calendar_narrow()</a></code> generic. It
+narrows a year-month-weekday vector to the specified <code>precision</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'clock_year_month_weekday'
+calendar_narrow(x, precision)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code style="white-space: pre;">[clock_year_month_weekday]</code>
+</p>
+<p>A year-month-weekday vector.</p>
+</td></tr>
+<tr valign="top"><td><code>precision</code></td>
+<td>
+<p><code style="white-space: pre;">[character(1)]</code>
+</p>
+<p>One of:
+</p>
+
+<ul>
+<li> <p><code>"year"</code>
+</p>
+</li>
+<li> <p><code>"month"</code>
+</p>
+</li>
+<li> <p><code>"day"</code>
+</p>
+</li>
+<li> <p><code>"hour"</code>
+</p>
+</li>
+<li> <p><code>"minute"</code>
+</p>
+</li>
+<li> <p><code>"second"</code>
+</p>
+</li>
+<li> <p><code>"millisecond"</code>
+</p>
+</li>
+<li> <p><code>"microsecond"</code>
+</p>
+</li>
+<li> <p><code>"nanosecond"</code>
+</p>
+</li></ul>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p><code>x</code> narrowed to the supplied <code>precision</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Day precision
+x &lt;- year_month_weekday(2019, 1, 1, 2)
+x
+
+# Narrowed to month precision
+calendar_narrow(x, "month")
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create a clock locale</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for clock_locale {clock}"><tr><td>clock_locale {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Create a clock locale</h2>
+
+<h3>Description</h3>
+
+<p>A clock locale contains the information required to format and parse dates.
+The defaults have been chosen to match US English. A clock locale object can
+be provided to <code>format()</code> methods or parse functions (like
+<code><a href="year_month_day_parse.html">year_month_day_parse()</a></code>) to override the defaults.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+clock_locale(labels = "en", decimal_mark = ".")
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>labels</code></td>
+<td>
+<p><code style="white-space: pre;">[clock_labels / character(1)]</code>
+</p>
+<p>Character representations of localized weekday names, month names, and
+AM/PM names. Either the language code as string (passed on to
+<code><a href="clock_labels.html">clock_labels_lookup()</a></code>), or an object created by <code><a href="clock_labels.html">clock_labels()</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>decimal_mark</code></td>
+<td>
+<p><code style="white-space: pre;">[character(1)]</code>
+</p>
+<p>Symbol used for the decimal place when formatting sub-second date-times.
+Either <code>","</code> or <code>"."</code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A <code>"clock_locale"</code> object.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+clock_locale()
+clock_locale(labels = "fr")
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

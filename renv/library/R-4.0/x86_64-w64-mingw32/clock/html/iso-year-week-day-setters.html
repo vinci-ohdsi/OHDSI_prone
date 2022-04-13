@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Setters: iso-year-week-day</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for iso-year-week-day-setters {clock}"><tr><td>iso-year-week-day-setters {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Setters: iso-year-week-day</h2>
+
+<h3>Description</h3>
+
+<p>These are iso-year-week-day methods for the
+<a href="clock-setters.html">setter generics</a>.
+</p>
+
+<ul>
+<li> <p><code>set_year()</code> sets the ISO year.
+</p>
+</li>
+<li> <p><code>set_week()</code> sets the ISO week of the year. Valid values are in the range
+of <code style="white-space: pre;">[1, 53]</code>.
+</p>
+</li>
+<li> <p><code>set_day()</code> sets the day of the week. Valid values are in the range of
+<code style="white-space: pre;">[1, 7]</code>, with 1 = Monday, and 7 = Sunday.
+</p>
+</li>
+<li><p> There are sub-daily setters for setting more precise components.
+</p>
+</li></ul>
+
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'clock_iso_year_week_day'
+set_year(x, value, ...)
+
+## S3 method for class 'clock_iso_year_week_day'
+set_week(x, value, ...)
+
+## S3 method for class 'clock_iso_year_week_day'
+set_day(x, value, ...)
+
+## S3 method for class 'clock_iso_year_week_day'
+set_hour(x, value, ...)
+
+## S3 method for class 'clock_iso_year_week_day'
+set_minute(x, value, ...)
+
+## S3 method for class 'clock_iso_year_week_day'
+set_second(x, value, ...)
+
+## S3 method for class 'clock_iso_year_week_day'
+set_millisecond(x, value, ...)
+
+## S3 method for class 'clock_iso_year_week_day'
+set_microsecond(x, value, ...)
+
+## S3 method for class 'clock_iso_year_week_day'
+set_nanosecond(x, value, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code style="white-space: pre;">[clock_iso_year_week_day]</code>
+</p>
+<p>A iso-year-week-day vector.</p>
+</td></tr>
+<tr valign="top"><td><code>value</code></td>
+<td>
+<p><code style="white-space: pre;">[integer / "last"]</code>
+</p>
+<p>The value to set the component to.
+</p>
+<p>For <code>set_week()</code>, this can also be <code>"last"</code> to adjust to the last
+week of the current ISO year.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>These dots are for future extensions and must be empty.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p><code>x</code> with the component set.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Year precision vector
+x &lt;- iso_year_week_day(2019:2023)
+
+# Promote to week precision by setting the week
+# (Note that some ISO weeks have 52 weeks, and others have 53)
+x &lt;- set_week(x, "last")
+x
+
+# Set to an invalid week
+invalid &lt;- set_week(x, 53)
+invalid
+
+# Here are the invalid ones (they only have 52 weeks)
+invalid[invalid_detect(invalid)]
+
+# Resolve the invalid dates by choosing the previous/next valid moment
+invalid_resolve(invalid, invalid = "previous")
+invalid_resolve(invalid, invalid = "next")
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

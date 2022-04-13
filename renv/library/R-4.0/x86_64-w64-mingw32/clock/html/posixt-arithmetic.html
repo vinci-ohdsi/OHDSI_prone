@@ -1,0 +1,322 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Arithmetic: date-time</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for posixt-arithmetic {clock}"><tr><td>posixt-arithmetic {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Arithmetic: date-time</h2>
+
+<h3>Description</h3>
+
+<p>These are POSIXct/POSIXlt methods for the
+<a href="clock-arithmetic.html">arithmetic generics</a>.
+</p>
+<p>Calendrical based arithmetic:
+</p>
+<p>These functions convert to a naive-time, then to a year-month-day, perform
+the arithmetic, then convert back to a date-time.
+</p>
+
+<ul>
+<li> <p><code>add_years()</code>
+</p>
+</li>
+<li> <p><code>add_quarters()</code>
+</p>
+</li>
+<li> <p><code>add_months()</code>
+</p>
+</li></ul>
+
+<p>Naive-time based arithmetic:
+</p>
+<p>These functions convert to a naive-time, perform the arithmetic, then
+convert back to a date-time.
+</p>
+
+<ul>
+<li> <p><code>add_weeks()</code>
+</p>
+</li>
+<li> <p><code>add_days()</code>
+</p>
+</li></ul>
+
+<p>Sys-time based arithmetic:
+</p>
+<p>These functions convert to a sys-time, perform the arithmetic, then
+convert back to a date-time.
+</p>
+
+<ul>
+<li> <p><code>add_hours()</code>
+</p>
+</li>
+<li> <p><code>add_minutes()</code>
+</p>
+</li>
+<li> <p><code>add_seconds()</code>
+</p>
+</li></ul>
+
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'POSIXt'
+add_years(x, n, ..., invalid = NULL, nonexistent = NULL, ambiguous = x)
+
+## S3 method for class 'POSIXt'
+add_quarters(x, n, ..., invalid = NULL, nonexistent = NULL, ambiguous = x)
+
+## S3 method for class 'POSIXt'
+add_months(x, n, ..., invalid = NULL, nonexistent = NULL, ambiguous = x)
+
+## S3 method for class 'POSIXt'
+add_weeks(x, n, ..., nonexistent = NULL, ambiguous = x)
+
+## S3 method for class 'POSIXt'
+add_days(x, n, ..., nonexistent = NULL, ambiguous = x)
+
+## S3 method for class 'POSIXt'
+add_hours(x, n, ...)
+
+## S3 method for class 'POSIXt'
+add_minutes(x, n, ...)
+
+## S3 method for class 'POSIXt'
+add_seconds(x, n, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code style="white-space: pre;">[POSIXct / POSIXlt]</code>
+</p>
+<p>A date-time vector.</p>
+</td></tr>
+<tr valign="top"><td><code>n</code></td>
+<td>
+<p><code style="white-space: pre;">[integer / clock_duration]</code>
+</p>
+<p>An integer vector to be converted to a duration, or a duration
+corresponding to the arithmetic function being used. This corresponds
+to the number of duration units to add. <code>n</code> may be negative to subtract
+units of duration.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>These dots are for future extensions and must be empty.</p>
+</td></tr>
+<tr valign="top"><td><code>invalid</code></td>
+<td>
+<p><code style="white-space: pre;">[character(1) / NULL]</code>
+</p>
+<p>One of the following invalid date resolution strategies:
+</p>
+
+<ul>
+<li> <p><code>"previous"</code>: The previous valid instant in time.
+</p>
+</li>
+<li> <p><code>"previous-day"</code>: The previous valid day in time, keeping the time of
+day.
+</p>
+</li>
+<li> <p><code>"next"</code>: The next valid instant in time.
+</p>
+</li>
+<li> <p><code>"next-day"</code>: The next valid day in time, keeping the time of day.
+</p>
+</li>
+<li> <p><code>"overflow"</code>: Overflow by the number of days that the input is invalid
+by. Time of day is dropped.
+</p>
+</li>
+<li> <p><code>"overflow-day"</code>: Overflow by the number of days that the input is
+invalid by. Time of day is kept.
+</p>
+</li>
+<li> <p><code>"NA"</code>: Replace invalid dates with <code>NA</code>.
+</p>
+</li>
+<li> <p><code>"error"</code>: Error on invalid dates.
+</p>
+</li></ul>
+
+<p>Using either <code>"previous"</code> or <code>"next"</code> is generally recommended, as these
+two strategies maintain the <em>relative ordering</em> between elements of the
+input.
+</p>
+<p>If <code>NULL</code>, defaults to <code>"error"</code>.
+</p>
+<p>If <code>getOption("clock.strict")</code> is <code>TRUE</code>, <code>invalid</code> must be supplied and
+cannot be <code>NULL</code>. This is a convenient way to make production code robust
+to invalid dates.</p>
+</td></tr>
+<tr valign="top"><td><code>nonexistent</code></td>
+<td>
+<p><code style="white-space: pre;">[character / NULL]</code>
+</p>
+<p>One of the following nonexistent time resolution strategies, allowed to be
+either length 1, or the same length as the input:
+</p>
+
+<ul>
+<li> <p><code>"roll-forward"</code>: The next valid instant in time.
+</p>
+</li>
+<li> <p><code>"roll-backward"</code>: The previous valid instant in time.
+</p>
+</li>
+<li> <p><code>"shift-forward"</code>: Shift the nonexistent time forward by the size of
+the daylight saving time gap.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">"shift-backward</code>: Shift the nonexistent time backward by the size of
+the daylight saving time gap.
+</p>
+</li>
+<li> <p><code>"NA"</code>: Replace nonexistent times with <code>NA</code>.
+</p>
+</li>
+<li> <p><code>"error"</code>: Error on nonexistent times.
+</p>
+</li></ul>
+
+<p>Using either <code>"roll-forward"</code> or <code>"roll-backward"</code> is generally
+recommended over shifting, as these two strategies maintain the
+<em>relative ordering</em> between elements of the input.
+</p>
+<p>If <code>NULL</code>, defaults to <code>"error"</code>.
+</p>
+<p>If <code>getOption("clock.strict")</code> is <code>TRUE</code>, <code>nonexistent</code> must be supplied
+and cannot be <code>NULL</code>. This is a convenient way to make production code
+robust to nonexistent times.</p>
+</td></tr>
+<tr valign="top"><td><code>ambiguous</code></td>
+<td>
+<p><code style="white-space: pre;">[character / zoned_time / POSIXct / list(2) / NULL]</code>
+</p>
+<p>One of the following ambiguous time resolution strategies, allowed to be
+either length 1, or the same length as the input:
+</p>
+
+<ul>
+<li> <p><code>"earliest"</code>: Of the two possible times, choose the earliest one.
+</p>
+</li>
+<li> <p><code>"latest"</code>: Of the two possible times, choose the latest one.
+</p>
+</li>
+<li> <p><code>"NA"</code>: Replace ambiguous times with <code>NA</code>.
+</p>
+</li>
+<li> <p><code>"error"</code>: Error on ambiguous times.
+</p>
+</li></ul>
+
+<p>Alternatively, <code>ambiguous</code> is allowed to be a zoned_time (or POSIXct) that
+is either length 1, or the same length as the input. If an ambiguous time
+is encountered, the zoned_time is consulted. If the zoned_time corresponds
+to a naive_time that is also ambiguous <em>and</em> uses the same daylight saving
+time transition point as the original ambiguous time, then the offset of
+the zoned_time is used to resolve the ambiguity. If the ambiguity cannot be
+resolved by consulting the zoned_time, then this method falls back to
+<code>NULL</code>.
+</p>
+<p>Finally, <code>ambiguous</code> is allowed to be a list of size 2, where the first
+element of the list is a zoned_time (as described above), and the second
+element of the list is an ambiguous time resolution strategy to use when
+the ambiguous time cannot be resolved by consulting the zoned_time.
+Specifying a zoned_time on its own is identical to <code style="white-space: pre;">list(&lt;zoned_time&gt;, NULL)</code>.
+</p>
+<p>If <code>NULL</code>, defaults to <code>"error"</code>.
+</p>
+<p>If <code>getOption("clock.strict")</code> is <code>TRUE</code>, <code>ambiguous</code> must be supplied and
+cannot be <code>NULL</code>. Additionally, <code>ambiguous</code> cannot be specified as a
+zoned_time on its own, as this implies <code>NULL</code> for ambiguous times that the
+zoned_time cannot resolve. Instead, it must be specified as a list
+alongside an ambiguous time resolution strategy as described above. This is
+a convenient way to make production code robust to ambiguous times.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Adding a single quarter with <code>add_quarters()</code> is equivalent to adding
+3 months.
+</p>
+<p><code>x</code> and <code>n</code> are recycled against each other.
+</p>
+<p>Calendrical based arithmetic has the potential to generate invalid dates
+(like the 31st of February), nonexistent times (due to daylight saving
+time gaps), and ambiguous times (due to daylight saving time fallbacks).
+</p>
+<p>Naive-time based arithmetic will never generate an invalid date, but
+may generate a nonexistent or ambiguous time (i.e. you added 1 day and
+landed in a daylight saving time gap).
+</p>
+<p>Sys-time based arithmetic operates in the UTC time zone, which means
+that it will never generate any invalid dates or nonexistent / ambiguous
+times.
+</p>
+<p>The conversion from POSIXct/POSIXlt to the corresponding clock type uses
+a &quot;best guess&quot; about whether you want to do the arithmetic using a naive-time
+or a sys-time. For example, when adding months, you probably want to
+retain the printed time when converting to a year-month-day to perform
+the arithmetic, so the conversion goes through naive-time. However,
+when adding smaller units like seconds, you probably want
+<code style="white-space: pre;">"2020-03-08 01:59:59" + 1 second</code> in the America/New_York time zone to
+return <code>"2020-03-08 03:00:00"</code>, taking into account the fact that there
+was a daylight saving time gap. This requires doing the arithmetic in
+sys-time, so that is what clock converts to. If you disagree with this
+heuristic for any reason, you can take control and perform the conversions
+yourself. For example, you could convert the previous example to a
+naive-time instead of a sys-time manually with <code><a href="as_naive_time.html">as_naive_time()</a></code>, add
+1 second giving <code>"2020-03-08 02:00:00"</code>, then convert back to a
+POSIXct/POSIXlt, dealing with the nonexistent time that gets created by
+using the <code>nonexistent</code> argument of <code>as.POSIXct()</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>x</code> after performing the arithmetic.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+x &lt;- as.POSIXct("2019-01-01", tz = "America/New_York")
+
+add_years(x, 1:5)
+
+y &lt;- as.POSIXct("2019-01-31 00:30:00", tz = "America/New_York")
+
+# Adding 1 month to `y` generates an invalid date. Unlike year-month-day
+# types, R's native date-time types cannot handle invalid dates, so you must
+# resolve them immediately. If you don't you get an error:
+try(add_months(y, 1:2))
+add_months(as_year_month_day(y), 1:2)
+
+# Resolve invalid dates by specifying an invalid date resolution strategy
+# with the `invalid` argument. Using `"previous"` here sets the date-time to
+# the previous valid moment in time - i.e. the end of the month. The
+# time is set to the last moment in the day to retain the relative ordering
+# within your input. If you are okay with potentially losing this, and
+# want to retain your time of day, you can use `"previous-day"` to set the
+# date-time to the previous valid day, while keeping the time of day.
+add_months(y, 1:2, invalid = "previous")
+add_months(y, 1:2, invalid = "previous-day")
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

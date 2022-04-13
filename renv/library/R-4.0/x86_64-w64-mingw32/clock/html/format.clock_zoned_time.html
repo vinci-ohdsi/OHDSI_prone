@@ -1,0 +1,273 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Formatting: zoned-time</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for format.clock_zoned_time {clock}"><tr><td>format.clock_zoned_time {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Formatting: zoned-time</h2>
+
+<h3>Description</h3>
+
+<p>This is a zoned-time method for the <code><a href="../../base/html/format.html">format()</a></code> generic.
+</p>
+<p>This function allows you to format a zoned-time using a flexible <code>format</code>
+string.
+</p>
+<p>If <code>format</code> is <code>NULL</code>, a default format of <code>"%Y-%m-%d %H:%M:%S%Ez[%Z]"</code> is
+used. This maximizes the chance for constructing a string that can be
+reproducibly parsed into a valid zoned-time.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'clock_zoned_time'
+format(x, ..., format = NULL, locale = clock_locale(), abbreviate_zone = FALSE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code style="white-space: pre;">[clock_zoned_time]</code>
+</p>
+<p>A zoned-time.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p><code style="white-space: pre;">[dots]</code>
+</p>
+<p>Not used, but no error will be thrown if not empty to remain compatible
+with usage of the <code>format()</code> generic.</p>
+</td></tr>
+<tr valign="top"><td><code>format</code></td>
+<td>
+<p><code style="white-space: pre;">[character(1) / NULL]</code>
+</p>
+<p>If <code>NULL</code>, a default format is used, which depends on the type of the
+input.
+</p>
+<p>Otherwise, a format string which is a combination of:
+</p>
+<p><strong>Year</strong>
+</p>
+
+<ul>
+<li> <p><code style="white-space: pre;">%C</code>: The year divided by 100 using floored division. If the result
+is a single decimal digit, it is prefixed with <code>0</code>.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%y</code>: The last two decimal digits of the year. If the result is a single
+digit it is prefixed by <code>0</code>.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%Y</code>: The year as a decimal number. If the result is less than four
+digits it is left-padded with <code>0</code> to four digits.
+</p>
+</li></ul>
+
+<p><strong>Month</strong>
+</p>
+
+<ul>
+<li> <p><code style="white-space: pre;">%b</code>, <code style="white-space: pre;">%h</code>: The <code>locale</code>'s abbreviated month name.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%B</code>: The <code>locale</code>'s full month name.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%m</code>: The month as a decimal number. January is <code>01</code>. If the result is a
+single digit, it is prefixed with <code>0</code>.
+</p>
+</li></ul>
+
+<p><strong>Day</strong>
+</p>
+
+<ul>
+<li> <p><code style="white-space: pre;">%d</code>: The day of month as a decimal number. If the result is a single
+decimal digit, it is prefixed with <code>0</code>.
+</p>
+</li></ul>
+
+<p><strong>Day of the week</strong>
+</p>
+
+<ul>
+<li> <p><code style="white-space: pre;">%a</code>: The <code>locale</code>'s abbreviated weekday name.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%A</code>: The <code>locale</code>'s full weekday name.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%w</code>: The weekday as a decimal number (<code>0-6</code>), where Sunday is <code>0</code>.
+</p>
+</li></ul>
+
+<p><strong>ISO 8601 week-based year</strong>
+</p>
+
+<ul>
+<li> <p><code style="white-space: pre;">%g</code>: The last two decimal digits of the ISO week-based year. If the
+result is a single digit it is prefixed by <code>0</code>.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%G</code>: The ISO week-based year as a decimal number. If the result is less
+than four digits it is left-padded with <code>0</code> to four digits.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%V</code>: The ISO week-based week number as a decimal number. If the result
+is a single digit, it is prefixed with <code>0</code>.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%u</code>: The ISO weekday as a decimal number (<code>1-7</code>), where Monday is <code>1</code>.
+</p>
+</li></ul>
+
+<p><strong>Week of the year</strong>
+</p>
+
+<ul>
+<li> <p><code style="white-space: pre;">%U</code>: The week number of the year as a decimal number. The first Sunday
+of the year is the first day of week <code>01</code>. Days of the same year prior to
+that are in week <code>00</code>. If the result is a single digit, it is prefixed with
+<code>0</code>.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%W</code>: The week number of the year as a decimal number. The first Monday
+of the year is the first day of week <code>01</code>. Days of the same year prior to
+that are in week <code>00</code>. If the result is a single digit, it is prefixed with
+<code>0</code>.
+</p>
+</li></ul>
+
+<p><strong>Day of the year</strong>
+</p>
+
+<ul>
+<li> <p><code style="white-space: pre;">%j</code>: The day of the year as a decimal number. January 1 is <code>001</code>. If the
+result is less than three digits, it is left-padded with <code>0</code> to three
+digits.
+</p>
+</li></ul>
+
+<p><strong>Date</strong>
+</p>
+
+<ul>
+<li> <p><code style="white-space: pre;">%D</code>, <code style="white-space: pre;">%x</code>: Equivalent to <code style="white-space: pre;">%m/%d/%y</code>.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%F</code>: Equivalent to <code style="white-space: pre;">%Y-%m-%d</code>.
+</p>
+</li></ul>
+
+<p><strong>Time of day</strong>
+</p>
+
+<ul>
+<li> <p><code style="white-space: pre;">%H</code>: The hour (24-hour clock) as a decimal number. If the result is a
+single digit, it is prefixed with <code>0</code>.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%I</code>: The hour (12-hour clock) as a decimal number. If the result is a
+single digit, it is prefixed with <code>0</code>.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%M</code>: The minute as a decimal number. If the result is a single digit, it
+is prefixed with <code>0</code>.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%S</code>: Seconds as a decimal number. Fractional seconds are printed at the
+precision of the input. The character for the decimal point is localized
+according to <code>locale</code>.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%p</code>: The <code>locale</code>'s equivalent of the AM/PM designations associated with
+a 12-hour clock.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%R</code>: Equivalent to <code style="white-space: pre;">%H:%M</code>.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%T</code>, <code style="white-space: pre;">%X</code>: Equivalent to <code style="white-space: pre;">%H:%M:%S</code>.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%r</code>: Nearly equivalent to <code style="white-space: pre;">%I:%M:%S %p</code>, but seconds are always printed
+at second precision.
+</p>
+</li></ul>
+
+<p><strong>Time zone</strong>
+</p>
+
+<ul>
+<li> <p><code style="white-space: pre;">%z</code>: The offset from UTC in the ISO 8601 format. For example <code>-0430</code>
+refers to 4 hours 30 minutes behind UTC. If the offset is zero, <code>+0000</code> is
+used. The modified command <code style="white-space: pre;">%Ez</code> inserts a <code>:</code> between the hour and
+minutes, like <code>-04:30</code>.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%Z</code>: The full time zone name. If <code>abbreviate_zone</code> is <code>TRUE</code>, the time
+zone abbreviation.
+</p>
+</li></ul>
+
+<p><strong>Miscellaneous</strong>
+</p>
+
+<ul>
+<li> <p><code style="white-space: pre;">%c</code>: A date and time representation. Similar to, but not exactly the
+same as, <code style="white-space: pre;">%a %b %d %H:%M:%S %Y</code>.
+</p>
+</li>
+<li> <p><code>%%</code>: A <code style="white-space: pre;">%</code> character.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%n</code>: A newline character.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%t</code>: A horizontal-tab character.
+</p>
+</li></ul>
+</td></tr>
+<tr valign="top"><td><code>locale</code></td>
+<td>
+<p><code style="white-space: pre;">[clock_locale]</code>
+</p>
+<p>A locale object created from <code><a href="clock_locale.html">clock_locale()</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>abbreviate_zone</code></td>
+<td>
+<p><code style="white-space: pre;">[logical(1)]</code>
+</p>
+<p>If <code>TRUE</code>, <code style="white-space: pre;">%Z</code> returns an abbreviated time zone name.
+</p>
+<p>If <code>FALSE</code>, <code style="white-space: pre;">%Z</code> returns the full time zone name.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A character vector of the formatted input.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+x &lt;- year_month_day(2019, 1, 1)
+x &lt;- as_zoned_time(as_naive_time(x), "America/New_York")
+
+format(x)
+format(x, format = "%B %d, %Y")
+format(x, format = "%B %d, %Y", locale = clock_locale("fr"))
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Is the calendar year a leap year?</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for calendar_leap_year {clock}"><tr><td>calendar_leap_year {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Is the calendar year a leap year?</h2>
+
+<h3>Description</h3>
+
+<p><code>calendar_leap_year()</code> detects if the year is a leap year according to
+the Gregorian calendar. It is only relevant for calendar types that use
+a Gregorian year, i.e. <code><a href="year_month_day.html">year_month_day()</a></code>, <code><a href="year_month_weekday.html">year_month_weekday()</a></code>, and
+<code><a href="year_day.html">year_day()</a></code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+calendar_leap_year(x)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code style="white-space: pre;">[calendar]</code>
+</p>
+<p>A calendar type to detect leap years in.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A logical vector the same size as <code>x</code>. Returns <code>TRUE</code> if in a leap
+year, <code>FALSE</code> if not in a leap year, and <code>NA</code> if <code>x</code> is <code>NA</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+x &lt;- year_month_day(c(2019:2024, NA))
+calendar_leap_year(x)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

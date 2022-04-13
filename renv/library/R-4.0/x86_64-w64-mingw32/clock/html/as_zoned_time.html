@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Convert to a zoned-time</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for as_zoned_time {clock}"><tr><td>as_zoned_time {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Convert to a zoned-time</h2>
+
+<h3>Description</h3>
+
+<p><code>as_zoned_time()</code> converts <code>x</code> to a zoned-time. You generally convert
+to a zoned time from either a sys-time or a naive time. Each are documented
+on their own page:
+</p>
+
+<ul>
+<li> <p><a href="as-zoned-time-sys-time.html">sys-time</a>
+</p>
+</li>
+<li> <p><a href="as-zoned-time-naive-time.html">naive-time</a>
+</p>
+</li></ul>
+
+<p>There are also convenience methods for converting to a zoned time from
+native R date and date-time types:
+</p>
+
+<ul>
+<li> <p><a href="as-zoned-time-Date.html">dates (Date)</a>
+</p>
+</li>
+<li> <p><a href="as-zoned-time-posixt.html">date-times (POSIXct / POSIXlt)</a>
+</p>
+</li></ul>
+
+
+
+<h3>Usage</h3>
+
+<pre>
+as_zoned_time(x, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code style="white-space: pre;">[object]</code>
+</p>
+<p>An object to convert to a zoned-time.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>These dots are for future extensions and must be empty.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A zoned-time vector.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+x &lt;- as.Date("2019-01-01")
+as_zoned_time(x, "Europe/London")
+
+y &lt;- as_naive_time(year_month_day(2019, 2, 1))
+as_zoned_time(y, zone = "America/New_York")
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

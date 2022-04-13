@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Cast a duration between precisions</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for duration_cast {clock}"><tr><td>duration_cast {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Cast a duration between precisions</h2>
+
+<h3>Description</h3>
+
+<p>Casting is one way to change a duration's precision.
+</p>
+<p>Casting to a less precise precision will completely drop information that
+is more precise than the precision that you are casting to. It does so
+in a way that makes it round towards zero.
+</p>
+<p>Casting to a more precise precision is done through a multiplication by
+a conversion factor between the current precision and the new precision.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+duration_cast(x, precision)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code style="white-space: pre;">[clock_duration]</code>
+</p>
+<p>A duration.</p>
+</td></tr>
+<tr valign="top"><td><code>precision</code></td>
+<td>
+<p><code style="white-space: pre;">[character(1)]</code>
+</p>
+<p>A precision. One of:
+</p>
+
+<ul>
+<li> <p><code>"year"</code>
+</p>
+</li>
+<li> <p><code>"quarter"</code>
+</p>
+</li>
+<li> <p><code>"month"</code>
+</p>
+</li>
+<li> <p><code>"week"</code>
+</p>
+</li>
+<li> <p><code>"day"</code>
+</p>
+</li>
+<li> <p><code>"hour"</code>
+</p>
+</li>
+<li> <p><code>"minute"</code>
+</p>
+</li>
+<li> <p><code>"second"</code>
+</p>
+</li>
+<li> <p><code>"millisecond"</code>
+</p>
+</li>
+<li> <p><code>"microsecond"</code>
+</p>
+</li>
+<li> <p><code>"nanosecond"</code>
+</p>
+</li></ul>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>When you want to change to a less precise precision, you often want
+<code><a href="duration-rounding.html">duration_floor()</a></code> instead of <code>duration_cast()</code>, as that rounds towards
+negative infinity, which is generally the desired behavior when working with
+time points (especially ones pre-1970, which are stored as negative
+durations).
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>x</code> cast to the new <code>precision</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+x &lt;- duration_seconds(c(86401, -86401))
+
+# Casting rounds towards 0
+cast &lt;- duration_cast(x, "day")
+cast
+
+# Flooring rounds towards negative infinity
+floor &lt;- duration_floor(x, "day")
+floor
+
+# Flooring is generally more useful when working with time points,
+# note that the cast ends up rounding the pre-1970 date up to the next
+# day, while the post-1970 date is rounded down.
+as_sys_time(x)
+as_sys_time(cast)
+as_sys_time(floor)
+
+# Casting to a more precise precision
+duration_cast(x, "millisecond")
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

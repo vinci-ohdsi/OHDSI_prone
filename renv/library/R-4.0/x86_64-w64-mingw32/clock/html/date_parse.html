@@ -1,0 +1,344 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Parsing: date</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for date_parse {clock}"><tr><td>date_parse {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Parsing: date</h2>
+
+<h3>Description</h3>
+
+<p><code>date_parse()</code> parses strings into a Date.
+</p>
+<p>The default <code>format</code> used is <code>"%Y-%m-%d"</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+date_parse(x, ..., format = NULL, locale = clock_locale())
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code style="white-space: pre;">[character]</code>
+</p>
+<p>A character vector to parse.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>These dots are for future extensions and must be empty.</p>
+</td></tr>
+<tr valign="top"><td><code>format</code></td>
+<td>
+<p><code style="white-space: pre;">[character / NULL]</code>
+</p>
+<p>A format string. A combination of the following commands, or <code>NULL</code>,
+in which case a default format string is used.
+</p>
+<p>A vector of multiple format strings can be supplied. They will be tried in
+the order they are provided.
+</p>
+<p><strong>Year</strong>
+</p>
+
+<ul>
+<li> <p><code style="white-space: pre;">%C</code>: The century as a decimal number. The modified command <code style="white-space: pre;">%NC</code> where
+<code>N</code> is a positive decimal integer specifies the maximum number of
+characters to read. If not specified, the default is <code>2</code>. Leading zeroes
+are permitted but not required.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%y</code>: The last two decimal digits of the year. If the century is not
+otherwise specified (e.g. with <code style="white-space: pre;">%C</code>), values in the range <code style="white-space: pre;">[69 - 99]</code> are
+presumed to refer to the years <code style="white-space: pre;">[1969 - 1999]</code>, and values in the range
+<code style="white-space: pre;">[00 - 68]</code> are presumed to refer to the years <code style="white-space: pre;">[2000 - 2068]</code>. The
+modified command <code style="white-space: pre;">%Ny</code>, where <code>N</code> is a positive decimal integer, specifies
+the maximum number of characters to read. If not specified, the default is
+<code>2</code>. Leading zeroes are permitted but not required.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%Y</code>: The year as a decimal number. The modified command <code style="white-space: pre;">%NY</code> where <code>N</code>
+is a positive decimal integer specifies the maximum number of characters to
+read. If not specified, the default is <code>4</code>. Leading zeroes are permitted
+but not required.
+</p>
+</li></ul>
+
+<p><strong>Month</strong>
+</p>
+
+<ul>
+<li> <p><code style="white-space: pre;">%b</code>, <code style="white-space: pre;">%B</code>, <code style="white-space: pre;">%h</code>: The <code>locale</code>'s full or abbreviated case-insensitive
+month name.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%m</code>: The month as a decimal number. January is <code>1</code>. The modified command
+<code style="white-space: pre;">%Nm</code> where <code>N</code> is a positive decimal integer specifies the maximum number
+of characters to read. If not specified, the default is <code>2</code>. Leading zeroes
+are permitted but not required.
+</p>
+</li></ul>
+
+<p><strong>Day</strong>
+</p>
+
+<ul>
+<li> <p><code style="white-space: pre;">%d</code>, <code style="white-space: pre;">%e</code>: The day of the month as a decimal number. The modified
+command <code style="white-space: pre;">%Nd</code> where <code>N</code> is a positive decimal integer specifies the maximum
+number of characters to read. If not specified, the default is <code>2</code>. Leading
+zeroes are permitted but not required.
+</p>
+</li></ul>
+
+<p><strong>Day of the week</strong>
+</p>
+
+<ul>
+<li> <p><code style="white-space: pre;">%a</code>, <code style="white-space: pre;">%A</code>: The <code>locale</code>'s full or abbreviated case-insensitive weekday
+name.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%w</code>: The weekday as a decimal number (<code>0-6</code>), where Sunday is <code>0</code>. The
+modified command <code style="white-space: pre;">%Nw</code> where <code>N</code> is a positive decimal integer specifies
+the maximum number of characters to read. If not specified, the default is
+<code>1</code>. Leading zeroes are permitted but not required.
+</p>
+</li></ul>
+
+<p><strong>ISO 8601 week-based year</strong>
+</p>
+
+<ul>
+<li> <p><code style="white-space: pre;">%g</code>: The last two decimal digits of the ISO week-based year. The
+modified command <code style="white-space: pre;">%Ng</code> where <code>N</code> is a positive decimal integer specifies
+the maximum number of characters to read. If not specified, the default is
+<code>2</code>. Leading zeroes are permitted but not required.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%G</code>: The ISO week-based year as a decimal number. The modified command
+<code style="white-space: pre;">%NG</code> where <code>N</code> is a positive decimal integer specifies the maximum number
+of characters to read. If not specified, the default is <code>4</code>. Leading zeroes
+are permitted but not required.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%V</code>: The ISO week-based week number as a decimal number. The modified
+command <code style="white-space: pre;">%NV</code> where <code>N</code> is a positive decimal integer specifies the maximum
+number of characters to read. If not specified, the default is <code>2</code>. Leading
+zeroes are permitted but not required.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%u</code>: The ISO weekday as a decimal number (<code>1-7</code>), where Monday is <code>1</code>.
+The modified command <code style="white-space: pre;">%Nu</code> where <code>N</code> is a positive decimal integer
+specifies the maximum number of characters to read. If not specified, the
+default is <code>1</code>. Leading zeroes are permitted but not required.
+</p>
+</li></ul>
+
+<p><strong>Week of the year</strong>
+</p>
+
+<ul>
+<li> <p><code style="white-space: pre;">%U</code>: The week number of the year as a decimal number. The first Sunday
+of the year is the first day of week <code>01</code>. Days of the same year prior to
+that are in week <code>00</code>. The modified command <code style="white-space: pre;">%NU</code> where <code>N</code> is a positive
+decimal integer specifies the maximum number of characters to read. If not
+specified, the default is <code>2</code>. Leading zeroes are permitted but not
+required.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%W</code>: The week number of the year as a decimal number. The first Monday
+of the year is the first day of week <code>01</code>. Days of the same year prior to
+that are in week <code>00</code>. The modified command <code style="white-space: pre;">%NW</code> where <code>N</code> is a positive
+decimal integer specifies the maximum number of characters to read. If not
+specified, the default is <code>2</code>. Leading zeroes are permitted but not
+required.
+</p>
+</li></ul>
+
+<p><strong>Day of the year</strong>
+</p>
+
+<ul>
+<li> <p><code style="white-space: pre;">%j</code>: The day of the year as a decimal number. January 1 is <code>1</code>. The
+modified command <code style="white-space: pre;">%Nj</code> where <code>N</code> is a positive decimal integer specifies
+the maximum number of characters to read. If not specified, the default is
+<code>3</code>. Leading zeroes are permitted but not required.
+</p>
+</li></ul>
+
+<p><strong>Date</strong>
+</p>
+
+<ul>
+<li> <p><code style="white-space: pre;">%D</code>, <code style="white-space: pre;">%x</code>: Equivalent to <code style="white-space: pre;">%m/%d/%y</code>.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%F</code>: Equivalent to <code style="white-space: pre;">%Y-%m-%d</code>. If modified with a width (like <code style="white-space: pre;">%NF</code>),
+the width is applied to only <code style="white-space: pre;">%Y</code>.
+</p>
+</li></ul>
+
+<p><strong>Time of day</strong>
+</p>
+
+<ul>
+<li> <p><code style="white-space: pre;">%H</code>: The hour (24-hour clock) as a decimal number. The modified command
+<code style="white-space: pre;">%NH</code> where <code>N</code> is a positive decimal integer specifies the maximum number
+of characters to read. If not specified, the default is <code>2</code>. Leading zeroes
+are permitted but not required.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%I</code>: The hour (12-hour clock) as a decimal number. The modified command
+<code style="white-space: pre;">%NI</code> where <code>N</code> is a positive decimal integer specifies the maximum number
+of characters to read. If not specified, the default is <code>2</code>. Leading zeroes
+are permitted but not required.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%M</code>: The minutes as a decimal number. The modified command <code style="white-space: pre;">%NM</code> where
+<code>N</code> is a positive decimal integer specifies the maximum number of
+characters to read. If not specified, the default is <code>2</code>. Leading zeroes
+are permitted but not required.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%S</code>: The seconds as a decimal number. The modified command <code style="white-space: pre;">%NS</code> where
+<code>N</code> is a positive decimal integer specifies the maximum number of
+characters to read. If not specified, the default is determined by the
+precision that you are parsing at. If encountered, the <code>locale</code>
+determines the decimal point character. Leading zeroes are permitted but
+not required.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%p</code>: The <code>locale</code>'s equivalent of the AM/PM designations associated with
+a 12-hour clock. The command <code style="white-space: pre;">%I</code> must precede <code style="white-space: pre;">%p</code> in the format string.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%R</code>: Equivalent to <code style="white-space: pre;">%H:%M</code>.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%T</code>, <code style="white-space: pre;">%X</code>: Equivalent to <code style="white-space: pre;">%H:%M:%S</code>.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%r</code>: Equivalent to <code style="white-space: pre;">%I:%M:%S %p</code>.
+</p>
+</li></ul>
+
+<p><strong>Time zone</strong>
+</p>
+
+<ul>
+<li> <p><code style="white-space: pre;">%z</code>: The offset from UTC in the format <code style="white-space: pre;">[+|-]hh[mm]</code>. For example
+<code>-0430</code> refers to 4 hours 30 minutes behind UTC. And <code>04</code> refers to 4 hours
+ahead of UTC. The modified command <code style="white-space: pre;">%Ez</code> parses a <code>:</code> between the hours and
+minutes and leading zeroes on the hour field are optional:
+<code style="white-space: pre;">[+|-]h[h][:mm]</code>. For example <code>-04:30</code> refers to 4 hours 30 minutes behind
+UTC. And <code>4</code> refers to 4 hours ahead of UTC.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%Z</code>: The full time zone name or the time zone abbreviation, depending on
+the function being used. A single word is parsed. This word can only
+contain characters that are alphanumeric, or one of <code>'_'</code>, <code>'/'</code>, <code>'-'</code> or
+<code>'+'</code>.
+</p>
+</li></ul>
+
+<p><strong>Miscellaneous</strong>
+</p>
+
+<ul>
+<li> <p><code style="white-space: pre;">%c</code>: A date and time representation. Equivalent to
+<code style="white-space: pre;">%a %b %d %H:%M:%S %Y</code>.
+</p>
+</li>
+<li> <p><code>%%</code>: A <code style="white-space: pre;">%</code> character.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%n</code>: Matches one white space character. <code style="white-space: pre;">%n</code>, <code style="white-space: pre;">%t</code>, and a space can be
+combined to match a wide range of white-space patterns. For example <code>"%n "</code>
+matches one or more white space characters, and <code>"%n%t%t"</code> matches one to
+three white space characters.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%t</code>: Matches zero or one white space characters.
+</p>
+</li></ul>
+</td></tr>
+<tr valign="top"><td><code>locale</code></td>
+<td>
+<p><code style="white-space: pre;">[clock_locale]</code>
+</p>
+<p>A locale object created from <code><a href="clock_locale.html">clock_locale()</a></code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p><em><code>date_parse()</code> ignores both the <code style="white-space: pre;">%z</code> and <code style="white-space: pre;">%Z</code> commands,</em> as clock treats
+Date as a <em>naive</em> type, with a yet-to-be-specified time zone.
+</p>
+<p>If parsing a string with sub-daily components, such as hours, minutes or
+seconds, note that the conversion to Date will round those components to
+the nearest day. See the examples for a way to control this.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A Date.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+date_parse("2020-01-01")
+
+date_parse(
+  "January 5, 2020",
+  format = "%B %d, %Y"
+)
+
+# With a different locale
+date_parse(
+  "janvier 5, 2020",
+  format = "%B %d, %Y",
+  locale = clock_locale("fr")
+)
+
+# A neat feature of `date_parse()` is the ability to parse
+# the ISO year-week-day format
+date_parse("2020-W01-2", format = "%G-W%V-%u")
+
+# ---------------------------------------------------------------------------
+# Rounding of sub-daily components
+
+# Note that rounding a string with time components will round them to the
+# nearest day if you try and parse them
+x &lt;- c("2019-01-01 11", "2019-01-01 12")
+
+# Hour 12 rounds up to the next day
+date_parse(x, format = "%Y-%m-%d %H")
+
+# If you don't like this, one option is to just not parse the time component
+date_parse(x, format = "%Y-%m-%d")
+
+# A more general option is to parse the full string as a naive-time,
+# then round manually
+nt &lt;- naive_time_parse(x, format = "%Y-%m-%d %H", precision = "hour")
+nt
+
+nt &lt;- time_point_floor(nt, "day")
+nt
+
+as.Date(nt)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

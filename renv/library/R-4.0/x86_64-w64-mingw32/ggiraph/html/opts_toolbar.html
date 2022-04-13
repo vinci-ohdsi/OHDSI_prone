@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Toolbar settings</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for opts_toolbar {ggiraph}"><tr><td>opts_toolbar {ggiraph}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Toolbar settings</h2>
+
+<h3>Description</h3>
+
+<p>Allows customization of the toolbar
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+opts_toolbar(position = "topright", saveaspng = TRUE, pngname = "diagram")
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>position</code></td>
+<td>
+<p>one of 'top', 'bottom', 'topleft', 'topright', 'bottomleft', 'bottomright'</p>
+</td></tr>
+<tr valign="top"><td><code>saveaspng</code></td>
+<td>
+<p>set to TRUE to propose the 'save as png' button.</p>
+</td></tr>
+<tr valign="top"><td><code>pngname</code></td>
+<td>
+<p>the default basename (without .png extension) to use for the png file.</p>
+</td></tr>
+</table>
+
+
+<h3>Note</h3>
+
+<p><code>saveaspng</code> relies on JavaScript promises, so any browsers that don't natively
+support the standard Promise object will need to have a polyfill (e.g.
+Internet Explorer with version less than 11 will need it).
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other girafe animation options: 
+<code><a href="girafe_options.html">girafe_options</a>()</code>,
+<code><a href="opts_hover.html">opts_hover</a>()</code>,
+<code><a href="opts_selection.html">opts_selection</a>()</code>,
+<code><a href="opts_sizing.html">opts_sizing</a>()</code>,
+<code><a href="opts_tooltip.html">opts_tooltip</a>()</code>,
+<code><a href="opts_zoom.html">opts_zoom</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+library(ggplot2)
+
+dataset &lt;- mtcars
+dataset$carname = row.names(mtcars)
+
+gg &lt;- ggplot(
+  data = dataset,
+  mapping = aes(x = wt, y = qsec, color = disp,
+                tooltip = carname, data_id = carname) ) +
+  geom_point_interactive() + theme_minimal()
+
+x &lt;- girafe(ggobj = gg)
+x &lt;- girafe_options(x,
+  opts_toolbar(position = "top") )
+if( interactive() ) print(x)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>ggiraph</em> version 0.7.10 <a href="00Index.html">Index</a>]</div>
+</body></html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Clock arithmetic</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for clock-arithmetic {clock}"><tr><td>clock-arithmetic {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Clock arithmetic</h2>
+
+<h3>Description</h3>
+
+<p>This is the landing page for all clock arithmetic functions. There are
+specific sub-pages describing how arithmetic works for different calendars
+and time points, which is where you should look for more information.
+</p>
+<p>Calendars are efficient at arithmetic with irregular units of time, such as
+month, quarters, or years.
+</p>
+
+<ul>
+<li> <p><a href="year-month-day-arithmetic.html">year-month-day</a>
+</p>
+</li>
+<li> <p><a href="year-month-weekday-arithmetic.html">year-month-weekday</a>
+</p>
+</li>
+<li> <p><a href="year-quarter-day-arithmetic.html">year-quarter-day</a>
+</p>
+</li>
+<li> <p><a href="iso-year-week-day-arithmetic.html">iso-year-week-day</a>
+</p>
+</li>
+<li> <p><a href="year-day-arithmetic.html">year-day</a>
+</p>
+</li></ul>
+
+<p>Time points, such as naive-times and sys-times, are efficient at arithmetic
+with regular, well-defined units of time, such as days, hours, seconds,
+or nanoseconds.
+</p>
+
+<ul>
+<li> <p><a href="time-point-arithmetic.html">time-point</a>
+</p>
+</li></ul>
+
+<p>Durations can use any of these arithmetic functions, and return a new
+duration with a precision corresponding to the common type of the
+input and the function used.
+</p>
+
+<ul>
+<li> <p><a href="duration-arithmetic.html">duration</a>
+</p>
+</li></ul>
+
+<p>Weekdays can perform day-based circular arithmetic.
+</p>
+
+<ul>
+<li> <p><a href="weekday-arithmetic.html">weekday</a>
+</p>
+</li></ul>
+
+<p>There are also convenience methods for doing arithmetic directly on a
+native R date or date-time type:
+</p>
+
+<ul>
+<li> <p><a href="Date-arithmetic.html">dates (Date)</a>
+</p>
+</li>
+<li> <p><a href="posixt-arithmetic.html">date-times (POSIXct / POSIXlt)</a>
+</p>
+</li></ul>
+
+
+
+<h3>Usage</h3>
+
+<pre>
+add_years(x, n, ...)
+
+add_quarters(x, n, ...)
+
+add_months(x, n, ...)
+
+add_weeks(x, n, ...)
+
+add_days(x, n, ...)
+
+add_hours(x, n, ...)
+
+add_minutes(x, n, ...)
+
+add_seconds(x, n, ...)
+
+add_milliseconds(x, n, ...)
+
+add_microseconds(x, n, ...)
+
+add_nanoseconds(x, n, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code style="white-space: pre;">[object]</code>
+</p>
+<p>An object.</p>
+</td></tr>
+<tr valign="top"><td><code>n</code></td>
+<td>
+<p><code style="white-space: pre;">[integer / clock_duration]</code>
+</p>
+<p>An integer vector to be converted to a duration, or a duration
+corresponding to the arithmetic function being used. This corresponds
+to the number of duration units to add. <code>n</code> may be negative to subtract
+units of duration.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>These dots are for future extensions and must be empty.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Months and years are considered &quot;irregular&quot; because some months have more
+days then others (28, 29, 30, or 31), and some years have more days than
+others (365 or 366).
+</p>
+<p>Days are considered &quot;regular&quot; because they are defined as 86,400 seconds.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>x</code> after performing the arithmetic.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# See each sub-page for more specific examples
+x &lt;- year_month_day(2019, 2, 1)
+add_months(x, 1)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

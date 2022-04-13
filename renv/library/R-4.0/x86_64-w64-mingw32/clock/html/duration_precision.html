@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Precision: duration</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for duration_precision {clock}"><tr><td>duration_precision {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Precision: duration</h2>
+
+<h3>Description</h3>
+
+<p><code>duration_precision()</code> extracts the precision from a duration object. It
+returns the precision as a single string.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+duration_precision(x)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code style="white-space: pre;">[clock_duration]</code>
+</p>
+<p>A duration.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A single string holding the precision of the duration.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+duration_precision(duration_seconds(1))
+duration_precision(duration_nanoseconds(2))
+duration_precision(duration_quarters(1:5))
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

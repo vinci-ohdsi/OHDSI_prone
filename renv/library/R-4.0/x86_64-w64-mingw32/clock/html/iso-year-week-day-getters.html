@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Getters: iso-year-week-day</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for iso-year-week-day-getters {clock}"><tr><td>iso-year-week-day-getters {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Getters: iso-year-week-day</h2>
+
+<h3>Description</h3>
+
+<p>These are iso-year-week-day methods for the
+<a href="clock-getters.html">getter generics</a>.
+</p>
+
+<ul>
+<li> <p><code>get_year()</code> returns the ISO year. Note that this can differ from the
+Gregorian year.
+</p>
+</li>
+<li> <p><code>get_week()</code> returns the ISO week of the current ISO year.
+</p>
+</li>
+<li> <p><code>get_day()</code> returns a value between 1-7 indicating the weekday of the
+current ISO week, where 1 = Monday and 7 = Sunday, in line with the
+ISO standard.
+</p>
+</li>
+<li><p> There are sub-daily getters for extracting more precise components.
+</p>
+</li></ul>
+
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'clock_iso_year_week_day'
+get_year(x)
+
+## S3 method for class 'clock_iso_year_week_day'
+get_week(x)
+
+## S3 method for class 'clock_iso_year_week_day'
+get_day(x)
+
+## S3 method for class 'clock_iso_year_week_day'
+get_hour(x)
+
+## S3 method for class 'clock_iso_year_week_day'
+get_minute(x)
+
+## S3 method for class 'clock_iso_year_week_day'
+get_second(x)
+
+## S3 method for class 'clock_iso_year_week_day'
+get_millisecond(x)
+
+## S3 method for class 'clock_iso_year_week_day'
+get_microsecond(x)
+
+## S3 method for class 'clock_iso_year_week_day'
+get_nanosecond(x)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code style="white-space: pre;">[clock_iso_year_week_day]</code>
+</p>
+<p>A iso-year-week-day to get the component from.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>The component.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+x &lt;- iso_year_week_day(2019, 50:52, 1:3)
+x
+
+# Get the ISO week
+get_week(x)
+
+# Gets the weekday, 1 = Monday, 7 = Sunday
+get_day(x)
+
+# Note that the ISO year can differ from the Gregorian year
+iso &lt;- iso_year_week_day(2019, 1, 1)
+ymd &lt;- as_year_month_day(iso)
+
+get_year(iso)
+get_year(ymd)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

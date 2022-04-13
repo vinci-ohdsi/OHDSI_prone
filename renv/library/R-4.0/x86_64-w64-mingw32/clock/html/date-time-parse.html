@@ -1,0 +1,532 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Parsing: date-time</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for date-time-parse {clock}"><tr><td>date-time-parse {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Parsing: date-time</h2>
+
+<h3>Description</h3>
+
+<p>There are three parsers for parsing strings into POSIXct date-times,
+<code>date_time_parse()</code>, <code>date_time_parse_complete()</code>, and
+<code>date_time_parse_abbrev()</code>.
+</p>
+
+
+<h4>date_time_parse()</h4>
+
+<p><code>date_time_parse()</code> is useful for strings like <code>"2019-01-01 00:00:00"</code>, where
+the UTC offset and full time zone name are not present in the string. The
+string is first parsed as a naive-time without any time zone assumptions, and
+is then converted to a POSIXct with the supplied <code>zone</code>.
+</p>
+<p>Because converting from naive-time to POSIXct may result in nonexistent or
+ambiguous times due to daylight saving time, these must be resolved
+explicitly with the <code>nonexistent</code> and <code>ambiguous</code> arguments.
+</p>
+<p><code>date_time_parse()</code> completely ignores the <code style="white-space: pre;">%z</code> and <code style="white-space: pre;">%Z</code> commands. The only
+time zone specific information that is used is the <code>zone</code>.
+</p>
+<p>The default <code>format</code> used is <code>"%Y-%m-%d %H:%M:%S"</code>.
+</p>
+
+
+
+<h4>date_time_parse_complete()</h4>
+
+<p><code>date_time_parse_complete()</code> is a parser for <em>complete</em> date-time strings,
+like <code>"2019-01-01 00:00:00-05:00[America/New_York]"</code>. A complete date-time
+string has both the time zone offset and full time zone name in the string,
+which is the only way for the string itself to contain all of the information
+required to construct a zoned-time. Because of this,
+<code>date_time_parse_complete()</code> requires both the <code style="white-space: pre;">%z</code> and <code style="white-space: pre;">%Z</code> commands to be
+supplied in the <code>format</code> string.
+</p>
+<p>The default <code>format</code> used is <code>"%Y-%m-%d %H:%M:%S%Ez[%Z]"</code>.
+</p>
+
+
+
+<h4>date_time_parse_abbrev()</h4>
+
+<p><code>date_time_parse_abbrev()</code> is a parser for date-time strings containing only
+a time zone abbreviation, like <code>"2019-01-01 00:00:00 EST"</code>. The time zone
+abbreviation is not enough to identify the full time zone name that the
+date-time belongs to, so the full time zone name must be supplied as the
+<code>zone</code> argument. However, the time zone abbreviation can help with resolving
+ambiguity around daylight saving time fallbacks.
+</p>
+<p>For <code>date_time_parse_abbrev()</code>, <code style="white-space: pre;">%Z</code> must be supplied and is interpreted as
+the time zone abbreviation rather than the full time zone name.
+</p>
+<p>If used, the <code style="white-space: pre;">%z</code> command must parse correctly, but its value will be
+completely ignored.
+</p>
+<p>The default <code>format</code> used is <code>"%Y-%m-%d %H:%M:%S %Z"</code>.
+</p>
+
+
+
+<h3>Usage</h3>
+
+<pre>
+date_time_parse(
+  x,
+  zone,
+  ...,
+  format = NULL,
+  locale = clock_locale(),
+  nonexistent = NULL,
+  ambiguous = NULL
+)
+
+date_time_parse_complete(x, ..., format = NULL, locale = clock_locale())
+
+date_time_parse_abbrev(x, zone, ..., format = NULL, locale = clock_locale())
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code style="white-space: pre;">[character]</code>
+</p>
+<p>A character vector to parse.</p>
+</td></tr>
+<tr valign="top"><td><code>zone</code></td>
+<td>
+<p><code style="white-space: pre;">[character(1)]</code>
+</p>
+<p>A full time zone name.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>These dots are for future extensions and must be empty.</p>
+</td></tr>
+<tr valign="top"><td><code>format</code></td>
+<td>
+<p><code style="white-space: pre;">[character / NULL]</code>
+</p>
+<p>A format string. A combination of the following commands, or <code>NULL</code>,
+in which case a default format string is used.
+</p>
+<p>A vector of multiple format strings can be supplied. They will be tried in
+the order they are provided.
+</p>
+<p><strong>Year</strong>
+</p>
+
+<ul>
+<li> <p><code style="white-space: pre;">%C</code>: The century as a decimal number. The modified command <code style="white-space: pre;">%NC</code> where
+<code>N</code> is a positive decimal integer specifies the maximum number of
+characters to read. If not specified, the default is <code>2</code>. Leading zeroes
+are permitted but not required.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%y</code>: The last two decimal digits of the year. If the century is not
+otherwise specified (e.g. with <code style="white-space: pre;">%C</code>), values in the range <code style="white-space: pre;">[69 - 99]</code> are
+presumed to refer to the years <code style="white-space: pre;">[1969 - 1999]</code>, and values in the range
+<code style="white-space: pre;">[00 - 68]</code> are presumed to refer to the years <code style="white-space: pre;">[2000 - 2068]</code>. The
+modified command <code style="white-space: pre;">%Ny</code>, where <code>N</code> is a positive decimal integer, specifies
+the maximum number of characters to read. If not specified, the default is
+<code>2</code>. Leading zeroes are permitted but not required.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%Y</code>: The year as a decimal number. The modified command <code style="white-space: pre;">%NY</code> where <code>N</code>
+is a positive decimal integer specifies the maximum number of characters to
+read. If not specified, the default is <code>4</code>. Leading zeroes are permitted
+but not required.
+</p>
+</li></ul>
+
+<p><strong>Month</strong>
+</p>
+
+<ul>
+<li> <p><code style="white-space: pre;">%b</code>, <code style="white-space: pre;">%B</code>, <code style="white-space: pre;">%h</code>: The <code>locale</code>'s full or abbreviated case-insensitive
+month name.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%m</code>: The month as a decimal number. January is <code>1</code>. The modified command
+<code style="white-space: pre;">%Nm</code> where <code>N</code> is a positive decimal integer specifies the maximum number
+of characters to read. If not specified, the default is <code>2</code>. Leading zeroes
+are permitted but not required.
+</p>
+</li></ul>
+
+<p><strong>Day</strong>
+</p>
+
+<ul>
+<li> <p><code style="white-space: pre;">%d</code>, <code style="white-space: pre;">%e</code>: The day of the month as a decimal number. The modified
+command <code style="white-space: pre;">%Nd</code> where <code>N</code> is a positive decimal integer specifies the maximum
+number of characters to read. If not specified, the default is <code>2</code>. Leading
+zeroes are permitted but not required.
+</p>
+</li></ul>
+
+<p><strong>Day of the week</strong>
+</p>
+
+<ul>
+<li> <p><code style="white-space: pre;">%a</code>, <code style="white-space: pre;">%A</code>: The <code>locale</code>'s full or abbreviated case-insensitive weekday
+name.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%w</code>: The weekday as a decimal number (<code>0-6</code>), where Sunday is <code>0</code>. The
+modified command <code style="white-space: pre;">%Nw</code> where <code>N</code> is a positive decimal integer specifies
+the maximum number of characters to read. If not specified, the default is
+<code>1</code>. Leading zeroes are permitted but not required.
+</p>
+</li></ul>
+
+<p><strong>ISO 8601 week-based year</strong>
+</p>
+
+<ul>
+<li> <p><code style="white-space: pre;">%g</code>: The last two decimal digits of the ISO week-based year. The
+modified command <code style="white-space: pre;">%Ng</code> where <code>N</code> is a positive decimal integer specifies
+the maximum number of characters to read. If not specified, the default is
+<code>2</code>. Leading zeroes are permitted but not required.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%G</code>: The ISO week-based year as a decimal number. The modified command
+<code style="white-space: pre;">%NG</code> where <code>N</code> is a positive decimal integer specifies the maximum number
+of characters to read. If not specified, the default is <code>4</code>. Leading zeroes
+are permitted but not required.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%V</code>: The ISO week-based week number as a decimal number. The modified
+command <code style="white-space: pre;">%NV</code> where <code>N</code> is a positive decimal integer specifies the maximum
+number of characters to read. If not specified, the default is <code>2</code>. Leading
+zeroes are permitted but not required.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%u</code>: The ISO weekday as a decimal number (<code>1-7</code>), where Monday is <code>1</code>.
+The modified command <code style="white-space: pre;">%Nu</code> where <code>N</code> is a positive decimal integer
+specifies the maximum number of characters to read. If not specified, the
+default is <code>1</code>. Leading zeroes are permitted but not required.
+</p>
+</li></ul>
+
+<p><strong>Week of the year</strong>
+</p>
+
+<ul>
+<li> <p><code style="white-space: pre;">%U</code>: The week number of the year as a decimal number. The first Sunday
+of the year is the first day of week <code>01</code>. Days of the same year prior to
+that are in week <code>00</code>. The modified command <code style="white-space: pre;">%NU</code> where <code>N</code> is a positive
+decimal integer specifies the maximum number of characters to read. If not
+specified, the default is <code>2</code>. Leading zeroes are permitted but not
+required.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%W</code>: The week number of the year as a decimal number. The first Monday
+of the year is the first day of week <code>01</code>. Days of the same year prior to
+that are in week <code>00</code>. The modified command <code style="white-space: pre;">%NW</code> where <code>N</code> is a positive
+decimal integer specifies the maximum number of characters to read. If not
+specified, the default is <code>2</code>. Leading zeroes are permitted but not
+required.
+</p>
+</li></ul>
+
+<p><strong>Day of the year</strong>
+</p>
+
+<ul>
+<li> <p><code style="white-space: pre;">%j</code>: The day of the year as a decimal number. January 1 is <code>1</code>. The
+modified command <code style="white-space: pre;">%Nj</code> where <code>N</code> is a positive decimal integer specifies
+the maximum number of characters to read. If not specified, the default is
+<code>3</code>. Leading zeroes are permitted but not required.
+</p>
+</li></ul>
+
+<p><strong>Date</strong>
+</p>
+
+<ul>
+<li> <p><code style="white-space: pre;">%D</code>, <code style="white-space: pre;">%x</code>: Equivalent to <code style="white-space: pre;">%m/%d/%y</code>.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%F</code>: Equivalent to <code style="white-space: pre;">%Y-%m-%d</code>. If modified with a width (like <code style="white-space: pre;">%NF</code>),
+the width is applied to only <code style="white-space: pre;">%Y</code>.
+</p>
+</li></ul>
+
+<p><strong>Time of day</strong>
+</p>
+
+<ul>
+<li> <p><code style="white-space: pre;">%H</code>: The hour (24-hour clock) as a decimal number. The modified command
+<code style="white-space: pre;">%NH</code> where <code>N</code> is a positive decimal integer specifies the maximum number
+of characters to read. If not specified, the default is <code>2</code>. Leading zeroes
+are permitted but not required.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%I</code>: The hour (12-hour clock) as a decimal number. The modified command
+<code style="white-space: pre;">%NI</code> where <code>N</code> is a positive decimal integer specifies the maximum number
+of characters to read. If not specified, the default is <code>2</code>. Leading zeroes
+are permitted but not required.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%M</code>: The minutes as a decimal number. The modified command <code style="white-space: pre;">%NM</code> where
+<code>N</code> is a positive decimal integer specifies the maximum number of
+characters to read. If not specified, the default is <code>2</code>. Leading zeroes
+are permitted but not required.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%S</code>: The seconds as a decimal number. The modified command <code style="white-space: pre;">%NS</code> where
+<code>N</code> is a positive decimal integer specifies the maximum number of
+characters to read. If not specified, the default is determined by the
+precision that you are parsing at. If encountered, the <code>locale</code>
+determines the decimal point character. Leading zeroes are permitted but
+not required.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%p</code>: The <code>locale</code>'s equivalent of the AM/PM designations associated with
+a 12-hour clock. The command <code style="white-space: pre;">%I</code> must precede <code style="white-space: pre;">%p</code> in the format string.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%R</code>: Equivalent to <code style="white-space: pre;">%H:%M</code>.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%T</code>, <code style="white-space: pre;">%X</code>: Equivalent to <code style="white-space: pre;">%H:%M:%S</code>.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%r</code>: Equivalent to <code style="white-space: pre;">%I:%M:%S %p</code>.
+</p>
+</li></ul>
+
+<p><strong>Time zone</strong>
+</p>
+
+<ul>
+<li> <p><code style="white-space: pre;">%z</code>: The offset from UTC in the format <code style="white-space: pre;">[+|-]hh[mm]</code>. For example
+<code>-0430</code> refers to 4 hours 30 minutes behind UTC. And <code>04</code> refers to 4 hours
+ahead of UTC. The modified command <code style="white-space: pre;">%Ez</code> parses a <code>:</code> between the hours and
+minutes and leading zeroes on the hour field are optional:
+<code style="white-space: pre;">[+|-]h[h][:mm]</code>. For example <code>-04:30</code> refers to 4 hours 30 minutes behind
+UTC. And <code>4</code> refers to 4 hours ahead of UTC.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%Z</code>: The full time zone name or the time zone abbreviation, depending on
+the function being used. A single word is parsed. This word can only
+contain characters that are alphanumeric, or one of <code>'_'</code>, <code>'/'</code>, <code>'-'</code> or
+<code>'+'</code>.
+</p>
+</li></ul>
+
+<p><strong>Miscellaneous</strong>
+</p>
+
+<ul>
+<li> <p><code style="white-space: pre;">%c</code>: A date and time representation. Equivalent to
+<code style="white-space: pre;">%a %b %d %H:%M:%S %Y</code>.
+</p>
+</li>
+<li> <p><code>%%</code>: A <code style="white-space: pre;">%</code> character.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%n</code>: Matches one white space character. <code style="white-space: pre;">%n</code>, <code style="white-space: pre;">%t</code>, and a space can be
+combined to match a wide range of white-space patterns. For example <code>"%n "</code>
+matches one or more white space characters, and <code>"%n%t%t"</code> matches one to
+three white space characters.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">%t</code>: Matches zero or one white space characters.
+</p>
+</li></ul>
+</td></tr>
+<tr valign="top"><td><code>locale</code></td>
+<td>
+<p><code style="white-space: pre;">[clock_locale]</code>
+</p>
+<p>A locale object created from <code><a href="clock_locale.html">clock_locale()</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>nonexistent</code></td>
+<td>
+<p><code style="white-space: pre;">[character / NULL]</code>
+</p>
+<p>One of the following nonexistent time resolution strategies, allowed to be
+either length 1, or the same length as the input:
+</p>
+
+<ul>
+<li> <p><code>"roll-forward"</code>: The next valid instant in time.
+</p>
+</li>
+<li> <p><code>"roll-backward"</code>: The previous valid instant in time.
+</p>
+</li>
+<li> <p><code>"shift-forward"</code>: Shift the nonexistent time forward by the size of
+the daylight saving time gap.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">"shift-backward</code>: Shift the nonexistent time backward by the size of
+the daylight saving time gap.
+</p>
+</li>
+<li> <p><code>"NA"</code>: Replace nonexistent times with <code>NA</code>.
+</p>
+</li>
+<li> <p><code>"error"</code>: Error on nonexistent times.
+</p>
+</li></ul>
+
+<p>Using either <code>"roll-forward"</code> or <code>"roll-backward"</code> is generally
+recommended over shifting, as these two strategies maintain the
+<em>relative ordering</em> between elements of the input.
+</p>
+<p>If <code>NULL</code>, defaults to <code>"error"</code>.
+</p>
+<p>If <code>getOption("clock.strict")</code> is <code>TRUE</code>, <code>nonexistent</code> must be supplied
+and cannot be <code>NULL</code>. This is a convenient way to make production code
+robust to nonexistent times.</p>
+</td></tr>
+<tr valign="top"><td><code>ambiguous</code></td>
+<td>
+<p><code style="white-space: pre;">[character / zoned_time / POSIXct / list(2) / NULL]</code>
+</p>
+<p>One of the following ambiguous time resolution strategies, allowed to be
+either length 1, or the same length as the input:
+</p>
+
+<ul>
+<li> <p><code>"earliest"</code>: Of the two possible times, choose the earliest one.
+</p>
+</li>
+<li> <p><code>"latest"</code>: Of the two possible times, choose the latest one.
+</p>
+</li>
+<li> <p><code>"NA"</code>: Replace ambiguous times with <code>NA</code>.
+</p>
+</li>
+<li> <p><code>"error"</code>: Error on ambiguous times.
+</p>
+</li></ul>
+
+<p>Alternatively, <code>ambiguous</code> is allowed to be a zoned_time (or POSIXct) that
+is either length 1, or the same length as the input. If an ambiguous time
+is encountered, the zoned_time is consulted. If the zoned_time corresponds
+to a naive_time that is also ambiguous <em>and</em> uses the same daylight saving
+time transition point as the original ambiguous time, then the offset of
+the zoned_time is used to resolve the ambiguity. If the ambiguity cannot be
+resolved by consulting the zoned_time, then this method falls back to
+<code>NULL</code>.
+</p>
+<p>Finally, <code>ambiguous</code> is allowed to be a list of size 2, where the first
+element of the list is a zoned_time (as described above), and the second
+element of the list is an ambiguous time resolution strategy to use when
+the ambiguous time cannot be resolved by consulting the zoned_time.
+Specifying a zoned_time on its own is identical to <code style="white-space: pre;">list(&lt;zoned_time&gt;, NULL)</code>.
+</p>
+<p>If <code>NULL</code>, defaults to <code>"error"</code>.
+</p>
+<p>If <code>getOption("clock.strict")</code> is <code>TRUE</code>, <code>ambiguous</code> must be supplied and
+cannot be <code>NULL</code>. Additionally, <code>ambiguous</code> cannot be specified as a
+zoned_time on its own, as this implies <code>NULL</code> for ambiguous times that the
+zoned_time cannot resolve. Instead, it must be specified as a list
+alongside an ambiguous time resolution strategy as described above. This is
+a convenient way to make production code robust to ambiguous times.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>If <code>date_time_parse_complete()</code> is given input that is length zero, all
+<code>NA</code>s, or completely fails to parse, then no time zone will be able to be
+determined. In that case, the result will use <code>"UTC"</code>.
+</p>
+<p>If manually parsing sub-second components, be aware that they will be
+automatically rounded to the nearest second when converting them to POSIXct.
+See the examples for a way to control this.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A POSIXct.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Parse with a known `zone`, even though that information isn't in the string
+date_time_parse("2020-01-01 05:06:07", "America/New_York")
+
+# Same time as above, except this is a completely unambiguous parse that
+# doesn't require a `zone` argument, because the zone name and offset are
+# both present in the string
+date_time_parse_complete("2020-01-01 05:06:07-05:00[America/New_York]")
+
+# Only day components
+date_time_parse("2020-01-01", "America/New_York", format = "%Y-%m-%d")
+
+# `date_time_parse()` may have issues with ambiguous times due to daylight
+# saving time fallbacks. For example, there were two 1'oclock hours here:
+x &lt;- date_time_parse("1970-10-25 00:59:59", "America/New_York")
+
+# First (earliest) 1'oclock hour
+add_seconds(x, 1)
+# Second (latest) 1'oclock hour
+add_seconds(x, 3601)
+
+# If you try to parse this ambiguous time directly, you'll get an error:
+ambiguous_time &lt;- "1970-10-25 01:00:00"
+try(date_time_parse(ambiguous_time, "America/New_York"))
+
+# Resolve it by specifying whether you'd like to use the
+# `earliest` or `latest` of the two possible times
+date_time_parse(ambiguous_time, "America/New_York", ambiguous = "earliest")
+date_time_parse(ambiguous_time, "America/New_York", ambiguous = "latest")
+
+# `date_time_parse_complete()` doesn't have these issues, as it requires
+# that the offset and zone name are both in the string, which resolves
+# the ambiguity
+complete_times &lt;- c(
+  "1970-10-25 01:00:00-04:00[America/New_York]",
+  "1970-10-25 01:00:00-05:00[America/New_York]"
+)
+date_time_parse_complete(complete_times)
+
+# `date_time_parse_abbrev()` also doesn't have these issues, since it
+# uses the time zone abbreviation name to resolve the ambiguity
+abbrev_times &lt;- c(
+  "1970-10-25 01:00:00 EDT",
+  "1970-10-25 01:00:00 EST"
+)
+date_time_parse_abbrev(abbrev_times, "America/New_York")
+
+# ---------------------------------------------------------------------------
+# Rounding of sub-second components
+
+# Generally, if you have a string with sub-second components, they will
+# be ignored when parsing into a date-time
+x &lt;- c("2019-01-01 00:00:01.1", "2019-01-01 00:00:01.7")
+
+date_time_parse(x, "America/New_York")
+
+# If you manually try and parse those sub-second components with `%4S` to
+# read the 2 seconds, 1 decimal point, and 1 fractional component, the
+# fractional component will be rounded to the nearest second
+date_time_parse(x, "America/New_York", format = "%Y-%m-%d %H:%M:%4S")
+
+# If you don't like this, parse the full string as a naive-time,
+# then round manually and convert to a POSIXct
+nt &lt;- naive_time_parse(x, format = "%Y-%m-%d %H:%M:%S", precision = "millisecond")
+nt
+
+nt &lt;- time_point_floor(nt, "second")
+nt
+
+as.POSIXct(nt, "America/New_York")
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

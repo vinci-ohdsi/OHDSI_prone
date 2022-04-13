@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Convert to a zoned-time from a date-time</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for as-zoned-time-posixt {clock}"><tr><td>as-zoned-time-posixt {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Convert to a zoned-time from a date-time</h2>
+
+<h3>Description</h3>
+
+<p>This is a POSIXct/POSIXlt method for the <code><a href="as_zoned_time.html">as_zoned_time()</a></code> generic.
+</p>
+<p>Converting from one of R's native date-time classes (POSIXct or POSIXlt)
+will retain the time zone of that object. There is no <code>zone</code> argument.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'POSIXt'
+as_zoned_time(x, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code style="white-space: pre;">[POSIXct / POSIXlt]</code>
+</p>
+<p>A date-time.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>These dots are for future extensions and must be empty.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A zoned-time.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+x &lt;- as.POSIXct("2019-01-01", tz = "America/New_York")
+as_zoned_time(x)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

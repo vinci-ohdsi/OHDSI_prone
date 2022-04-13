@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Construct a duration</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for duration-helper {clock}"><tr><td>duration-helper {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Construct a duration</h2>
+
+<h3>Description</h3>
+
+<p>These helpers construct durations of the specified precision. Durations
+represent units of time.
+</p>
+<p>Durations are separated into two categories:
+</p>
+<p><strong>Calendrical</strong>
+</p>
+
+<ul>
+<li><p> year
+</p>
+</li>
+<li><p> quarter
+</p>
+</li>
+<li><p> month
+</p>
+</li></ul>
+
+<p><strong>Chronological</strong>
+</p>
+
+<ul>
+<li><p> week
+</p>
+</li>
+<li><p> day
+</p>
+</li>
+<li><p> hour
+</p>
+</li>
+<li><p> minute
+</p>
+</li>
+<li><p> second
+</p>
+</li>
+<li><p> millisecond
+</p>
+</li>
+<li><p> microsecond
+</p>
+</li>
+<li><p> nanosecond
+</p>
+</li></ul>
+
+<p>Calendrical durations are generally used when manipulating calendar types,
+like year-month-day. Chronological durations are generally used when
+working with time points, like sys-time or naive-time.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+duration_years(n = integer())
+
+duration_quarters(n = integer())
+
+duration_months(n = integer())
+
+duration_weeks(n = integer())
+
+duration_days(n = integer())
+
+duration_hours(n = integer())
+
+duration_minutes(n = integer())
+
+duration_seconds(n = integer())
+
+duration_milliseconds(n = integer())
+
+duration_microseconds(n = integer())
+
+duration_nanoseconds(n = integer())
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>n</code></td>
+<td>
+<p><code style="white-space: pre;">[integer]</code>
+</p>
+<p>The number of units of time to use when creating the duration.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A duration of the specified precision.
+</p>
+
+
+<h3>Internal Representation</h3>
+
+<p>Durations are internally represented as an integer number of &quot;ticks&quot; along
+with a ratio describing how it converts to a number of seconds. The
+following duration ratios are used in clock:
+</p>
+
+<ul>
+<li> <p><code style="white-space: pre;">1 year == 31556952 seconds</code>
+</p>
+</li>
+<li> <p><code style="white-space: pre;">1 quarter == 7889238 seconds</code>
+</p>
+</li>
+<li> <p><code style="white-space: pre;">1 month == 2629746 seconds</code>
+</p>
+</li>
+<li> <p><code style="white-space: pre;">1 week == 604800 seconds</code>
+</p>
+</li>
+<li> <p><code style="white-space: pre;">1 day == 86400 seconds</code>
+</p>
+</li>
+<li> <p><code style="white-space: pre;">1 hour == 3600 seconds</code>
+</p>
+</li>
+<li> <p><code style="white-space: pre;">1 minute == 60 seconds</code>
+</p>
+</li>
+<li> <p><code style="white-space: pre;">1 second == 1 second</code>
+</p>
+</li>
+<li> <p><code style="white-space: pre;">1 millisecond == 1 / 1000 seconds</code>
+</p>
+</li>
+<li> <p><code style="white-space: pre;">1 microsecond == 1 / 1000000 seconds</code>
+</p>
+</li>
+<li> <p><code style="white-space: pre;">1 nanosecond == 1 / 1000000000 seconds</code>
+</p>
+</li></ul>
+
+<p>A duration of 1 year is defined to correspond to the
+average length of a proleptic Gregorian year, i.e. 365.2425 days.
+</p>
+<p>A duration of 1 month is defined as exactly 1/12 of a year.
+</p>
+<p>A duration of 1 quarter is defined as exactly 1/4 of a year.
+</p>
+<p>A duration of 1 week is defined as exactly 7 days.
+</p>
+<p>These conversions come into play when doing operations like adding or
+flooring durations. Generally, you add two calendrical durations together
+to get a new calendrical duration, rather than adding a calendrical and
+a chronological duration together. The one exception is <code><a href="duration_cast.html">duration_cast()</a></code>,
+which can cast durations to any other precision, with a potential loss of
+information.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+duration_years(1:5)
+duration_nanoseconds(1:5)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

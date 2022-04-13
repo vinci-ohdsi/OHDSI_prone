@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Shifting: date and date-time</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for date-and-date-time-shifting {clock}"><tr><td>date-and-date-time-shifting {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Shifting: date and date-time</h2>
+
+<h3>Description</h3>
+
+<p><code>date_shift()</code> shifts <code>x</code> to the <code>target</code> weekday. You can shift to the next
+or previous weekday. If <code>x</code> is currently on the <code>target</code> weekday, you can
+choose to leave it alone or advance it to the next instance of the <code>target</code>.
+</p>
+<p>There are separate help pages for shifting dates and date-times:
+</p>
+
+<ul>
+<li> <p><a href="date-shifting.html">dates (Date)</a>
+</p>
+</li>
+<li> <p><a href="posixt-shifting.html">date-times (POSIXct/POSIXlt)</a>
+</p>
+</li></ul>
+
+
+
+<h3>Usage</h3>
+
+<pre>
+date_shift(x, target, ..., which = "next", boundary = "keep")
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code style="white-space: pre;">[Date / POSIXct / POSIXlt]</code>
+</p>
+<p>A date or date-time vector.</p>
+</td></tr>
+<tr valign="top"><td><code>target</code></td>
+<td>
+<p><code style="white-space: pre;">[weekday]</code>
+</p>
+<p>A weekday created from <code><a href="weekday.html">weekday()</a></code> to target.
+</p>
+<p>Generally this is length 1, but can also be the same length as <code>x</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>These dots are for future extensions and must be empty.</p>
+</td></tr>
+<tr valign="top"><td><code>which</code></td>
+<td>
+<p><code style="white-space: pre;">[character(1)]</code>
+</p>
+<p>One of:
+</p>
+
+<ul>
+<li> <p><code>"next"</code>: Shift to the next instance of the <code>target</code> weekday.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">"previous</code>: Shift to the previous instance of the <code>target</code> weekday.
+</p>
+</li></ul>
+</td></tr>
+<tr valign="top"><td><code>boundary</code></td>
+<td>
+<p><code style="white-space: pre;">[character(1)]</code>
+</p>
+<p>One of:
+</p>
+
+<ul>
+<li> <p><code>"keep"</code>: If <code>x</code> is currently on the <code>target</code> weekday, return it.
+</p>
+</li>
+<li> <p><code>"advance"</code>: If <code>x</code> is currently on the <code>target</code> weekday, advance it
+anyways.
+</p>
+</li></ul>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p><code>x</code> shifted to the <code>target</code> weekday.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# See the type specific documentation for more examples
+
+x &lt;- as.Date("2019-01-01") + 0:1
+
+# A Tuesday and Wednesday
+as_weekday(x)
+
+monday &lt;- weekday(clock_weekdays$monday)
+
+# Shift to the next Monday
+date_shift(x, monday)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

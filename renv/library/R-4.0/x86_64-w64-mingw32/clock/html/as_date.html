@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Convert to a date</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for as_date {clock}"><tr><td>as_date {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Convert to a date</h2>
+
+<h3>Description</h3>
+
+<p><code>as_date()</code> is a generic function that converts its input to a date (Date).
+</p>
+<p>There are methods for converting date-times (POSIXct), calendars,
+time points, and zoned-times to dates.
+</p>
+<p>For converting to a date-time, see <code><a href="as_date_time.html">as_date_time()</a></code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+as_date(x)
+
+## S3 method for class 'Date'
+as_date(x)
+
+## S3 method for class 'POSIXt'
+as_date(x)
+
+## S3 method for class 'clock_calendar'
+as_date(x)
+
+## S3 method for class 'clock_time_point'
+as_date(x)
+
+## S3 method for class 'clock_zoned_time'
+as_date(x)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code style="white-space: pre;">[vector]</code>
+</p>
+<p>A vector.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Note that clock always assumes that R's Date class is naive, so converting
+a POSIXct to a Date will always retain the printed year, month, and day
+value.
+</p>
+<p>This is not a drop-in replacement for <code>as.Date()</code>, as it only converts a
+limited set of types to Date. For parsing characters as dates, see
+<code><a href="date_parse.html">date_parse()</a></code>. For converting numerics to dates, see <code><a href="../../vctrs/html/new_date.html">vctrs::new_date()</a></code> or
+continue to use <code>as.Date()</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A date with the same length as <code>x</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+x &lt;- date_time_parse("2019-01-01 23:02:03", "America/New_York")
+
+# R's `as.Date.POSIXct()` method defaults to changing the printed time
+# to UTC before converting, which can result in odd conversions like this:
+as.Date(x)
+
+# `as_date()` will never change the printed time before converting
+as_date(x)
+
+# Can also convert from other clock types
+as_date(year_month_day(2019, 2, 5))
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

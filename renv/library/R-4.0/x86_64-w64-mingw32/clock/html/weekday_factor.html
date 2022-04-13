@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Convert a weekday to an ordered factor</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for weekday_factor {clock}"><tr><td>weekday_factor {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Convert a weekday to an ordered factor</h2>
+
+<h3>Description</h3>
+
+<p><code>weekday_factor()</code> converts a weekday object to an ordered factor. This
+can be useful in combination with ggplot2, or for modeling.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+weekday_factor(x, ..., labels = "en", abbreviate = TRUE, encoding = "western")
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code style="white-space: pre;">[weekday]</code>
+</p>
+<p>A weekday vector.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>These dots are for future extensions and must be empty.</p>
+</td></tr>
+<tr valign="top"><td><code>labels</code></td>
+<td>
+<p><code style="white-space: pre;">[clock_labels / character(1)]</code>
+</p>
+<p>Character representations of localized weekday names, month names, and
+AM/PM names. Either the language code as string (passed on to
+<code><a href="clock_labels.html">clock_labels_lookup()</a></code>), or an object created by <code><a href="clock_labels.html">clock_labels()</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>abbreviate</code></td>
+<td>
+<p><code style="white-space: pre;">[logical(1)]</code>
+</p>
+<p>If <code>TRUE</code>, the abbreviated weekday names from <code>labels</code> will be used.
+</p>
+<p>If <code>FALSE</code>, the full weekday names from <code>labels</code> will be used.</p>
+</td></tr>
+<tr valign="top"><td><code>encoding</code></td>
+<td>
+<p><code style="white-space: pre;">[character(1)]</code>
+</p>
+<p>One of:
+</p>
+
+<ul>
+<li> <p><code>"western"</code>: Encode the weekdays as an ordered factor with levels from
+Sunday -&gt; Saturday.
+</p>
+</li>
+<li> <p><code>"iso"</code>: Encode the weekdays as an ordered factor with levels from
+Monday -&gt; Sunday.
+</p>
+</li></ul>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>An ordered factor representing the weekdays.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+x &lt;- weekday(1:7)
+
+# Default to Sunday -&gt; Saturday
+weekday_factor(x)
+
+# ISO encoding is Monday -&gt; Sunday
+weekday_factor(x, encoding = "iso")
+
+# With full names
+weekday_factor(x, abbreviate = FALSE)
+
+# Or a different language
+weekday_factor(x, labels = "fr")
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

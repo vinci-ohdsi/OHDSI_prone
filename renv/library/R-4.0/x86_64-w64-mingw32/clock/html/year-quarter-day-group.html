@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Grouping: year-quarter-day</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for year-quarter-day-group {clock}"><tr><td>year-quarter-day-group {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Grouping: year-quarter-day</h2>
+
+<h3>Description</h3>
+
+<p>This is a year-quarter-day method for the <code><a href="calendar_group.html">calendar_group()</a></code> generic.
+</p>
+<p>Grouping for a year-quarter-day object can be done at any precision, as
+long as <code>x</code> is at least as precise as <code>precision</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'clock_year_quarter_day'
+calendar_group(x, precision, ..., n = 1L)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code style="white-space: pre;">[clock_year_quarter_day]</code>
+</p>
+<p>A year-quarter-day vector.</p>
+</td></tr>
+<tr valign="top"><td><code>precision</code></td>
+<td>
+<p><code style="white-space: pre;">[character(1)]</code>
+</p>
+<p>One of:
+</p>
+
+<ul>
+<li> <p><code>"year"</code>
+</p>
+</li>
+<li> <p><code>"quarter"</code>
+</p>
+</li>
+<li> <p><code>"day"</code>
+</p>
+</li>
+<li> <p><code>"hour"</code>
+</p>
+</li>
+<li> <p><code>"minute"</code>
+</p>
+</li>
+<li> <p><code>"second"</code>
+</p>
+</li>
+<li> <p><code>"millisecond"</code>
+</p>
+</li>
+<li> <p><code>"microsecond"</code>
+</p>
+</li>
+<li> <p><code>"nanosecond"</code>
+</p>
+</li></ul>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>These dots are for future extensions and must be empty.</p>
+</td></tr>
+<tr valign="top"><td><code>n</code></td>
+<td>
+<p><code style="white-space: pre;">[positive integer(1)]</code>
+</p>
+<p>A single positive integer specifying a multiple of <code>precision</code> to use.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p><code>x</code> grouped at the specified <code>precision</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+x &lt;- year_quarter_day(2019, 1:4)
+x &lt;- c(x, set_year(x, 2020))
+
+# Group by 3 quarters
+# Note that this is a grouping of 3 quarters of the current year
+# (i.e. the count resets at the beginning of the next year)
+calendar_group(x, "quarter", n = 3)
+
+# Group by 5 days of the current quarter
+y &lt;- year_quarter_day(2019, 1, 1:90)
+calendar_group(y, "day", n = 5)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

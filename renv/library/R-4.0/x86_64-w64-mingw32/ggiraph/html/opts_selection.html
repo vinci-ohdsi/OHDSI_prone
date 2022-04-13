@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Selection effect settings</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for opts_selection {ggiraph}"><tr><td>opts_selection {ggiraph}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Selection effect settings</h2>
+
+<h3>Description</h3>
+
+<p>Allows customization of the rendering of
+selected graphic elements.
+Use <code>opts_selection</code> for interactive geometries in panels,
+<code>opts_selection_key</code> for interactive scales/guides and
+<code>opts_selection_theme</code> for interactive theme elements.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+opts_selection(
+  css = NULL,
+  type = "multiple",
+  only_shiny = TRUE,
+  selected = character(0)
+)
+
+opts_selection_key(
+  css = NULL,
+  type = "single",
+  only_shiny = TRUE,
+  selected = character(0)
+)
+
+opts_selection_theme(
+  css = NULL,
+  type = "single",
+  only_shiny = TRUE,
+  selected = character(0)
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>css</code></td>
+<td>
+<p>css to associate with elements when they are selected.
+It must be a scalar character. It can also be constructed with
+<code><a href="girafe_css.html">girafe_css</a></code>, to give more control over the css for different element types.</p>
+</td></tr>
+<tr valign="top"><td><code>type</code></td>
+<td>
+<p>selection mode (&quot;single&quot;, &quot;multiple&quot;, &quot;none&quot;)
+when widget is in a Shiny application.</p>
+</td></tr>
+<tr valign="top"><td><code>only_shiny</code></td>
+<td>
+<p>disable selections if not in a shiny context.</p>
+</td></tr>
+<tr valign="top"><td><code>selected</code></td>
+<td>
+<p>character vector, id to be selected when the graph will be
+initialized.</p>
+</td></tr>
+</table>
+
+
+<h3>Note</h3>
+
+<p><strong>IMPORTANT</strong>: When applying a <code>fill</code> style with the <code>css</code> argument,
+be aware that the browser's CSS engine will apply it also to line elements,
+if there are any that use the selection feature. This will cause an undesired effect.
+</p>
+<p>To overcome this, supply the argument <code>css</code> using <code><a href="girafe_css.html">girafe_css</a></code>,
+in order to set the <code>fill</code> style only for the desired elements.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other girafe animation options: 
+<code><a href="girafe_options.html">girafe_options</a>()</code>,
+<code><a href="opts_hover.html">opts_hover</a>()</code>,
+<code><a href="opts_sizing.html">opts_sizing</a>()</code>,
+<code><a href="opts_toolbar.html">opts_toolbar</a>()</code>,
+<code><a href="opts_tooltip.html">opts_tooltip</a>()</code>,
+<code><a href="opts_zoom.html">opts_zoom</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+library(ggplot2)
+
+dataset &lt;- mtcars
+dataset$carname = row.names(mtcars)
+
+gg &lt;- ggplot(
+  data = dataset,
+  mapping = aes(x = wt, y = qsec, color = disp,
+                tooltip = carname, data_id = carname) ) +
+  geom_point_interactive() + theme_minimal()
+
+x &lt;- girafe(ggobj = gg)
+x &lt;- girafe_options(x,
+  opts_selection(type = "multiple",
+    css = "fill:red;stroke:gray;r:5pt;") )
+if( interactive() ) print(x)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>ggiraph</em> version 0.7.10 <a href="00Index.html">Index</a>]</div>
+</body></html>

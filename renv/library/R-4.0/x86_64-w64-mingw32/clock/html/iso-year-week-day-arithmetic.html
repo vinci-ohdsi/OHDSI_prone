@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Arithmetic: iso-year-week-day</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for iso-year-week-day-arithmetic {clock}"><tr><td>iso-year-week-day-arithmetic {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Arithmetic: iso-year-week-day</h2>
+
+<h3>Description</h3>
+
+<p>These are iso-year-week-day methods for the
+<a href="clock-arithmetic.html">arithmetic generics</a>.
+</p>
+
+<ul>
+<li> <p><code>add_years()</code>
+</p>
+</li></ul>
+
+<p>You cannot add weeks or days to an iso-year-week-day calendar. Adding
+days is much more efficiently done by converting to a time point first
+by using <code><a href="as_naive_time.html">as_naive_time()</a></code> or <code><a href="as_sys_time.html">as_sys_time()</a></code>. Adding weeks is equally
+as efficient as adding 7 days. Additionally, adding weeks to an invalid
+iso-year-week object containing <code>iso_year_week_day(2019, 53)</code> would be
+undefined, as the 53rd ISO week of 2019 doesn't exist to begin with.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'clock_iso_year_week_day'
+add_years(x, n, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code style="white-space: pre;">[clock_iso_year_week_day]</code>
+</p>
+<p>A iso-year-week-day vector.</p>
+</td></tr>
+<tr valign="top"><td><code>n</code></td>
+<td>
+<p><code style="white-space: pre;">[integer / clock_duration]</code>
+</p>
+<p>An integer vector to be converted to a duration, or a duration
+corresponding to the arithmetic function being used. This corresponds
+to the number of duration units to add. <code>n</code> may be negative to subtract
+units of duration.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>These dots are for future extensions and must be empty.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p><code>x</code> and <code>n</code> are recycled against each other.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>x</code> after performing the arithmetic.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+x &lt;- iso_year_week_day(2019, 1, 1)
+add_years(x, 1:2)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

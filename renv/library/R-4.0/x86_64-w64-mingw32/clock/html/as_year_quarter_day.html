@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Convert to year-quarter-day</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for as_year_quarter_day {clock}"><tr><td>as_year_quarter_day {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Convert to year-quarter-day</h2>
+
+<h3>Description</h3>
+
+<p><code>as_year_quarter_day()</code> converts a vector to the year-quarter-day
+calendar. Time points, Dates, POSIXct, and other calendars can all be
+converted to year-quarter-day.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+as_year_quarter_day(x, ..., start = NULL)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code style="white-space: pre;">[vector]</code>
+</p>
+<p>A vector to convert to year-quarter-day.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>These dots are for future extensions and must be empty.</p>
+</td></tr>
+<tr valign="top"><td><code>start</code></td>
+<td>
+<p><code style="white-space: pre;">[integer(1) / NULL]</code>
+</p>
+<p>The month to start the fiscal year in. 1 = January and 12 = December.
+</p>
+<p>If <code>NULL</code>:
+</p>
+
+<ul>
+<li><p> If <code>x</code> is a year-quarter-day, it will be returned as is.
+</p>
+</li>
+<li><p> Otherwise, a <code>start</code> of January will be used.
+</p>
+</li></ul>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A year-quarter-day vector.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# From Date
+as_year_quarter_day(as.Date("2019-01-01"))
+as_year_quarter_day(as.Date("2019-01-01"), start = 3)
+
+# From POSIXct, which assumes that the naive time is what should be converted
+as_year_quarter_day(as.POSIXct("2019-01-01 02:30:30", "America/New_York"))
+
+# From other calendars
+tuesday &lt;- 3
+as_year_quarter_day(year_month_weekday(2019, 2, tuesday, 2))
+
+# Converting between `start`s
+x &lt;- year_quarter_day(2019, 01, 01, start = 2)
+x
+
+# Default keeps the same start
+as_year_quarter_day(x)
+
+# But you can change it
+as_year_quarter_day(x, start = 1)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

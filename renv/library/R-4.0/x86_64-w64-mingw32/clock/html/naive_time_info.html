@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Info: naive-time</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for naive_time_info {clock}"><tr><td>naive_time_info {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Info: naive-time</h2>
+
+<h3>Description</h3>
+
+<p><code>naive_time_info()</code> retrieves a set of low-level information generally not
+required for most date-time manipulations. It is used implicitly
+by <code>as_zoned_time()</code> when converting from a naive-time.
+</p>
+<p>It returns a data frame with the following columns:
+</p>
+
+<ul>
+<li> <p><code>type</code>: A character vector containing one of:
+</p>
+
+<ul>
+<li> <p><code>"unique"</code>: The naive-time maps uniquely to a zoned-time that can be
+created with <code>zone</code>.
+</p>
+</li>
+<li> <p><code>"nonexistent"</code>: The naive-time does not exist as a zoned-time that can
+be created with <code>zone</code>.
+</p>
+</li>
+<li> <p><code>"ambiguous"</code>: The naive-time exists twice as a zoned-time that can be
+created with <code>zone</code>.
+</p>
+</li></ul>
+
+</li>
+<li> <p><code>first</code>: A <code><a href="sys_time_info.html">sys_time_info()</a></code> data frame.
+</p>
+</li>
+<li> <p><code>second</code>: A <code><a href="sys_time_info.html">sys_time_info()</a></code> data frame.
+</p>
+</li></ul>
+
+
+
+<h4>type == &quot;unique&quot;</h4>
+
+
+<ul>
+<li> <p><code>first</code> will be filled out with sys-info representing daylight saving time
+information for that time point in <code>zone</code>.
+</p>
+</li>
+<li> <p><code>second</code> will contain only <code>NA</code> values, as there is no ambiguity to
+represent information for.
+</p>
+</li></ul>
+
+
+
+
+<h4>type == &quot;nonexistent&quot;</h4>
+
+
+<ul>
+<li> <p><code>first</code> will be filled out with the sys-info that ends just prior to <code>x</code>.
+</p>
+</li>
+<li> <p><code>second</code> will be filled out with the sys-info that begins just after <code>x</code>.
+</p>
+</li></ul>
+
+
+
+
+<h4>type == &quot;ambiguous&quot;</h4>
+
+
+<ul>
+<li> <p><code>first</code> will be filled out with the sys-info that ends just after <code>x</code>.
+</p>
+</li>
+<li> <p><code>second</code> will be filled out with the sys-info that starts just before <code>x</code>.
+</p>
+</li></ul>
+
+
+
+
+<h3>Usage</h3>
+
+<pre>
+naive_time_info(x, zone)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code style="white-space: pre;">[clock_naive_time]</code>
+</p>
+<p>A naive-time.</p>
+</td></tr>
+<tr valign="top"><td><code>zone</code></td>
+<td>
+<p><code style="white-space: pre;">[character]</code>
+</p>
+<p>A valid time zone name.
+</p>
+<p>Unlike most functions in clock, in <code>naive_time_info()</code> <code>zone</code> is vectorized
+and is recycled against <code>x</code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>If the tibble package is installed, it is recommended to convert the output
+to a tibble with <code>as_tibble()</code>, as that will print the df-cols much nicer.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A data frame of low level information.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+library(vctrs)
+
+x &lt;- year_month_day(1970, 04, 26, 02, 30, 00)
+x &lt;- as_naive_time(x)
+
+# Maps uniquely to a time in London
+naive_time_info(x, "Europe/London")
+
+# This naive-time never existed in New York!
+# A DST gap jumped the time from 01:59:59 -&gt; 03:00:00,
+# skipping the 2 o'clock hour
+zone &lt;- "America/New_York"
+info &lt;- naive_time_info(x, zone)
+info
+
+# You can recreate various `nonexistent` strategies with this info
+as_zoned_time(x, zone, nonexistent = "roll-forward")
+as_zoned_time(info$first$end, zone)
+
+as_zoned_time(x, zone, nonexistent = "roll-backward")
+as_zoned_time(info$first$end - 1, zone)
+
+as_zoned_time(x, zone, nonexistent = "shift-forward")
+as_zoned_time(as_sys_time(x) - info$first$offset, zone)
+
+as_zoned_time(x, zone, nonexistent = "shift-backward")
+as_zoned_time(as_sys_time(x) - info$second$offset, zone)
+
+# ---------------------------------------------------------------------------
+# Normalizing to UTC
+
+# Imagine you had the following printed times, and knowledge that they
+# are to be interpreted as in the corresponding time zones
+df &lt;- data_frame(
+  x = c("2020-01-05 02:30:00", "2020-06-03 12:20:05"),
+  zone = c("America/Los_Angeles", "Europe/London")
+)
+
+# The times are assumed to be naive-times, i.e. if you lived in the `zone`
+# at the moment the time was recorded, then you would have seen that time
+# printed on the clock. Currently, these are strings. To convert them to
+# a time based type, you'll have to acknowledge that R only lets you have
+# 1 time zone in a vector of date-times at a time. So you'll need to
+# normalize these naive-times. The easiest thing to normalize them to
+# is UTC.
+df$naive &lt;- naive_time_parse(df$x)
+
+# Get info about the naive times using a vector of zones
+info &lt;- naive_time_info(df$naive, df$zone)
+info
+
+# We'll assume that some system generated these naive-times with no
+# chance of them ever being nonexistent or ambiguous. So now all we have
+# to do is use the offset to convert the naive-time to a sys-time. The
+# relationship used is:
+# offset = naive_time - sys_time
+df$sys &lt;- as_sys_time(df$naive) - info$first$offset
+df
+
+# At this point, both times are in UTC. From here, you can convert them
+# both to either America/Los_Angeles or Europe/London as required.
+as_zoned_time(df$sys, "America/Los_Angeles")
+as_zoned_time(df$sys, "Europe/London")
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

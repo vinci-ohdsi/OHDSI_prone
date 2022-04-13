@@ -1,0 +1,312 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Convert to a zoned-time from a naive-time</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for as-zoned-time-naive-time {clock}"><tr><td>as-zoned-time-naive-time {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Convert to a zoned-time from a naive-time</h2>
+
+<h3>Description</h3>
+
+<p>This is a naive-time method for the <code><a href="as_zoned_time.html">as_zoned_time()</a></code> generic.
+</p>
+<p>Converting to a zoned-time from a naive-time retains the printed time,
+but changes the underlying duration, depending on the <code>zone</code> that you choose.
+</p>
+<p>Naive-times are time points with a yet-to-be-determined time zone. By
+converting them to a zoned-time, all you are doing is specifying that
+time zone while attempting to keep all other printed information the
+same (if possible).
+</p>
+<p>If you want to retain the underlying duration, try converting to a zoned-time
+<a href="as-zoned-time-sys-time.html">from a sys-time</a>, which is a time point
+interpreted as having a UTC time zone.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'clock_naive_time'
+as_zoned_time(x, zone, ..., nonexistent = NULL, ambiguous = NULL)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code style="white-space: pre;">[clock_naive_time]</code>
+</p>
+<p>A naive-time to convert to a zoned-time.</p>
+</td></tr>
+<tr valign="top"><td><code>zone</code></td>
+<td>
+<p><code style="white-space: pre;">[character(1)]</code>
+</p>
+<p>The zone to convert to.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>These dots are for future extensions and must be empty.</p>
+</td></tr>
+<tr valign="top"><td><code>nonexistent</code></td>
+<td>
+<p><code style="white-space: pre;">[character / NULL]</code>
+</p>
+<p>One of the following nonexistent time resolution strategies, allowed to be
+either length 1, or the same length as the input:
+</p>
+
+<ul>
+<li> <p><code>"roll-forward"</code>: The next valid instant in time.
+</p>
+</li>
+<li> <p><code>"roll-backward"</code>: The previous valid instant in time.
+</p>
+</li>
+<li> <p><code>"shift-forward"</code>: Shift the nonexistent time forward by the size of
+the daylight saving time gap.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">"shift-backward</code>: Shift the nonexistent time backward by the size of
+the daylight saving time gap.
+</p>
+</li>
+<li> <p><code>"NA"</code>: Replace nonexistent times with <code>NA</code>.
+</p>
+</li>
+<li> <p><code>"error"</code>: Error on nonexistent times.
+</p>
+</li></ul>
+
+<p>Using either <code>"roll-forward"</code> or <code>"roll-backward"</code> is generally
+recommended over shifting, as these two strategies maintain the
+<em>relative ordering</em> between elements of the input.
+</p>
+<p>If <code>NULL</code>, defaults to <code>"error"</code>.
+</p>
+<p>If <code>getOption("clock.strict")</code> is <code>TRUE</code>, <code>nonexistent</code> must be supplied
+and cannot be <code>NULL</code>. This is a convenient way to make production code
+robust to nonexistent times.</p>
+</td></tr>
+<tr valign="top"><td><code>ambiguous</code></td>
+<td>
+<p><code style="white-space: pre;">[character / zoned_time / POSIXct / list(2) / NULL]</code>
+</p>
+<p>One of the following ambiguous time resolution strategies, allowed to be
+either length 1, or the same length as the input:
+</p>
+
+<ul>
+<li> <p><code>"earliest"</code>: Of the two possible times, choose the earliest one.
+</p>
+</li>
+<li> <p><code>"latest"</code>: Of the two possible times, choose the latest one.
+</p>
+</li>
+<li> <p><code>"NA"</code>: Replace ambiguous times with <code>NA</code>.
+</p>
+</li>
+<li> <p><code>"error"</code>: Error on ambiguous times.
+</p>
+</li></ul>
+
+<p>Alternatively, <code>ambiguous</code> is allowed to be a zoned_time (or POSIXct) that
+is either length 1, or the same length as the input. If an ambiguous time
+is encountered, the zoned_time is consulted. If the zoned_time corresponds
+to a naive_time that is also ambiguous <em>and</em> uses the same daylight saving
+time transition point as the original ambiguous time, then the offset of
+the zoned_time is used to resolve the ambiguity. If the ambiguity cannot be
+resolved by consulting the zoned_time, then this method falls back to
+<code>NULL</code>.
+</p>
+<p>Finally, <code>ambiguous</code> is allowed to be a list of size 2, where the first
+element of the list is a zoned_time (as described above), and the second
+element of the list is an ambiguous time resolution strategy to use when
+the ambiguous time cannot be resolved by consulting the zoned_time.
+Specifying a zoned_time on its own is identical to <code style="white-space: pre;">list(&lt;zoned_time&gt;, NULL)</code>.
+</p>
+<p>If <code>NULL</code>, defaults to <code>"error"</code>.
+</p>
+<p>If <code>getOption("clock.strict")</code> is <code>TRUE</code>, <code>ambiguous</code> must be supplied and
+cannot be <code>NULL</code>. Additionally, <code>ambiguous</code> cannot be specified as a
+zoned_time on its own, as this implies <code>NULL</code> for ambiguous times that the
+zoned_time cannot resolve. Instead, it must be specified as a list
+alongside an ambiguous time resolution strategy as described above. This is
+a convenient way to make production code robust to ambiguous times.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A zoned-time vector.
+</p>
+
+
+<h3>Daylight Saving Time</h3>
+
+<p>Converting from a naive-time to a zoned-time is not always possible due to
+daylight saving time issues. There are two types of these issues:
+</p>
+<p><em>Nonexistent</em> times are the result of daylight saving time &quot;gaps&quot;.
+For example, in the America/New_York time zone, there was a daylight
+saving time gap 1 second after <code>"2020-03-08 01:59:59"</code>, where the clocks
+changed from <code>01:59:59 -&gt; 03:00:00</code>, completely skipping the 2 o'clock hour.
+This means that if you had a naive time of <code>"2020-03-08 02:30:00"</code>, you
+couldn't convert that straight into a zoned-time with this time zone. To
+resolve these issues, the <code>nonexistent</code> argument can be used to specify
+one of many nonexistent time resolution strategies.
+</p>
+<p><em>Ambiguous</em> times are the result of daylight saving time &quot;fallbacks&quot;.
+For example, in the America/New_York time zone, there was a daylight
+saving time fallback 1 second after <code>"2020-11-01 01:59:59 EDT"</code>, at which
+point the clocks &quot;fell backwards&quot; by 1 hour, resulting in a printed time of
+<code>"2020-11-01 01:00:00 EST"</code> (note the EDT-&gt;EST shift). This resulted in two
+1 o'clock hours for this day, so if you had a naive time of
+<code>"2020-11-01 01:30:00"</code>, you wouldn't be able to convert that directly
+into a zoned-time with this time zone, as there is no way for clock to know
+which of the two ambiguous times you wanted. To resolve these issues,
+the <code>ambiguous</code> argument can be used to specify one of many ambiguous
+time resolution strategies.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+library(magrittr)
+
+x &lt;- as_naive_time(year_month_day(2019, 1, 1))
+
+# Converting a naive-time to a zoned-time generally retains the
+# printed time, while changing the underlying duration.
+as_zoned_time(x, "America/New_York")
+as_zoned_time(x, "America/Los_Angeles")
+
+# ---------------------------------------------------------------------------
+# Nonexistent time:
+
+new_york &lt;- "America/New_York"
+
+# There was a daylight saving gap in the America/New_York time zone on
+# 2020-03-08 01:59:59 -&gt; 03:00:00, which means that one of these
+# naive-times don't exist in that time zone. By default, attempting to
+# convert it to a zoned time will result in an error.
+nonexistent_time &lt;- year_month_day(2020, 03, 08, c(02, 03), c(45, 30), 00)
+nonexistent_time &lt;- as_naive_time(nonexistent_time)
+try(as_zoned_time(nonexistent_time, new_york))
+
+# Resolve this by specifying a nonexistent time resolution strategy
+as_zoned_time(nonexistent_time, new_york, nonexistent = "roll-forward")
+as_zoned_time(nonexistent_time, new_york, nonexistent = "roll-backward")
+
+# Note that rolling backwards will choose the last possible moment in
+# time at the current precision of the input
+nonexistent_nanotime &lt;- time_point_cast(nonexistent_time, "nanosecond")
+nonexistent_nanotime
+as_zoned_time(nonexistent_nanotime, new_york, nonexistent = "roll-backward")
+
+# A word of caution - Shifting does not guarantee that the relative ordering
+# of the input is maintained
+shifted &lt;- as_zoned_time(
+  nonexistent_time,
+  new_york,
+  nonexistent = "shift-forward"
+)
+shifted
+
+# 02:45:00 &lt; 03:30:00
+nonexistent_time[1] &lt; nonexistent_time[2]
+# 03:45:00 &gt; 03:30:00 (relative ordering is lost)
+shifted[1] &lt; shifted[2]
+
+# ---------------------------------------------------------------------------
+# Ambiguous time:
+
+new_york &lt;- "America/New_York"
+
+# There was a daylight saving time fallback in the America/New_York time
+# zone on 2020-11-01 01:59:59 EDT -&gt; 2020-11-01 01:00:00 EST, resulting
+# in two 1 o'clock hours. This means that the following naive time is
+# ambiguous since we don't know which of the two 1 o'clocks it belongs to.
+# By default, attempting to convert it to a zoned time will result in an
+# error.
+ambiguous_time &lt;- year_month_day(2020, 11, 01, 01, 30, 00)
+ambiguous_time &lt;- as_naive_time(ambiguous_time)
+try(as_zoned_time(ambiguous_time, new_york))
+
+# Resolve this by specifying an ambiguous time resolution strategy
+earliest &lt;- as_zoned_time(ambiguous_time, new_york, ambiguous = "earliest")
+latest &lt;- as_zoned_time(ambiguous_time, new_york, ambiguous = "latest")
+na &lt;- as_zoned_time(ambiguous_time, new_york, ambiguous = "NA")
+earliest
+latest
+na
+
+# Now assume that you were given the following zoned-times, i.e.,
+# you didn't build them from scratch so you already know their otherwise
+# ambiguous offsets
+x &lt;- c(earliest, latest)
+x
+
+# To set the seconds to 5 in both, you might try:
+x_naive &lt;- x %&gt;%
+  as_naive_time() %&gt;%
+  as_year_month_day() %&gt;%
+  set_second(5) %&gt;%
+  as_naive_time()
+
+x_naive
+
+# But this fails because you've "lost" the information about which
+# offsets these ambiguous times started in
+try(as_zoned_time(x_naive, zoned_time_zone(x)))
+
+# To get around this, you can use that information by specifying
+# `ambiguous = x`, which will use the offset from `x` to resolve the
+# ambiguity in `x_naive` as long as `x` is also an ambiguous time with the
+# same daylight saving time transition point as `x_naive` (i.e. here
+# everything has a transition point of `"2020-11-01 01:00:00 EST"`).
+as_zoned_time(x_naive, zoned_time_zone(x), ambiguous = x)
+
+# Say you added one more time to `x` that would not be considered ambiguous
+# in naive-time
+x &lt;- c(x, as_zoned_time(as_sys_time(latest) + 3600, zoned_time_zone(latest)))
+x
+
+# Imagine you want to floor this vector to a multiple of 2 hours, with
+# an origin of 1am that day. You can do this by subtracting the origin,
+# flooring, then adding it back
+origin &lt;- year_month_day(2019, 11, 01, 01, 00, 00) %&gt;%
+  as_naive_time() %&gt;%
+  as_duration()
+
+x_naive &lt;- x %&gt;%
+  as_naive_time() %&gt;%
+  add_seconds(-origin) %&gt;%
+  time_point_floor("hour", n = 2) %&gt;%
+  add_seconds(origin)
+
+x_naive
+
+# You again have ambiguous naive-time points, so you might try using
+# `ambiguous = x`. It looks like this took care of the first two problems,
+# but we have an issue at location 3.
+try(as_zoned_time(x_naive, zoned_time_zone(x), ambiguous = x))
+
+# When we floored from 02:30:00 -&gt; 01:00:00, we went from being
+# unambiguous -&gt; ambiguous. In clock, this is something you must handle
+# explicitly, and cannot be handled by using information from `x`. You can
+# handle this while still retaining the behavior for the other two
+# time points that were ambiguous before and after the floor by passing a
+# list containing `x` and an ambiguous time resolution strategy to use
+# when information from `x` can't resolve ambiguities:
+as_zoned_time(x_naive, zoned_time_zone(x), ambiguous = list(x, "latest"))
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

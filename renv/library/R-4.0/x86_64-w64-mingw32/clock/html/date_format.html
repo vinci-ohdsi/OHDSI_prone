@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Formatting: date and date-time</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for date_format {clock}"><tr><td>date_format {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Formatting: date and date-time</h2>
+
+<h3>Description</h3>
+
+<p><code>date_format()</code> formats a date (Date) or date-time (POSIXct/POSIXlt) using
+a <code>format</code> string.
+</p>
+<p>There are separate help pages for formatting dates and date-times:
+</p>
+
+<ul>
+<li> <p><a href="date-formatting.html">dates (Date)</a>
+</p>
+</li>
+<li> <p><a href="posixt-formatting.html">date-times (POSIXct/POSIXlt)</a>
+</p>
+</li></ul>
+
+
+
+<h3>Usage</h3>
+
+<pre>
+date_format(x, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code style="white-space: pre;">[Date / POSIXct / POSIXlt]</code>
+</p>
+<p>A date or date-time vector.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>These dots are for future extensions and must be empty.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A character vector of the formatted input.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# See method specific documentation for more examples
+
+x &lt;- as.Date("2019-01-01")
+date_format(x, format = "year: %Y, month: %m, day: %d")
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

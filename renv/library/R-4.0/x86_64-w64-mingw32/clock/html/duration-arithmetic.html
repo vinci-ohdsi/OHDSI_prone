@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Arithmetic: duration</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for duration-arithmetic {clock}"><tr><td>duration-arithmetic {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Arithmetic: duration</h2>
+
+<h3>Description</h3>
+
+<p>These are duration methods for the
+<a href="clock-arithmetic.html">arithmetic generics</a>.
+</p>
+
+<ul>
+<li> <p><code>add_years()</code>
+</p>
+</li>
+<li> <p><code>add_quarters()</code>
+</p>
+</li>
+<li> <p><code>add_months()</code>
+</p>
+</li>
+<li> <p><code>add_weeks()</code>
+</p>
+</li>
+<li> <p><code>add_days()</code>
+</p>
+</li>
+<li> <p><code>add_hours()</code>
+</p>
+</li>
+<li> <p><code>add_minutes()</code>
+</p>
+</li>
+<li> <p><code>add_seconds()</code>
+</p>
+</li>
+<li> <p><code>add_milliseconds()</code>
+</p>
+</li>
+<li> <p><code>add_microseconds()</code>
+</p>
+</li>
+<li> <p><code>add_nanoseconds()</code>
+</p>
+</li></ul>
+
+<p>When adding to a duration using one of these functions, a second duration
+is created based on the function name and <code>n</code>. The two durations are then
+added together, and the precision of the result is determined as the
+<em>more precise precision</em> of the two durations.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'clock_duration'
+add_years(x, n, ...)
+
+## S3 method for class 'clock_duration'
+add_quarters(x, n, ...)
+
+## S3 method for class 'clock_duration'
+add_months(x, n, ...)
+
+## S3 method for class 'clock_duration'
+add_weeks(x, n, ...)
+
+## S3 method for class 'clock_duration'
+add_days(x, n, ...)
+
+## S3 method for class 'clock_duration'
+add_hours(x, n, ...)
+
+## S3 method for class 'clock_duration'
+add_minutes(x, n, ...)
+
+## S3 method for class 'clock_duration'
+add_seconds(x, n, ...)
+
+## S3 method for class 'clock_duration'
+add_milliseconds(x, n, ...)
+
+## S3 method for class 'clock_duration'
+add_microseconds(x, n, ...)
+
+## S3 method for class 'clock_duration'
+add_nanoseconds(x, n, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code style="white-space: pre;">[clock_duration]</code>
+</p>
+<p>A duration vector.</p>
+</td></tr>
+<tr valign="top"><td><code>n</code></td>
+<td>
+<p><code style="white-space: pre;">[integer / clock_duration]</code>
+</p>
+<p>An integer vector to be converted to a duration, or a duration
+corresponding to the arithmetic function being used. This corresponds
+to the number of duration units to add. <code>n</code> may be negative to subtract
+units of duration.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>These dots are for future extensions and must be empty.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>You can add calendrical durations to other calendrical durations,
+and chronological durations to other chronological durations, but you can't
+add a chronological duration to a calendrical duration
+(such as adding days and months). For more information, see the
+documentation on the <a href="duration-helper.html">duration helper</a> page.
+</p>
+<p><code>x</code> and <code>n</code> are recycled against each other.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>x</code> after performing the arithmetic, possibly with a more precise
+precision.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+x &lt;- duration_seconds(5)
+
+# Addition in the same precision
+add_seconds(x, 1:10)
+
+# Addition with days, defined as 86400 seconds
+add_days(x, 1)
+
+# Similarly, if you start with days and add seconds, you get the common
+# precision of the two back, which is seconds
+y &lt;- duration_days(1)
+add_seconds(y, 5)
+
+# But you can't add a chronological duration (days) and
+# a calendrical duration (months)
+try(add_months(y, 1))
+
+# You can add years to a duration of months, which adds
+# an additional 12 months / year
+z &lt;- duration_months(5)
+add_years(z, 1)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

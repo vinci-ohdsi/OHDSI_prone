@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Time point rounding</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for time-point-rounding {clock}"><tr><td>time-point-rounding {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Time point rounding</h2>
+
+<h3>Description</h3>
+
+
+<ul>
+<li> <p><code>time_point_floor()</code> rounds a sys-time or naive-time down to a multiple of
+the specified <code>precision</code>.
+</p>
+</li>
+<li> <p><code>time_point_ceiling()</code> rounds a sys-time or naive-time up to a multiple of
+the specified <code>precision</code>.
+</p>
+</li>
+<li> <p><code>time_point_round()</code> rounds up or down depending on what is closer,
+rounding up on ties.
+</p>
+</li></ul>
+
+<p>Rounding time points is mainly useful for rounding sub-daily time points
+up to daily time points.
+</p>
+<p>It can also be useful for flooring by a set number of days (like 20) with
+respect to some origin. By default, the origin is 1970-01-01 00:00:00.
+</p>
+<p>If you want to group by components, such as &quot;day of the month&quot;, rather than
+by &quot;n days&quot;, see <code><a href="calendar_group.html">calendar_group()</a></code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+time_point_floor(x, precision, ..., n = 1L, origin = NULL)
+
+time_point_ceiling(x, precision, ..., n = 1L, origin = NULL)
+
+time_point_round(x, precision, ..., n = 1L, origin = NULL)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code style="white-space: pre;">[clock_sys_time / clock_naive_time]</code>
+</p>
+<p>A sys-time or naive-time.</p>
+</td></tr>
+<tr valign="top"><td><code>precision</code></td>
+<td>
+<p><code style="white-space: pre;">[character(1)]</code>
+</p>
+<p>A time point precision. One of:
+</p>
+
+<ul>
+<li> <p><code>"day"</code>
+</p>
+</li>
+<li> <p><code>"hour"</code>
+</p>
+</li>
+<li> <p><code>"minute"</code>
+</p>
+</li>
+<li> <p><code>"second"</code>
+</p>
+</li>
+<li> <p><code>"millisecond"</code>
+</p>
+</li>
+<li> <p><code>"microsecond"</code>
+</p>
+</li>
+<li> <p><code>"nanosecond"</code>
+</p>
+</li></ul>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>These dots are for future extensions and must be empty.</p>
+</td></tr>
+<tr valign="top"><td><code>n</code></td>
+<td>
+<p><code style="white-space: pre;">[positive integer(1)]</code>
+</p>
+<p>A positive integer specifying the multiple of <code>precision</code> to use.</p>
+</td></tr>
+<tr valign="top"><td><code>origin</code></td>
+<td>
+<p><code style="white-space: pre;">[clock_sys_time(1) / clock_naive_time(1) / NULL]</code>
+</p>
+<p>An origin to begin counting from. Mostly useful when <code>n &gt; 1</code> and you
+want to control how the rounding groups are created.
+</p>
+<p>If <code>x</code> is a sys-time, <code>origin</code> must be a sys-time.
+</p>
+<p>If <code>x</code> is a naive-time, <code>origin</code> must be a naive-time.
+</p>
+<p>The precision of <code>origin</code> must be equally precise as or less
+precise than <code>precision</code>.
+</p>
+<p>If <code>NULL</code>, a default origin of midnight on 1970-01-01 is used.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p><code>x</code> rounded to the new <code>precision</code>.
+</p>
+
+
+<h3>Boundary Handling</h3>
+
+<p>To understand how flooring and ceiling work, you need to know how they
+create their intervals for rounding.
+</p>
+
+<ul>
+<li> <p><code>time_point_floor()</code> constructs intervals of <code>[lower, upper)</code> that
+bound each element of <code>x</code>, then always chooses the <em>left-hand side</em>.
+</p>
+</li>
+<li> <p><code>time_point_ceiling()</code> constructs intervals of <code>(lower, upper]</code> that
+bound each element of <code>x</code>, then always chooses the <em>right-hand side</em>.
+</p>
+</li></ul>
+
+<p>As an easy example, consider 2020-01-02 00:00:05.
+</p>
+<p>To floor this to the nearest day, the following interval is constructed,
+and the left-hand side is returned at day precision:
+</p>
+<p><code>[2020-01-02 00:00:00, 2020-01-03 00:00:00)</code>
+</p>
+<p>To ceiling this to the nearest day, the following interval
+is constructed, and the right-hand side is returned at day precision:
+</p>
+<p><code>(2020-01-02 00:00:00, 2020-01-03 00:00:00]</code>
+</p>
+<p>Here is another example, this time with a time point on a boundary,
+2020-01-02 00:00:00.
+</p>
+<p>To floor this to the nearest day, the following interval is constructed,
+and the left-hand side is returned at day precision:
+</p>
+<p><code>[2020-01-02 00:00:00, 2020-01-03 00:00:00)</code>
+</p>
+<p>To ceiling this to the nearest day, the following interval
+is constructed, and the right-hand side is returned at day precision:
+</p>
+<p><code>(2020-01-01 00:00:00, 2020-01-02 00:00:00]</code>
+</p>
+<p>Notice that, regardless of whether you are doing a floor or ceiling, if
+the input falls on a boundary then it will be returned as is.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+library(magrittr)
+
+x &lt;- as_naive_time(year_month_day(2019, 01, 01))
+x &lt;- add_days(x, 0:40)
+head(x)
+
+# Floor by sets of 20 days
+# The implicit origin to start the 20 day counter is 1970-01-01
+time_point_floor(x, "day", n = 20)
+
+# You can easily customize the origin by creating a duration out of the
+# origin date of interest...
+origin &lt;- year_month_day(2019, 01, 01) %&gt;%
+  as_naive_time() %&gt;%
+  as_duration()
+
+# Which you can subtract from, floor, and then add to your input
+time_point_floor(x - origin, "day", n = 20) + origin
+
+# For times on the boundary, floor and ceiling both return the input
+# at the new precision. Notice how the first element is on the boundary,
+# and the second is 1 second after the boundary.
+y &lt;- as_naive_time(year_month_day(2020, 01, 02, 00, 00, c(00, 01)))
+time_point_floor(y, "day")
+time_point_ceiling(y, "day")
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

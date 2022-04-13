@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Duration rounding</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for duration-rounding {clock}"><tr><td>duration-rounding {clock}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Duration rounding</h2>
+
+<h3>Description</h3>
+
+
+<ul>
+<li> <p><code>duration_floor()</code> rounds a duration down to a multiple of the specified
+<code>precision</code>.
+</p>
+</li>
+<li> <p><code>duration_ceiling()</code> rounds a duration up to a multiple of the specified
+<code>precision</code>.
+</p>
+</li>
+<li> <p><code>duration_round()</code> rounds up or down depending on what is closer,
+rounding up on ties.
+</p>
+</li></ul>
+
+
+
+<h3>Usage</h3>
+
+<pre>
+duration_floor(x, precision, ..., n = 1L)
+
+duration_ceiling(x, precision, ..., n = 1L)
+
+duration_round(x, precision, ..., n = 1L)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code style="white-space: pre;">[clock_duration]</code>
+</p>
+<p>A duration.</p>
+</td></tr>
+<tr valign="top"><td><code>precision</code></td>
+<td>
+<p><code style="white-space: pre;">[character(1)]</code>
+</p>
+<p>A precision. One of:
+</p>
+
+<ul>
+<li> <p><code>"year"</code>
+</p>
+</li>
+<li> <p><code>"quarter"</code>
+</p>
+</li>
+<li> <p><code>"month"</code>
+</p>
+</li>
+<li> <p><code>"week"</code>
+</p>
+</li>
+<li> <p><code>"day"</code>
+</p>
+</li>
+<li> <p><code>"hour"</code>
+</p>
+</li>
+<li> <p><code>"minute"</code>
+</p>
+</li>
+<li> <p><code>"second"</code>
+</p>
+</li>
+<li> <p><code>"millisecond"</code>
+</p>
+</li>
+<li> <p><code>"microsecond"</code>
+</p>
+</li>
+<li> <p><code>"nanosecond"</code>
+</p>
+</li></ul>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>These dots are for future extensions and must be empty.</p>
+</td></tr>
+<tr valign="top"><td><code>n</code></td>
+<td>
+<p><code style="white-space: pre;">[positive integer(1)]</code>
+</p>
+<p>A positive integer specifying the multiple of <code>precision</code> to use.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>You can floor calendrical durations to other calendrical durations, and
+chronological durations to other chronological durations, but you can't
+floor a chronological duration to a calendrical duration (such as flooring
+from day to month). For more information, see the documentation on the
+<a href="duration-helper.html">duration helper</a> page.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>x</code> rounded to the <code>precision</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+x &lt;- duration_seconds(c(86399, 86401))
+
+duration_floor(x, "day")
+duration_ceiling(x, "day")
+
+# Can't floor from a chronological duration (seconds)
+# to a calendrical duration (months)
+try(duration_floor(x, "month"))
+
+# Every 2 days, using an origin of day 0
+y &lt;- duration_seconds(c(0, 86400, 86400 * 2, 86400 * 3))
+duration_floor(y, "day", n = 2)
+
+# Shifting the origin to be day 1
+origin &lt;- duration_days(1)
+duration_floor(y - origin, "day", n = 2) + origin
+
+# Rounding will round ties up
+half_day &lt;- 86400 / 2
+half_day_durations &lt;- duration_seconds(c(half_day - 1, half_day, half_day + 1))
+duration_round(half_day_durations, "day")
+
+# With larger units
+x &lt;- duration_months(c(0, 15, 24))
+duration_floor(x, "year")
+duration_floor(x, "quarter")
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>clock</em> version 0.3.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create interactive boxplot</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for geom_boxplot_interactive {ggiraph}"><tr><td>geom_boxplot_interactive {ggiraph}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Create interactive boxplot</h2>
+
+<h3>Description</h3>
+
+<p>The geometry is based on <code><a href="../../ggplot2/html/geom_boxplot.html">geom_boxplot()</a></code>.
+See the documentation for those functions for more details.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+geom_boxplot_interactive(...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>arguments passed to base function,
+plus any of the <code><a href="ipar.html">interactive_parameters()</a></code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Details for geom_*_interactive functions</h3>
+
+<p>The interactive parameters can be supplied with two ways:
+</p>
+
+<ul>
+<li><p> As aesthetics with the mapping argument (via <code><a href="../../ggplot2/html/aes.html">aes()</a></code>).
+In this way they can be mapped to data columns and apply to a set of geometries.
+</p>
+</li>
+<li><p> As plain arguments into the geom_*_interactive function.
+In this way they can be set to a scalar value.
+</p>
+</li></ul>
+
+
+
+<h3>See Also</h3>
+
+<p><code><a href="girafe.html">girafe()</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# add interactive boxplot -------
+library(ggplot2)
+library(ggiraph)
+
+p &lt;- ggplot(mpg,
+  aes(x = class, y = hwy, tooltip = class)) +
+  geom_boxplot_interactive()
+
+x &lt;- girafe(ggobj = p)
+if( interactive() ) print(x)
+
+p &lt;- ggplot(mpg, aes(x = drv, y = hwy, tooltip = class, fill = class, data_id=class)) +
+  geom_boxplot_interactive(outlier.colour = "red") +
+  guides(fill = "none") + theme_minimal()
+
+x &lt;- girafe(ggobj = p)
+if( interactive() ) print(x)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>ggiraph</em> version 0.7.10 <a href="00Index.html">Index</a>]</div>
+</body></html>
